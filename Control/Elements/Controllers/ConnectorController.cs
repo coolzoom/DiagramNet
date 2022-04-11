@@ -15,9 +15,9 @@ internal class ConnectorController : RectangleController
 
   public override void DrawSelection(Graphics g)
   {
-    Rectangle unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.El.Location.X - 1, this.El.Location.Y - 1, this.El.Size.Width + 2, this.El.Size.Height + 2));
-    SolidBrush solidBrush = new SolidBrush(Color.FromArgb(150, Color.Green));
-    Pen pen = new Pen((Brush) solidBrush, 2f);
+    var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.El.Location.X - 1, this.El.Location.Y - 1, this.El.Size.Width + 2, this.El.Size.Height + 2));
+    var solidBrush = new SolidBrush(Color.FromArgb(150, Color.Green));
+    var pen = new Pen((Brush) solidBrush, 2f);
     g.DrawRectangle(pen, unsignedRectangle);
     pen.Dispose();
     solidBrush.Dispose();

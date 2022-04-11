@@ -102,7 +102,7 @@ public abstract class BaseElement
 
   internal static Rectangle GetUnsignedRectangle(Rectangle rec)
   {
-    Rectangle unsignedRectangle = rec;
+    var unsignedRectangle = rec;
     if (rec.Width < 0)
     {
       unsignedRectangle.X = rec.X + rec.Width;

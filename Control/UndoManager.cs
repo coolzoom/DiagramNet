@@ -46,7 +46,7 @@ internal class UndoManager
   {
     if (!this.CanUndo)
       throw new ApplicationException("Can't Undo.");
-    object obj = this.DeserializeObject((Stream) this.List[this.CurrPos]);
+    var obj = this.DeserializeObject((Stream) this.List[this.CurrPos]);
     --this.CurrPos;
     return obj;
   }
@@ -61,8 +61,8 @@ internal class UndoManager
 
   private MemoryStream SerializeObject(object o)
   {
-    IFormatter formatter = (IFormatter) new BinaryFormatter();
-    MemoryStream serializationStream = new MemoryStream();
+    var formatter = (IFormatter) new BinaryFormatter();
+    var serializationStream = new MemoryStream();
     formatter.Serialize((Stream) serializationStream, o);
     serializationStream.Position = 0L;
     return serializationStream;
@@ -78,7 +78,7 @@ internal class UndoManager
   {
     if (this.CurrPos >= this.Capacity - 1)
       return;
-    for (int index = p; index < this.Capacity; ++index)
+    for (var index = p; index < this.Capacity; ++index)
     {
       if (this.List[index] != null)
         this.List[index].Close();
@@ -91,7 +91,7 @@ internal class UndoManager
     if (this.CurrPos < this.Capacity - 1 || this.List[this.CurrPos] == null)
       return;
     this.List[0].Close();
-    for (int index = 1; index <= this.CurrPos; ++index)
+    for (var index = 1; index <= this.CurrPos; ++index)
       this.List[index - 1] = this.List[index];
   }
 }

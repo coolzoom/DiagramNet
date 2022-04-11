@@ -48,7 +48,7 @@ public class Document : IDeserializationCallback
   public void AddElements(BaseElement[] els)
   {
     this.Elements.EnabledCalc = false;
-    foreach (BaseElement el in els)
+    foreach (var el in els)
       this.AddElement(el);
     this.Elements.EnabledCalc = true;
   }
@@ -61,7 +61,7 @@ public class Document : IDeserializationCallback
   {
     if (!this.CanAddLink(connStart, connEnd))
       return (BaseLinkElement) null;
-    BaseLinkElement element = this._linkType != LinkType.Straight ? (BaseLinkElement) new RightAngleLinkElement(connStart, connEnd) : (BaseLinkElement) new StraightLinkElement(connStart, connEnd);
+    var element = this._linkType != LinkType.Straight ? (BaseLinkElement) new RightAngleLinkElement(connStart, connEnd) : (BaseLinkElement) new StraightLinkElement(connStart, connEnd);
     this.Elements.Add((BaseElement) element);
     element.AppearanceChanged += new EventHandler(this.ElementAppearanceChanged);
     this.OnAppearancePropertyChanged(new EventArgs());
@@ -80,9 +80,9 @@ public class Document : IDeserializationCallback
         this.DeleteLink((BaseLinkElement) el);
         return;
       case NodeElement _:
-        foreach (ConnectorElement connector in ((NodeElement) el).Connectors)
+        foreach (var connector in ((NodeElement) el).Connectors)
         {
-          for (int index = connector.Links.Count - 1; index >= 0; --index)
+          for (var index = connector.Links.Count - 1; index >= 0; --index)
             this.DeleteLink((BaseLinkElement) connector.Links[index]);
         }
         if (this.SelectedNodes.Contains(el))
@@ -104,7 +104,7 @@ public class Document : IDeserializationCallback
   {
     this.SelectedElements.EnabledCalc = false;
     this.SelectedNodes.EnabledCalc = false;
-    for (int index = this.SelectedElements.Count - 1; index >= 0; --index)
+    for (var index = this.SelectedElements.Count - 1; index >= 0; --index)
       this.DeleteElement(this.SelectedElements[index]);
     this.SelectedElements.EnabledCalc = true;
     this.SelectedNodes.EnabledCalc = true;
@@ -149,7 +149,7 @@ public class Document : IDeserializationCallback
     this._canFireEvents = false;
     try
     {
-      foreach (BaseElement el in els)
+      foreach (var el in els)
         this.SelectElement(el);
     }
     finally
@@ -207,14 +207,14 @@ public class Document : IDeserializationCallback
   {
     if (this.Elements != null && this.Elements.Count > 0)
     {
-      for (int index = this.Elements.Count - 1; index >= 0; --index)
+      for (var index = this.Elements.Count - 1; index >= 0; --index)
       {
-        BaseElement element = this.Elements[index];
+        var element = this.Elements[index];
         if (!(element is BaseLinkElement))
         {
           if (element is NodeElement)
           {
-            foreach (ConnectorElement connector in ((NodeElement) element).Connectors)
+            foreach (var connector in ((NodeElement) element).Connectors)
             {
               if (((IControllable) connector).GetController().HitTest(point))
                 return (BaseElement) connector;
@@ -222,7 +222,7 @@ public class Document : IDeserializationCallback
           }
           if (element is IContainer)
           {
-            BaseElement innerElement = this.FindInnerElement((IContainer) element, point);
+            var innerElement = this.FindInnerElement((IContainer) element, point);
             if (innerElement != null)
               return innerElement;
           }
@@ -230,9 +230,9 @@ public class Document : IDeserializationCallback
             return element;
         }
       }
-      for (int index = this.Elements.Count - 1; index >= 0; --index)
+      for (var index = this.Elements.Count - 1; index >= 0; --index)
       {
-        BaseElement element = this.Elements[index];
+        var element = this.Elements[index];
         if (element is BaseLinkElement && element is IControllable && ((IControllable) element).GetController().HitTest(point))
           return element;
       }
@@ -246,7 +246,7 @@ public class Document : IDeserializationCallback
     {
       if (element is IContainer)
       {
-        BaseElement innerElement = this.FindInnerElement((IContainer) element, hitPos);
+        var innerElement = this.FindInnerElement((IContainer) element, hitPos);
         if (innerElement != null)
           return innerElement;
       }
@@ -258,7 +258,7 @@ public class Document : IDeserializationCallback
 
   public void MoveUpElement(BaseElement el)
   {
-    int i = this.Elements.IndexOf(el);
+    var i = this.Elements.IndexOf(el);
     if (i == this.Elements.Count - 1)
       return;
     this.Elements.ChangeIndex(i, i + 1);
@@ -267,7 +267,7 @@ public class Document : IDeserializationCallback
 
   public void MoveDownElement(BaseElement el)
   {
-    int i = this.Elements.IndexOf(el);
+    var i = this.Elements.IndexOf(el);
     if (i == 0)
       return;
     this.Elements.ChangeIndex(i, i - 1);
@@ -276,8 +276,8 @@ public class Document : IDeserializationCallback
 
   public void BringToFrontElement(BaseElement el)
   {
-    int i = this.Elements.IndexOf(el);
-    for (int y = i + 1; y <= this.Elements.Count - 1; ++y)
+    var i = this.Elements.IndexOf(el);
+    for (var y = i + 1; y <= this.Elements.Count - 1; ++y)
     {
       this.Elements.ChangeIndex(i, y);
       i = y;
@@ -287,8 +287,8 @@ public class Document : IDeserializationCallback
 
   public void SendToBackElement(BaseElement el)
   {
-    int i = this.Elements.IndexOf(el);
-    for (int y = i - 1; y >= 0; --y)
+    var i = this.Elements.IndexOf(el);
+    for (var y = i - 1; y >= 0; --y)
     {
       this.Elements.ChangeIndex(i, y);
       i = y;
@@ -365,7 +365,7 @@ public class Document : IDeserializationCallback
     {
       if ((double) value < 0.100000001490116)
         value = 0.1f;
-      bool flag = (double) Math.Abs(this._zoom - value) > 1.40129846432482E-45;
+      var flag = (double) Math.Abs(this._zoom - value) > 1.40129846432482E-45;
       this._zoom = value;
       this.GridSize = new Size(Convert.ToInt32(10f * value), Convert.ToInt32(10f * value));
       this.OnPropertyChanged(new EventArgs());
@@ -407,17 +407,17 @@ public class Document : IDeserializationCallback
 
   public void DrawElementsToGraphics(Graphics g, Rectangle? clippingRegion)
   {
-    for (int index = 0; index <= this.Elements.Count - 1; ++index)
+    for (var index = 0; index <= this.Elements.Count - 1; ++index)
     {
-      BaseElement element = this.Elements[index];
+      var element = this.Elements[index];
       if (element is BaseLinkElement && (!clippingRegion.HasValue || this.NeedDrawElement(element, clippingRegion.Value)))
         element.Draw(g);
       if (element is ILabelElement)
         ((ILabelElement) element).Label.Draw(g);
     }
-    for (int index = 0; index <= this.Elements.Count - 1; ++index)
+    for (var index = 0; index <= this.Elements.Count - 1; ++index)
     {
-      BaseElement element = this.Elements[index];
+      var element = this.Elements[index];
       if (!(element is BaseLinkElement) && (!clippingRegion.HasValue || this.NeedDrawElement(element, clippingRegion.Value)))
       {
         if (element is NodeElement)
@@ -432,11 +432,11 @@ public class Document : IDeserializationCallback
 
   public Rectangle DrawElements(Graphics g, Rectangle clippingRegion)
   {
-    Rectangle rectangle = new Rectangle();
-    bool flag = false;
-    for (int index = 0; index <= this.Elements.Count - 1; ++index)
+    var rectangle = new Rectangle();
+    var flag = false;
+    for (var index = 0; index <= this.Elements.Count - 1; ++index)
     {
-      BaseElement element = this.Elements[index];
+      var element = this.Elements[index];
       if (element is BaseLinkElement && this.NeedDrawElement(element, clippingRegion))
         element.Draw(g);
       if (element is ILabelElement)
@@ -458,9 +458,9 @@ public class Document : IDeserializationCallback
       if (element.Location.Y + element.Size.Height > rectangle.Height)
         rectangle.Height = element.Location.Y + element.Size.Height + 1;
     }
-    for (int index = 0; index <= this.Elements.Count - 1; ++index)
+    for (var index = 0; index <= this.Elements.Count - 1; ++index)
     {
-      BaseElement element = this.Elements[index];
+      var element = this.Elements[index];
       if (!(element is BaseLinkElement) && this.NeedDrawElement(element, clippingRegion))
       {
         if (element is NodeElement)
@@ -486,11 +486,11 @@ public class Document : IDeserializationCallback
 
   public Rectangle GetArea()
   {
-    Rectangle area = new Rectangle();
-    bool flag = false;
-    for (int index = 0; index <= this.Elements.Count - 1; ++index)
+    var area = new Rectangle();
+    var flag = false;
+    for (var index = 0; index <= this.Elements.Count - 1; ++index)
     {
-      BaseElement element = this.Elements[index];
+      var element = this.Elements[index];
       if (!flag)
       {
         area.X = element.Location.X;
@@ -515,21 +515,21 @@ public class Document : IDeserializationCallback
   {
     if (!el.Visible)
       return false;
-    Rectangle unsignedRectangle = el.GetUnsignedRectangle();
+    var unsignedRectangle = el.GetUnsignedRectangle();
     unsignedRectangle.Inflate(5, 5);
     return clippingRegion.IntersectsWith(unsignedRectangle);
   }
 
   internal void DrawSelections(Graphics g, Rectangle clippingRegion)
   {
-    for (int index = this.SelectedElements.Count - 1; index >= 0; --index)
+    for (var index = this.SelectedElements.Count - 1; index >= 0; --index)
     {
       if (this.SelectedElements[index] is IControllable)
       {
         ((IControllable) this.SelectedElements[index]).GetController().DrawSelection(g);
         if (this.SelectedElements[index] is BaseLinkElement)
         {
-          BaseLinkElement selectedElement = (BaseLinkElement) this.SelectedElements[index];
+          var selectedElement = (BaseLinkElement) this.SelectedElements[index];
           ((IControllable) selectedElement.Connector1).GetController().DrawSelection(g);
           ((IControllable) selectedElement.Connector2).GetController().DrawSelection(g);
         }
@@ -547,16 +547,16 @@ public class Document : IDeserializationCallback
     int w,
     int h)
   {
-    Pen pen = new Pen((Brush) new HatchBrush(HatchStyle.DarkUpwardDiagonal, Color.LightGray, Color.Transparent), 1f);
-    int x2 = this._location.X + w;
-    int y2 = this._location.Y + h;
+    var pen = new Pen((Brush) new HatchBrush(HatchStyle.DarkUpwardDiagonal, Color.LightGray, Color.Transparent), 1f);
+    var x2 = this._location.X + w;
+    var y2 = this._location.Y + h;
     if ((double) this._windowSize.Width / (double) this._zoom > (double) x2)
       x2 = (int) ((double) this._windowSize.Width / (double) this._zoom);
     if ((double) this._windowSize.Height / (double) this._zoom > (double) y2)
       y2 = (int) ((double) this._windowSize.Height / (double) this._zoom);
-    for (int index = 0; index < x2; index += gridSize.Width)
+    for (var index = 0; index < x2; index += gridSize.Width)
       g.DrawLine(pen, index, 0, index, y2);
-    for (int index = 0; index < y2; index += gridSize.Height)
+    for (var index = 0; index < y2; index += gridSize.Height)
       g.DrawLine(pen, 0, index, x2, index);
     pen.Dispose();
   }
@@ -628,8 +628,8 @@ public class Document : IDeserializationCallback
 
   public int ElementCount()
   {
-    int num = 0;
-    for (int index = 0; index <= this.Elements.Count - 1; ++index)
+    var num = 0;
+    for (var index = 0; index <= this.Elements.Count - 1; ++index)
     {
       if (this.Elements[index] is DiagramBlock)
         ++num;
@@ -639,8 +639,8 @@ public class Document : IDeserializationCallback
 
   public int LinkCount()
   {
-    int num = 0;
-    for (int index = 0; index <= this.Elements.Count - 1; ++index)
+    var num = 0;
+    for (var index = 0; index <= this.Elements.Count - 1; ++index)
     {
       if (this.Elements[index] is BaseLinkElement)
         ++num;

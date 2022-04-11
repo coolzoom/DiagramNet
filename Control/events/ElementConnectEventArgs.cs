@@ -29,7 +29,7 @@ public class ElementConnectEventArgs : EventArgs
 
   public override string ToString()
   {
-    string str = "";
+    var str = "";
     if (this._node1 != null)
       str = str + "Node1:" + (object) this._node1;
     if (this._node2 != null)

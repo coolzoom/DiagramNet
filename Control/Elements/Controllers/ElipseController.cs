@@ -17,8 +17,8 @@ internal class ElipseController : RectangleController
 
   public override bool HitTest(Point p)
   {
-    GraphicsPath graphicsPath = new GraphicsPath();
-    Matrix matrix = new Matrix();
+    var graphicsPath = new GraphicsPath();
+    var matrix = new Matrix();
     graphicsPath.AddEllipse(new Rectangle(this.El.Location.X, this.El.Location.Y, this.El.Size.Width, this.El.Size.Height));
     graphicsPath.Transform(matrix);
     return graphicsPath.IsVisible(p);
@@ -26,9 +26,9 @@ internal class ElipseController : RectangleController
 
   public override void DrawSelection(Graphics g)
   {
-    Rectangle unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.El.Location.X - 3, this.El.Location.Y - 3, this.El.Size.Width + 6, this.El.Size.Height + 6));
-    HatchBrush hatchBrush = new HatchBrush(HatchStyle.SmallCheckerBoard, Color.LightGray, Color.Transparent);
-    Pen pen = new Pen((Brush) hatchBrush, 3f);
+    var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.El.Location.X - 3, this.El.Location.Y - 3, this.El.Size.Width + 6, this.El.Size.Height + 6));
+    var hatchBrush = new HatchBrush(HatchStyle.SmallCheckerBoard, Color.LightGray, Color.Transparent);
+    var pen = new Pen((Brush) hatchBrush, 3f);
     g.DrawEllipse(pen, unsignedRectangle);
     pen.Dispose();
     hatchBrush.Dispose();

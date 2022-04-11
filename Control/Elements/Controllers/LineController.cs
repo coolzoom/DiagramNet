@@ -18,9 +18,9 @@ internal class LineController : IController
 
   public bool HitTest(Point p)
   {
-    GraphicsPath graphicsPath = new GraphicsPath();
-    Matrix matrix = new Matrix();
-    Pen pen = new Pen(this.El.BorderColor, (float) (this.El.BorderWidth + 4))
+    var graphicsPath = new GraphicsPath();
+    var matrix = new Matrix();
+    var pen = new Pen(this.El.BorderColor, (float) (this.El.BorderWidth + 4))
     {
       StartCap = this.El.StartCap,
       EndCap = this.El.EndCap
@@ -32,11 +32,11 @@ internal class LineController : IController
 
   public bool HitTest(Rectangle r)
   {
-    GraphicsPath graphicsPath = new GraphicsPath();
-    Matrix matrix = new Matrix();
+    var graphicsPath = new GraphicsPath();
+    var matrix = new Matrix();
     graphicsPath.AddRectangle(new Rectangle(this.El.Location.X, this.El.Location.Y, this.El.Size.Width, this.El.Size.Height));
     graphicsPath.Transform(matrix);
-    Rectangle rect = Rectangle.Round(graphicsPath.GetBounds());
+    var rect = Rectangle.Round(graphicsPath.GetBounds());
     return r.Contains(rect);
   }
 

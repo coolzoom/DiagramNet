@@ -91,9 +91,9 @@ public class Designer : UserControl
   {
     if (this._document.Elements.Count > 0)
     {
-      for (int index = 0; index <= this._document.Elements.Count - 1; ++index)
+      for (var index = 0; index <= this._document.Elements.Count - 1; ++index)
       {
-        BaseElement element = this._document.Elements[index];
+        var element = this._document.Elements[index];
         this.Invalidate(element);
         if (element is ILabelElement)
           this.Invalidate((BaseElement) ((ILabelElement) element).Label);
@@ -108,24 +108,24 @@ public class Designer : UserControl
   {
     if (el == null || !force && !el.IsInvalidated)
       return;
-    Rectangle rc = this.Goc2Gsc(el.InvalidateRec);
+    var rc = this.Goc2Gsc(el.InvalidateRec);
     rc.Inflate(10, 10);
     this.Invalidate(rc);
   }
 
   protected override void OnPaint(PaintEventArgs e)
   {
-    Graphics graphics = e.Graphics;
+    var graphics = e.Graphics;
     graphics.PageUnit = GraphicsUnit.Pixel;
-    Point autoScrollPosition = this.AutoScrollPosition;
+    var autoScrollPosition = this.AutoScrollPosition;
     graphics.TranslateTransform((float) autoScrollPosition.X, (float) autoScrollPosition.Y);
-    Matrix transform = graphics.Transform;
-    GraphicsContainer container = graphics.BeginContainer();
+    var transform = graphics.Transform;
+    var container = graphics.BeginContainer();
     graphics.SmoothingMode = this._document.SmoothingMode;
     graphics.PixelOffsetMode = this._document.PixelOffsetMode;
     graphics.CompositingQuality = this._document.CompositingQuality;
     graphics.ScaleTransform(this._document.Zoom, this._document.Zoom);
-    Rectangle clippingRegion = this.Gsc2Goc(e.ClipRectangle);
+    var clippingRegion = this.Gsc2Goc(e.ClipRectangle);
     this._document.DrawElements(graphics, clippingRegion);
     if (this._resizeAction == null || !this._resizeAction.IsResizing)
       this._document.DrawSelections(graphics, e.ClipRectangle);
@@ -148,11 +148,11 @@ public class Designer : UserControl
   protected override void OnPaintBackground(PaintEventArgs e)
   {
     base.OnPaintBackground(e);
-    Graphics graphics = e.Graphics;
+    var graphics = e.Graphics;
     graphics.PageUnit = GraphicsUnit.Pixel;
-    Matrix transform = graphics.Transform;
-    GraphicsContainer container = graphics.BeginContainer();
-    Rectangle clippingRegion = this.Gsc2Goc(e.ClipRectangle);
+    var transform = graphics.Transform;
+    var container = graphics.BeginContainer();
+    var clippingRegion = this.Gsc2Goc(e.ClipRectangle);
     this._document.DrawGrid(graphics, clippingRegion, this._document.GridSize, 1f, this.Size.Width, this.Size.Height);
     graphics.EndContainer(container);
     graphics.Transform = transform;
@@ -172,7 +172,7 @@ public class Designer : UserControl
       case DesignerAction.Connect:
         if (e.Button == MouseButtons.Left)
         {
-          Point point1 = this.Gsc2Goc(new Point(e.X, e.Y));
+          var point1 = this.Gsc2Goc(new Point(e.X, e.Y));
           this.StartResizeElement(point1);
           if (this._resizeAction == null || !this._resizeAction.IsResizing)
           {
@@ -198,7 +198,7 @@ public class Designer : UserControl
             else
             {
               this._document.ClearSelection();
-              Point point2 = this.Gsc2Goc(new Point(e.X, e.Y));
+              var point2 = this.Gsc2Goc(new Point(e.X, e.Y));
               this._isMultiSelection = true;
               this._selectionArea.Visible = true;
               this._selectionArea.Location = point2;
@@ -235,12 +235,12 @@ public class Designer : UserControl
     if (e.Button == MouseButtons.None)
     {
       this.Cursor = Cursors.Arrow;
-      Point point = this.Gsc2Goc(new Point(e.X, e.Y));
+      var point = this.Gsc2Goc(new Point(e.X, e.Y));
       if (this._resizeAction != null && (this._document.Action == DesignerAction.Select || this._document.Action == DesignerAction.Connect && this._resizeAction.IsResizingLink))
         this.Cursor = this._resizeAction.UpdateResizeCornerCursor(point);
       if (this._document.Action == DesignerAction.Connect)
       {
-        BaseElement element = this._document.FindElement(point);
+        var element = this._document.FindElement(point);
         if (this._mousePointerElement != element)
         {
           if (element is ConnectorElement)
@@ -265,7 +265,7 @@ public class Designer : UserControl
     }
     if (e.Button == MouseButtons.Left)
     {
-      Point point1 = this.Gsc2Goc(new Point(e.X, e.Y));
+      var point1 = this.Gsc2Goc(new Point(e.X, e.Y));
       if (this._resizeAction != null && this._resizeAction.IsResizing)
       {
         this._resizeAction.Resize(point1);
@@ -278,7 +278,7 @@ public class Designer : UserControl
       }
       if (this._isMultiSelection || this._isAddSelection)
       {
-        Point point2 = this.Gsc2Goc(new Point(e.X, e.Y));
+        var point2 = this.Gsc2Goc(new Point(e.X, e.Y));
         this._selectionArea.Size = new Size(point2.X - this._selectionArea.Location.X, point2.Y - this._selectionArea.Location.Y);
         this._selectionArea.Invalidate();
         this.Invalidate((BaseElement) this._selectionArea, true);
@@ -313,7 +313,7 @@ public class Designer : UserControl
 
   protected override void OnMouseUp(MouseEventArgs e)
   {
-    Rectangle unsignedRectangle = this._selectionArea.GetUnsignedRectangle();
+    var unsignedRectangle = this._selectionArea.GetUnsignedRectangle();
     if (this._moveAction != null && this._moveAction.IsMoving)
     {
       this.OnElementClick(new ElementEventArgs(this.SelectedElement, this.PreviousSelectedElement));
@@ -352,8 +352,8 @@ public class Designer : UserControl
   {
     if ((Control.ModifierKeys & Keys.Control) != Keys.Control || this.SelectedElement == null || this.PreviousSelectedElement == null || !(this.SelectedElement is NodeElement) || !(this.PreviousSelectedElement is NodeElement))
       return;
-    ConnectorElement connStart = ((IEnumerable<ConnectorElement>) ((NodeElement) this.PreviousSelectedElement).Connectors).OrderBy<ConnectorElement, int>((Func<ConnectorElement, int>) (c => c.Links.Count)).FirstOrDefault<ConnectorElement>((Func<ConnectorElement, bool>) (c => !c.IsStart));
-    ConnectorElement connEnd = ((IEnumerable<ConnectorElement>) ((NodeElement) this.SelectedElement).Connectors).FirstOrDefault<ConnectorElement>((Func<ConnectorElement, bool>) (c => c.IsStart && c.Links.Count == 0));
+    var connStart = ((IEnumerable<ConnectorElement>) ((NodeElement) this.PreviousSelectedElement).Connectors).OrderBy<ConnectorElement, int>((Func<ConnectorElement, int>) (c => c.Links.Count)).FirstOrDefault<ConnectorElement>((Func<ConnectorElement, bool>) (c => !c.IsStart));
+    var connEnd = ((IEnumerable<ConnectorElement>) ((NodeElement) this.SelectedElement).Connectors).FirstOrDefault<ConnectorElement>((Func<ConnectorElement, bool>) (c => c.IsStart && c.Links.Count == 0));
     if (connStart == null || connEnd == null)
       return;
     this.Document.AddLink(connStart, connEnd);
@@ -522,7 +522,7 @@ public class Designer : UserControl
 
   public Point Gsc2Goc(Point gsp)
   {
-    float zoom = this._document.Zoom;
+    var zoom = this._document.Zoom;
     gsp.X = (int) ((double) (gsp.X - this.AutoScrollPosition.X) / (double) zoom);
     gsp.Y = (int) ((double) (gsp.Y - this.AutoScrollPosition.Y) / (double) zoom);
     return gsp;
@@ -530,7 +530,7 @@ public class Designer : UserControl
 
   public Rectangle Gsc2Goc(Rectangle gsr)
   {
-    float zoom = this._document.Zoom;
+    var zoom = this._document.Zoom;
     gsr.X = (int) ((double) (gsr.X - this.AutoScrollPosition.X) / (double) zoom);
     gsr.Y = (int) ((double) (gsr.Y - this.AutoScrollPosition.Y) / (double) zoom);
     gsr.Width = (int) ((double) gsr.Width / (double) zoom);
@@ -540,7 +540,7 @@ public class Designer : UserControl
 
   public Rectangle Goc2Gsc(Rectangle gsr)
   {
-    float zoom = this._document.Zoom;
+    var zoom = this._document.Zoom;
     gsr.X = (int) ((double) (gsr.X + this.AutoScrollPosition.X) * (double) zoom);
     gsr.Y = (int) ((double) (gsr.Y + this.AutoScrollPosition.Y) * (double) zoom);
     gsr.Width = (int) ((double) gsr.Width * (double) zoom);
@@ -552,39 +552,39 @@ public class Designer : UserControl
 
   public void SaveBinary(string fileName)
   {
-    IFormatter formatter = (IFormatter) new BinaryFormatter();
-    Stream serializationStream = (Stream) new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+    var formatter = (IFormatter) new BinaryFormatter();
+    var serializationStream = (Stream) new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
     formatter.Serialize(serializationStream, (object) this._document);
     serializationStream.Close();
   }
 
   public Image GetThumbnail()
   {
-    Bitmap image = this.GetImage(false, true);
-    float num = Math.Min(170f / (float) image.Width, 120f / (float) image.Height);
+    var image = this.GetImage(false, true);
+    var num = Math.Min(170f / (float) image.Width, 120f / (float) image.Height);
     if ((double) num > 1.0)
       num = 1f;
-    Bitmap thumbnail = new Bitmap(180, 130);
-    Graphics graphics = Graphics.FromImage((Image) thumbnail);
+    var thumbnail = new Bitmap(180, 130);
+    var graphics = Graphics.FromImage((Image) thumbnail);
     graphics.InterpolationMode = InterpolationMode.High;
     graphics.CompositingQuality = CompositingQuality.HighQuality;
     graphics.SmoothingMode = SmoothingMode.AntiAlias;
-    int width = (int) ((double) image.Width * (double) num);
-    int height = (int) ((double) image.Height * (double) num);
-    int x = (170 - width) / 2 + 5;
-    int y = (120 - height) / 2 + 5;
+    var width = (int) ((double) image.Width * (double) num);
+    var height = (int) ((double) image.Height * (double) num);
+    var x = (170 - width) / 2 + 5;
+    var y = (120 - height) / 2 + 5;
     graphics.FillRectangle((Brush) new SolidBrush(Color.White), new Rectangle(0, 0, 180, 130));
     graphics.DrawRectangle(new Pen(Color.FromArgb(150, 150, 150)), new Rectangle(0, 0, 179, 129));
     graphics.DrawImage((Image) image, new Rectangle(x, y, width, height));
-    MemoryStream memoryStream = new MemoryStream();
+    var memoryStream = new MemoryStream();
     thumbnail.Save((Stream) memoryStream, ImageFormat.Png);
     return (Image) thumbnail;
   }
 
   public void OpenBinary(string fileName)
   {
-    IFormatter formatter = (IFormatter) new BinaryFormatter();
-    Stream serializationStream = (Stream) new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+    var formatter = (IFormatter) new BinaryFormatter();
+    var serializationStream = (Stream) new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
     this._document = (Document) formatter.Deserialize(serializationStream);
     serializationStream.Close();
     this.RecreateEventsHandlers();
@@ -600,14 +600,14 @@ public class Designer : UserControl
   {
     if (this._document.SelectedElements.Count == 0)
       return;
-    IFormatter formatter = (IFormatter) new BinaryFormatter();
-    Stream stream = (Stream) new MemoryStream();
-    BaseElement[] arrayClone = this._document.SelectedElements.GetArrayClone();
-    foreach (BaseElement baseElement in arrayClone)
+    var formatter = (IFormatter) new BinaryFormatter();
+    var stream = (Stream) new MemoryStream();
+    var arrayClone = this._document.SelectedElements.GetArrayClone();
+    foreach (var baseElement in arrayClone)
     {
       if (baseElement is NodeElement && ((NodeElement) baseElement).Connectors != null)
       {
-        foreach (ConnectorElement connector in ((NodeElement) baseElement).Connectors)
+        foreach (var connector in ((NodeElement) baseElement).Connectors)
           connector.Links = new ElementCollection();
       }
     }
@@ -618,19 +618,19 @@ public class Designer : UserControl
   public void Paste()
   {
     this._undo.Enabled = false;
-    IDataObject dataObject = Clipboard.GetDataObject();
-    DataFormats.Format format = DataFormats.GetFormat("Diagram.NET Element Collection");
+    var dataObject = Clipboard.GetDataObject();
+    var format = DataFormats.GetFormat("Diagram.NET Element Collection");
     if (dataObject != null && dataObject.GetDataPresent(format.Name))
     {
-      IFormatter formatter = (IFormatter) new BinaryFormatter();
-      Stream data = (Stream) dataObject.GetData(format.Name);
-      BaseElement[] els = (BaseElement[]) formatter.Deserialize(data);
+      var formatter = (IFormatter) new BinaryFormatter();
+      var data = (Stream) dataObject.GetData(format.Name);
+      var els = (BaseElement[]) formatter.Deserialize(data);
       data.Close();
-      foreach (BaseElement baseElement in els)
+      foreach (var baseElement in els)
       {
         if (baseElement is NodeElement)
         {
-          foreach (ConnectorElement connector in (baseElement as NodeElement).Connectors)
+          foreach (var connector in (baseElement as NodeElement).Connectors)
             connector.Links = new ElementCollection();
         }
         baseElement.Location = new Point(baseElement.Location.X + 20, baseElement.Location.Y + 20);
@@ -685,10 +685,10 @@ public class Designer : UserControl
       this._document.SelectedElements.Remove(selectedElem);
     this.Changed = false;
     this._moveAction = new MoveAction();
-    MoveAction.OnElementMovingDelegate onElementMovingDelegate = new MoveAction.OnElementMovingDelegate(this.OnElementMoving);
+    var onElementMovingDelegate = new MoveAction.OnElementMovingDelegate(this.OnElementMoving);
     this._moveAction.Start(mousePoint, this._document, onElementMovingDelegate);
     this._controllers = new IController[this._document.SelectedElements.Count];
-    for (int index = this._document.SelectedElements.Count - 1; index >= 0; --index)
+    for (var index = this._document.SelectedElements.Count - 1; index >= 0; --index)
       this._controllers[index] = !(this._document.SelectedElements[index] is IControllable) ? (IController) null : ((IControllable) this._document.SelectedElements[index]).GetController();
     this._resizeAction = new ResizeAction();
     this._resizeAction.Select(this._document);
@@ -700,7 +700,7 @@ public class Designer : UserControl
   {
     if (this._resizeAction == null || this._document.Action != DesignerAction.Select && (this._document.Action != DesignerAction.Connect || !this._resizeAction.IsResizingLink))
       return;
-    ResizeAction.OnElementResizingDelegate onElementResizingDelegate = new ResizeAction.OnElementResizingDelegate(this.OnElementResizing);
+    var onElementResizingDelegate = new ResizeAction.OnElementResizingDelegate(this.OnElementResizing);
     this._resizeAction.Start(mousePoint, onElementResizingDelegate);
     if (this._resizeAction.IsResizing)
       return;
@@ -712,7 +712,7 @@ public class Designer : UserControl
     if (this._document.Action != DesignerAction.Connect)
       return;
     this._connStart = connectorStart;
-    ConnectorElement connectorElement = new ConnectorElement(connectorStart.ParentElement);
+    var connectorElement = new ConnectorElement(connectorStart.ParentElement);
     connectorElement.Location = connectorStart.Location;
     this._connEnd = connectorElement;
     ((IMoveController) ((IControllable) this._connEnd).GetController()).Start(mousePoint);
@@ -739,8 +739,8 @@ public class Designer : UserControl
     {
       this._linkLine.Connector1.RemoveLink(this._linkLine);
       this._linkLine = this._document.AddLink(this._linkLine.Connector1, this._linkLine.Connector2);
-      ElementConnectEventArgs e = new ElementConnectEventArgs(this._linkLine.Connector1.ParentElement, this._linkLine.Connector2.ParentElement, this._linkLine);
-      bool flag = true;
+      var e = new ElementConnectEventArgs(this._linkLine.Connector1.ParentElement, this._linkLine.Connector2.ParentElement, this._linkLine);
+      var flag = true;
       if (this._linkLine.Connector1.ParentElement is DiagramBlock)
         flag = (this._linkLine.Connector1.ParentElement as DiagramBlock).OnElementConnected(this, e);
       if (flag)
@@ -840,10 +840,10 @@ public class Designer : UserControl
 
   private void MoveElement(Keys key)
   {
-    int num = (Control.ModifierKeys & Keys.Shift) == Keys.Shift ? 10 : 1;
+    var num = (Control.ModifierKeys & Keys.Shift) == Keys.Shift ? 10 : 1;
     foreach (BaseElement selectedElement in (ReadOnlyCollectionBase) this.Document.SelectedElements)
     {
-      Point location = selectedElement.Location;
+      var location = selectedElement.Location;
       if ((key & Keys.Down) == Keys.Down)
         location.Y += num;
       else if ((key & Keys.Right) == Keys.Right)
@@ -909,9 +909,9 @@ public class Designer : UserControl
 
   public Bitmap GetImage(bool drawGrid, bool whitebackground)
   {
-    Rectangle area = this.Document.GetArea();
-    Bitmap image = new Bitmap(area.Width - area.X, area.Height - area.Y);
-    Graphics g = Graphics.FromImage((Image) image);
+    var area = this.Document.GetArea();
+    var image = new Bitmap(area.Width - area.X, area.Height - area.Y);
+    var g = Graphics.FromImage((Image) image);
     if (whitebackground || drawGrid)
       g.FillRectangle((Brush) new SolidBrush(Color.White), 0, 0, image.Width, image.Height);
     if (drawGrid)
@@ -933,9 +933,9 @@ public class Designer : UserControl
     bool allowStretch,
     int pageNumber)
   {
-    float num = 1f;
+    var num = 1f;
     graphics.SetClip(new Rectangle(-5, -5, width + 5, height + 5));
-    Rectangle area = this.Document.GetArea();
+    var area = this.Document.GetArea();
     graphics.FillRectangle((Brush) new SolidBrush(Color.White), 0, 0, width, height);
     if (scaleToFitPaper && area.Width > 0 && area.Height > 0)
     {

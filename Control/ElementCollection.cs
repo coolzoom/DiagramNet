@@ -54,23 +54,23 @@ public class ElementCollection : ReadOnlyCollectionBase
 
   internal void ChangeIndex(int i, int y)
   {
-    object inner = this.InnerList[y];
+    var inner = this.InnerList[y];
     this.InnerList[y] = this.InnerList[i];
     this.InnerList[i] = inner;
   }
 
   public BaseElement[] GetArray()
   {
-    BaseElement[] array = new BaseElement[this.InnerList.Count];
-    for (int index = 0; index <= this.InnerList.Count - 1; ++index)
+    var array = new BaseElement[this.InnerList.Count];
+    for (var index = 0; index <= this.InnerList.Count - 1; ++index)
       array[index] = (BaseElement) this.InnerList[index];
     return array;
   }
 
   public BaseElement[] GetArrayClone()
   {
-    BaseElement[] arrayClone = new BaseElement[this.InnerList.Count];
-    for (int index = 0; index <= this.InnerList.Count - 1; ++index)
+    var arrayClone = new BaseElement[this.InnerList.Count];
+    for (var index = 0; index <= this.InnerList.Count - 1; ++index)
       arrayClone[index] = ((BaseElement) this.InnerList[index]).Clone();
     return arrayClone;
   }
@@ -131,7 +131,7 @@ public class ElementCollection : ReadOnlyCollectionBase
   {
     if (!this._enabledCalc)
       return;
-    Point location = element.Location;
+    var location = element.Location;
     if (location.X < this._location.X)
       this._location.X = location.X;
     if (location.Y >= this._location.Y)
@@ -143,12 +143,12 @@ public class ElementCollection : ReadOnlyCollectionBase
   {
     if (!this._enabledCalc)
       return;
-    Point location = element.Location;
-    Size size = element.Size;
-    int num1 = location.X + size.Width - this._location.X;
+    var location = element.Location;
+    var size = element.Size;
+    var num1 = location.X + size.Width - this._location.X;
     if (num1 > this._size.Width)
       this._size.Width = num1;
-    int num2 = location.Y + size.Height - this._location.Y;
+    var num2 = location.Y + size.Height - this._location.Y;
     if (num2 <= this._size.Height)
       return;
     this._size.Height = num2;

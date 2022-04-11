@@ -78,20 +78,20 @@ public abstract class NodeElement : BaseElement
 
   protected void UpdateConnectorsPosition()
   {
-    Point point = new Point(this.LocationValue.X + this.SizeValue.Width / 2, this.LocationValue.Y);
-    ConnectorElement connect1 = this.Connects[0];
+    var point = new Point(this.LocationValue.X + this.SizeValue.Width / 2, this.LocationValue.Y);
+    var connect1 = this.Connects[0];
     connect1.Location = new Point(point.X - 3, point.Y - 3);
     connect1.Size = new Size(6, 6);
     point = new Point(this.LocationValue.X + this.SizeValue.Width / 2, this.LocationValue.Y + this.SizeValue.Height);
-    ConnectorElement connect2 = this.Connects[1];
+    var connect2 = this.Connects[1];
     connect2.Location = new Point(point.X - 3, point.Y - 3);
     connect2.Size = new Size(6, 6);
     point = new Point(this.LocationValue.X, this.LocationValue.Y + this.SizeValue.Height / 2);
-    ConnectorElement connect3 = this.Connects[2];
+    var connect3 = this.Connects[2];
     connect3.Location = new Point(point.X - 3, point.Y - 3);
     connect3.Size = new Size(6, 6);
     point = new Point(this.LocationValue.X + this.SizeValue.Width, this.LocationValue.Y + this.SizeValue.Height / 2);
-    ConnectorElement connect4 = this.Connects[3];
+    var connect4 = this.Connects[3];
     connect4.Location = new Point(point.X - 3, point.Y - 3);
     connect4.Size = new Size(6, 6);
   }
@@ -99,9 +99,9 @@ public abstract class NodeElement : BaseElement
   public override void Invalidate()
   {
     base.Invalidate();
-    for (int index1 = this.Connects.Length - 1; index1 >= 0; --index1)
+    for (var index1 = this.Connects.Length - 1; index1 >= 0; --index1)
     {
-      for (int index2 = this.Connects[index1].Links.Count - 1; index2 >= 0; --index2)
+      for (var index2 = this.Connects[index1].Links.Count - 1; index2 >= 0; --index2)
         this.Connects[index1].Links[index2].Invalidate();
     }
   }
@@ -122,8 +122,8 @@ public abstract class NodeElement : BaseElement
 
   public virtual ElementCollection GetLinkedNodes()
   {
-    ElementCollection linkedNodes = new ElementCollection();
-    foreach (ConnectorElement connect in this.Connects)
+    var linkedNodes = new ElementCollection();
+    foreach (var connect in this.Connects)
     {
       foreach (BaseLinkElement link in (ReadOnlyCollectionBase) connect.Links)
         linkedNodes.Add(link.Connector1 == connect ? (BaseElement) link.Connector2.ParentElement : (BaseElement) link.Connector1.ParentElement);

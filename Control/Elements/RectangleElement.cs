@@ -100,7 +100,7 @@ public class RectangleElement : BaseElement, IControllable, ILabelElement
 
   protected virtual void DrawBorder(Graphics g, Rectangle r)
   {
-    Pen pen = new Pen(this.BorderColorValue, (float) this.BorderWidthValue);
+    var pen = new Pen(this.BorderColorValue, (float) this.BorderWidthValue);
     g.DrawRectangle(pen, r);
     pen.Dispose();
   }
@@ -108,8 +108,8 @@ public class RectangleElement : BaseElement, IControllable, ILabelElement
   internal override void Draw(Graphics g)
   {
     this.IsInvalidated = false;
-    Rectangle unsignedRectangle = this.GetUnsignedRectangle();
-    Brush brush = this.GetBrush(unsignedRectangle);
+    var unsignedRectangle = this.GetUnsignedRectangle();
+    var brush = this.GetBrush(unsignedRectangle);
     g.FillRectangle(brush, unsignedRectangle);
     this.DrawBorder(g, unsignedRectangle);
     brush.Dispose();

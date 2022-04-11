@@ -31,7 +31,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
   {
     this.NeedCalcLinkValue = true;
     this.InitConnectors(conn1, conn2);
-    foreach (LineElement lineElement in this.LineElements)
+    foreach (var lineElement in this.LineElements)
     {
       lineElement.StartCap = LineCap.Round;
       lineElement.EndCap = LineCap.Round;
@@ -82,13 +82,13 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
     {
       if (!((IMoveController) ((IControllable) this).GetController()).IsMoving)
         return;
-      Point location = this.Location;
-      Point point1 = value;
-      Point point2 = new Point(point1.X - location.X, point1.Y - location.Y);
-      foreach (LineElement lineElement in this.LineElements)
+      var location = this.Location;
+      var point1 = value;
+      var point2 = new Point(point1.X - location.X, point1.Y - location.Y);
+      foreach (var lineElement in this.LineElements)
       {
-        Point point1_1 = lineElement.Point1;
-        Point point2_1 = lineElement.Point2;
+        var point1_1 = lineElement.Point1;
+        var point2_1 = lineElement.Point2;
         lineElement.Point1 = new Point(point1_1.X + point2.X, point1_1.Y + point2.Y);
         lineElement.Point2 = new Point(point2_1.X + point2.X, point2_1.Y + point2.Y);
       }
@@ -146,7 +146,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
   {
     this.IsInvalidated = false;
     this.CalcLink();
-    for (int index = 0; index < this.LineElements.Length; ++index)
+    for (var index = 0; index < this.LineElements.Length; ++index)
     {
       if (index == this.LineElements.Length - 1)
         this.LineElements[index].EndCap = LineCap.ArrowAnchor;
@@ -179,7 +179,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
 
   private void RestartProps()
   {
-    foreach (LineElement lineElement in this.LineElements)
+    foreach (var lineElement in this.LineElements)
     {
       lineElement.BorderColor = this.BorderColorValue;
       lineElement.BorderWidth = this.BorderWidthValue;
@@ -199,17 +199,17 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
   {
     if (this.LineElements == null)
       return;
-    LineElement lineElement = this.LineElements[this.LineElements.Length - 1];
-    Point location1 = this.Connector1Value.Location;
-    Point location2 = this.Connector2Value.Location;
-    Size size1 = this.Connector1Value.Size;
-    Size size2 = this.Connector2Value.Size;
+    var lineElement = this.LineElements[this.LineElements.Length - 1];
+    var location1 = this.Connector1Value.Location;
+    var location2 = this.Connector2Value.Location;
+    var size1 = this.Connector1Value.Size;
+    var size2 = this.Connector2Value.Size;
     this.LineElements[0].Point1 = new Point(location1.X + size1.Width / 2, location1.Y + size1.Height / 2);
     lineElement.Point2 = this.Orientation == Orientation.Horizontal ? new Point(location2.X, location2.Y + size1.Height / 2) : new Point(location2.X + size2.Width / 2, location2.Y);
     if (this.LineElements.Length != 3)
       return;
-    Point point1 = this.LineElements[0].Point1;
-    Point point2 = lineElement.Point2;
+    var point1 = this.LineElements[0].Point1;
+    var point2 = lineElement.Point2;
     if (this.Orientation == Orientation.Horizontal)
     {
       this.LineElements[0].Point2 = new Point(point1.X + (point2.X - point1.X) / 2, point1.Y);
@@ -228,11 +228,11 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
   {
     if (!this.NeedCalcLinkValue || this.LineElements == null)
       return;
-    LineElement lineElement = this.LineElements[this.LineElements.Length - 1];
-    Point location1 = this.Connector1Value.Location;
-    Point location2 = this.Connector2Value.Location;
-    Size size1 = this.Connector1Value.Size;
-    Size size2 = this.Connector2Value.Size;
+    var lineElement = this.LineElements[this.LineElements.Length - 1];
+    var location1 = this.Connector1Value.Location;
+    var location2 = this.Connector2Value.Location;
+    var size1 = this.Connector1Value.Size;
+    var size2 = this.Connector2Value.Size;
     this.LineElements[0].Point1 = new Point(location1.X + size1.Width / 2, location1.Y + size1.Height / 2);
     lineElement.Point2 = this.Orientation == Orientation.Horizontal ? new Point(location2.X, location2.Y + size2.Height / 2) : new Point(location2.X + size2.Width / 2, location2.Y);
     if (this.LineElements.Length == 3)
@@ -266,9 +266,9 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
   {
     if (!this._needCalcLinkLocation)
       return;
-    Point[] points = new Point[this.LineElements.Length * 2];
-    int index = 0;
-    foreach (LineElement lineElement in this.LineElements)
+    var points = new Point[this.LineElements.Length * 2];
+    var index = 0;
+    foreach (var lineElement in this.LineElements)
     {
       points[index] = lineElement.Point1;
       points[index + 1] = lineElement.Point2;
@@ -282,19 +282,19 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
   {
     if (!this._needCalcLinkSize)
       return;
-    Size size = Size.Empty;
+    var size = Size.Empty;
     if (this.LineElements.Length > 1)
     {
-      Point[] points = new Point[this.LineElements.Length * 2];
-      int index = 0;
-      foreach (LineElement lineElement in this.LineElements)
+      var points = new Point[this.LineElements.Length * 2];
+      var index = 0;
+      foreach (var lineElement in this.LineElements)
       {
         points[index] = lineElement.Point1;
         points[index + 1] = lineElement.Point2;
         index += 2;
       }
-      Point upperPoint = DiagramUtil.GetUpperPoint(points);
-      Point lowerPoint = DiagramUtil.GetLowerPoint(points);
+      var upperPoint = DiagramUtil.GetUpperPoint(points);
+      var lowerPoint = DiagramUtil.GetLowerPoint(points);
       size = new Size(lowerPoint.X - upperPoint.X, lowerPoint.Y - upperPoint.Y);
     }
     this.SizeValue = size;

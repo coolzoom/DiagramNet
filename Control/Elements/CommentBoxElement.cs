@@ -42,8 +42,8 @@ public class CommentBoxElement : RectangleElement, IControllable
   internal override void Draw(Graphics g)
   {
     this.IsInvalidated = false;
-    Rectangle unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.LocationValue, this.SizeValue));
-    Point[] points = new Point[5]
+    var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.LocationValue, this.SizeValue));
+    var points = new Point[5]
     {
       new Point(unsignedRectangle.X, unsignedRectangle.Y),
       new Point(unsignedRectangle.X, unsignedRectangle.Y + unsignedRectangle.Height),

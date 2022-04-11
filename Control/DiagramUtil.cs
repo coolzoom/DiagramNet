@@ -17,14 +17,14 @@ internal class DiagramUtil
 
   public static Point DisplayToCartesianCoord(Point p, Rectangle referenceRec)
   {
-    int num1 = referenceRec.Width / 2;
-    int num2 = referenceRec.Height / 2;
+    var num1 = referenceRec.Width / 2;
+    var num2 = referenceRec.Height / 2;
     return new Point(p.X - num1, p.Y - num2);
   }
 
   public static double PointToAngle(Point cartPoint)
   {
-    double num = Math.Atan2((double) cartPoint.Y, (double) cartPoint.X) * (180.0 / Math.PI);
+    var num = Math.Atan2((double) cartPoint.Y, (double) cartPoint.X) * (180.0 / Math.PI);
     if (num > 0.0 && num < 180.0)
       num = 360.0 - num;
     return Math.Abs(num);
@@ -32,7 +32,7 @@ internal class DiagramUtil
 
   public static CardinalDirection GetDirection(Rectangle rec, Point point)
   {
-    double angle = DiagramUtil.PointToAngle(DiagramUtil.DisplayToCartesianCoord(point, rec));
+    var angle = DiagramUtil.PointToAngle(DiagramUtil.DisplayToCartesianCoord(point, rec));
     if (angle >= 0.0 && angle < 45.0 || angle >= 315.0)
       return CardinalDirection.East;
     if (angle >= 45.0 && angle < 135.0)
@@ -44,12 +44,12 @@ internal class DiagramUtil
 
   public static Point GetUpperPoint(Point[] points)
   {
-    Point empty = Point.Empty with
+    var empty = Point.Empty with
     {
       X = int.MaxValue,
       Y = int.MaxValue
     };
-    foreach (Point point in points)
+    foreach (var point in points)
     {
       if (point.X < empty.X)
         empty.X = point.X;
@@ -61,12 +61,12 @@ internal class DiagramUtil
 
   public static Point GetLowerPoint(Point[] points)
   {
-    Point empty = Point.Empty with
+    var empty = Point.Empty with
     {
       X = int.MinValue,
       Y = int.MinValue
     };
-    foreach (Point point in points)
+    foreach (var point in points)
     {
       if (point.X > empty.X)
         empty.X = point.X;
@@ -84,9 +84,9 @@ internal class DiagramUtil
 
   public static Size MeasureString(string text, Font font)
   {
-    Bitmap bitmap = new Bitmap(1, 1);
-    Graphics graphics = Graphics.FromImage((Image) bitmap);
-    SizeF sizeF = graphics.MeasureString(text, font);
+    var bitmap = new Bitmap(1, 1);
+    var graphics = Graphics.FromImage((Image) bitmap);
+    var sizeF = graphics.MeasureString(text, font);
     bitmap.Dispose();
     graphics.Dispose();
     return Size.Round(sizeF);
@@ -94,9 +94,9 @@ internal class DiagramUtil
 
   public static Size MeasureString(string text, Font font, SizeF layoutArea)
   {
-    Bitmap bitmap = new Bitmap(1, 1);
-    Graphics graphics = Graphics.FromImage((Image) bitmap);
-    SizeF sizeF = graphics.MeasureString(text, font, layoutArea);
+    var bitmap = new Bitmap(1, 1);
+    var graphics = Graphics.FromImage((Image) bitmap);
+    var sizeF = graphics.MeasureString(text, font, layoutArea);
     bitmap.Dispose();
     graphics.Dispose();
     return Size.Round(sizeF);
@@ -104,9 +104,9 @@ internal class DiagramUtil
 
   public static Size MeasureString(string text, Font font, int width)
   {
-    Bitmap bitmap = new Bitmap(1, 1);
-    Graphics graphics = Graphics.FromImage((Image) bitmap);
-    SizeF sizeF = graphics.MeasureString(text, font, width);
+    var bitmap = new Bitmap(1, 1);
+    var graphics = Graphics.FromImage((Image) bitmap);
+    var sizeF = graphics.MeasureString(text, font, width);
     bitmap.Dispose();
     graphics.Dispose();
     return Size.Round(sizeF);
@@ -118,9 +118,9 @@ internal class DiagramUtil
     PointF origin,
     StringFormat stringFormat)
   {
-    Bitmap bitmap = new Bitmap(1, 1);
-    Graphics graphics = Graphics.FromImage((Image) bitmap);
-    SizeF sizeF = graphics.MeasureString(text, font, origin, stringFormat);
+    var bitmap = new Bitmap(1, 1);
+    var graphics = Graphics.FromImage((Image) bitmap);
+    var sizeF = graphics.MeasureString(text, font, origin, stringFormat);
     bitmap.Dispose();
     graphics.Dispose();
     return Size.Round(sizeF);
@@ -132,9 +132,9 @@ internal class DiagramUtil
     SizeF layoutArea,
     StringFormat stringFormat)
   {
-    Bitmap bitmap = new Bitmap(1, 1);
-    Graphics graphics = Graphics.FromImage((Image) bitmap);
-    SizeF sizeF = graphics.MeasureString(text, font, layoutArea, stringFormat);
+    var bitmap = new Bitmap(1, 1);
+    var graphics = Graphics.FromImage((Image) bitmap);
+    var sizeF = graphics.MeasureString(text, font, layoutArea, stringFormat);
     bitmap.Dispose();
     graphics.Dispose();
     return Size.Round(sizeF);
@@ -142,9 +142,9 @@ internal class DiagramUtil
 
   public static Size MeasureString(string text, Font font, int width, StringFormat format)
   {
-    Bitmap bitmap = new Bitmap(1, 1);
-    Graphics graphics = Graphics.FromImage((Image) bitmap);
-    SizeF sizeF = graphics.MeasureString(text, font, width, format);
+    var bitmap = new Bitmap(1, 1);
+    var graphics = Graphics.FromImage((Image) bitmap);
+    var sizeF = graphics.MeasureString(text, font, width, format);
     bitmap.Dispose();
     graphics.Dispose();
     return Size.Round(sizeF);
@@ -158,9 +158,9 @@ internal class DiagramUtil
     out int charactersFitted,
     out int linesFilled)
   {
-    Bitmap bitmap = new Bitmap(1, 1);
-    Graphics graphics = Graphics.FromImage((Image) bitmap);
-    SizeF sizeF = graphics.MeasureString(text, font, layoutArea, stringFormat, out charactersFitted, out linesFilled);
+    var bitmap = new Bitmap(1, 1);
+    var graphics = Graphics.FromImage((Image) bitmap);
+    var sizeF = graphics.MeasureString(text, font, layoutArea, stringFormat, out charactersFitted, out linesFilled);
     bitmap.Dispose();
     graphics.Dispose();
     return Size.Round(sizeF);
@@ -168,12 +168,12 @@ internal class DiagramUtil
 
   public static int GetInnerElementsCount(BaseElement el)
   {
-    int innerElementsCount = 0;
+    var innerElementsCount = 0;
     if (el is ILabelElement)
       ++innerElementsCount;
     if (el is NodeElement)
     {
-      NodeElement nodeElement = (NodeElement) el;
+      var nodeElement = (NodeElement) el;
       innerElementsCount += nodeElement.Connectors.Length;
     }
     return innerElementsCount;
@@ -181,8 +181,8 @@ internal class DiagramUtil
 
   public static BaseElement[] GetInnerElements(BaseElement el)
   {
-    BaseElement[] destinationArray = new BaseElement[DiagramUtil.GetInnerElementsCount(el)];
-    int destinationIndex = 0;
+    var destinationArray = new BaseElement[DiagramUtil.GetInnerElementsCount(el)];
+    var destinationIndex = 0;
     if (el is ILabelElement)
     {
       destinationArray[destinationIndex] = (BaseElement) ((ILabelElement) el).Label;
@@ -190,7 +190,7 @@ internal class DiagramUtil
     }
     if (el is NodeElement)
     {
-      ConnectorElement[] connectors = ((NodeElement) el).Connectors;
+      var connectors = ((NodeElement) el).Connectors;
       Array.Copy((Array) connectors, 0, (Array) destinationArray, destinationIndex, connectors.Length);
     }
     return destinationArray;
@@ -204,11 +204,11 @@ internal class DiagramUtil
 
     public static Array Append(Array arr1, Array arr2)
     {
-      Type elementType1 = arr1.GetType().GetElementType();
-      Type elementType2 = arr1.GetType().GetElementType();
+      var elementType1 = arr1.GetType().GetElementType();
+      var elementType2 = arr1.GetType().GetElementType();
       if (elementType1 != elementType2)
         throw new Exception("Arrays isn't the same type");
-      ArrayList arrayList = new ArrayList(arr1.Length + arr2.Length - 1);
+      var arrayList = new ArrayList(arr1.Length + arr2.Length - 1);
       arrayList.AddRange((ICollection) arr1);
       arrayList.AddRange((ICollection) arr2);
       return arrayList.ToArray(elementType1);
@@ -216,8 +216,8 @@ internal class DiagramUtil
 
     public static Array Shrink(Array arr, object removeValue)
     {
-      ArrayList arrayList = new ArrayList(arr.Length - 1);
-      foreach (object obj in arr)
+      var arrayList = new ArrayList(arr.Length - 1);
+      foreach (var obj in arr)
       {
         if (obj != removeValue)
           arrayList.Add(obj);

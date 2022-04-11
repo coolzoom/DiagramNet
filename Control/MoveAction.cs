@@ -29,8 +29,8 @@ internal class MoveAction
     this._document = document;
     this._onElementMovingDelegate = onElementMovingDelegate;
     this._moveCtrl = new IMoveController[document.SelectedElements.Count];
-    IMoveController[] arr2 = new IMoveController[document.SelectedElements.Count];
-    for (int index = document.SelectedElements.Count - 1; index >= 0; --index)
+    var arr2 = new IMoveController[document.SelectedElements.Count];
+    for (var index = document.SelectedElements.Count - 1; index >= 0; --index)
     {
       this._moveCtrl[index] = ControllerHelper.GetMoveController(document.SelectedElements[index]);
       if (this._moveCtrl[index] != null && this._moveCtrl[index].CanMove)
@@ -39,7 +39,7 @@ internal class MoveAction
         this._moveCtrl[index].Start(mousePoint);
         if (document.SelectedElements[index] is ILabelElement && ControllerHelper.GetLabelController(document.SelectedElements[index]) == null)
         {
-          LabelElement label = ((ILabelElement) document.SelectedElements[index]).Label;
+          var label = ((ILabelElement) document.SelectedElements[index]).Label;
           arr2[index] = ControllerHelper.GetMoveController((BaseElement) label);
           if (arr2[index] != null && arr2[index].CanMove)
             arr2[index].Start(mousePoint);
@@ -52,8 +52,8 @@ internal class MoveAction
     }
     this._moveCtrl = (IMoveController[]) DiagramUtil.ArrayHelper.Append((Array) this._moveCtrl, (Array) arr2);
     this._moveCtrl = (IMoveController[]) DiagramUtil.ArrayHelper.Shrink((Array) this._moveCtrl, (object) null);
-    bool flag = true;
-    foreach (IMoveController moveController in this._moveCtrl)
+    var flag = true;
+    foreach (var moveController in this._moveCtrl)
     {
       if (moveController != null)
       {
@@ -67,7 +67,7 @@ internal class MoveAction
     }
     if (flag)
     {
-      foreach (IMoveController moveController in this._moveCtrl)
+      foreach (var moveController in this._moveCtrl)
         moveController?.End();
       this._moveCtrl = new IMoveController[1];
     }
@@ -79,7 +79,7 @@ internal class MoveAction
 
   public void Move(Point dragPoint)
   {
-    Point point = dragPoint;
+    var point = dragPoint;
     point.Offset(this._upperSelPointDragOffset.X, this._upperSelPointDragOffset.Y);
     this._upperSelPoint = point;
     if (point.X < 0)
@@ -90,7 +90,7 @@ internal class MoveAction
       dragPoint.X -= this._upperSelPoint.X;
     if (point.Y == 0)
       dragPoint.Y -= this._upperSelPoint.Y;
-    foreach (IMoveController moveController in this._moveCtrl)
+    foreach (var moveController in this._moveCtrl)
     {
       if (moveController != null && moveController.WillMove(dragPoint))
       {
@@ -108,7 +108,7 @@ internal class MoveAction
   {
     this._upperSelPoint = Point.Empty;
     this._upperSelPointDragOffset = Point.Empty;
-    foreach (IMoveController moveController in this._moveCtrl)
+    foreach (var moveController in this._moveCtrl)
     {
       if (moveController != null)
       {
@@ -123,8 +123,8 @@ internal class MoveAction
 
   private void UpdateUpperSelectionPoint()
   {
-    Point[] points = new Point[this._document.SelectedElements.Count];
-    int index = 0;
+    var points = new Point[this._document.SelectedElements.Count];
+    var index = 0;
     foreach (BaseElement selectedElement in (ReadOnlyCollectionBase) this._document.SelectedElements)
     {
       points[index] = selectedElement.Location;
@@ -135,11 +135,11 @@ internal class MoveAction
 
   private void UpdateLinkPosition(NodeElement node)
   {
-    foreach (ConnectorElement connector in node.Connectors)
+    foreach (var connector in node.Connectors)
     {
       foreach (BaseLinkElement link in (ReadOnlyCollectionBase) connector.Links)
       {
-        IController controller = ((IControllable) link).GetController();
+        var controller = ((IControllable) link).GetController();
         if (controller is IMoveController)
         {
           if (!((IMoveController) controller).IsMoving)
@@ -149,8 +149,8 @@ internal class MoveAction
           link.NeedCalcLink = true;
         if (link is ILabelElement)
         {
-          LabelElement label = ((ILabelElement) link).Label;
-          ILabelController labelController = ControllerHelper.GetLabelController((BaseElement) link);
+          var label = ((ILabelElement) link).Label;
+          var labelController = ControllerHelper.GetLabelController((BaseElement) link);
           if (labelController != null)
             labelController.SetLabelPosition();
           else

@@ -37,7 +37,7 @@ public class ElipseElement : RectangleElement, IControllable
   internal override void Draw(Graphics g)
   {
     this.IsInvalidated = false;
-    Rectangle unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.LocationValue.X, this.LocationValue.Y, this.SizeValue.Width, this.SizeValue.Height));
+    var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.LocationValue.X, this.LocationValue.Y, this.SizeValue.Width, this.SizeValue.Height));
     Color color;
     Color color2;
     if (this.OpacityValue == 100)
@@ -50,9 +50,9 @@ public class ElipseElement : RectangleElement, IControllable
       color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this.FillColor1Value);
       color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this.FillColor2Value);
     }
-    Brush brush = !(this.FillColor2Value == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(unsignedRectangle.X, unsignedRectangle.Y, unsignedRectangle.Width + 1, unsignedRectangle.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
+    var brush = !(this.FillColor2Value == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(unsignedRectangle.X, unsignedRectangle.Y, unsignedRectangle.Width + 1, unsignedRectangle.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
     g.FillEllipse(brush, unsignedRectangle);
-    Pen pen = new Pen(this.BorderColorValue, (float) this.BorderWidthValue);
+    var pen = new Pen(this.BorderColorValue, (float) this.BorderWidthValue);
     g.DrawEllipse(pen, unsignedRectangle);
     pen.Dispose();
     brush.Dispose();

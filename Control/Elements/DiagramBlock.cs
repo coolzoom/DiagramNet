@@ -88,12 +88,12 @@ public class DiagramBlock : NodeElement, IControllable
     if (this.Connects == null || this.Connects.Length != inputStates.Length + outputStates.Length)
     {
       this.Connects = new ConnectorElement[inputStates.Length + outputStates.Length];
-      for (int index = 0; index < inputStates.Length; ++index)
+      for (var index = 0; index < inputStates.Length; ++index)
         this.Connects[index] = new ConnectorElement((NodeElement) this)
         {
           State = inputStates[index]
         };
-      for (int index = 0; index < outputStates.Length; ++index)
+      for (var index = 0; index < outputStates.Length; ++index)
         this.Connects[inputStates.Length + index] = new ConnectorElement((NodeElement) this)
         {
           State = outputStates[index]
@@ -101,9 +101,9 @@ public class DiagramBlock : NodeElement, IControllable
     }
     else
     {
-      for (int index = 0; index < inputStates.Length; ++index)
+      for (var index = 0; index < inputStates.Length; ++index)
         this.Connects[index].State = inputStates[index];
-      for (int index = 0; index < outputStates.Length; ++index)
+      for (var index = 0; index < outputStates.Length; ++index)
         this.Connects[inputStates.Length + index].State = outputStates[index];
     }
     this.UpdateConnectorsPosition();
@@ -112,25 +112,25 @@ public class DiagramBlock : NodeElement, IControllable
 
   protected new void UpdateConnectorsPosition()
   {
-    for (int index = 0; index < this._inputStates.Length; ++index)
+    for (var index = 0; index < this._inputStates.Length; ++index)
     {
-      int num = 0;
+      var num = 0;
       if (this._inputStates.Length > 1 && this._inputStates.Length < 5)
         num = 20;
-      Point point = new Point(this.LocationValue.X, this.LocationValue.Y + ((this.SizeValue.Height - num) / (this._inputStates.Length + 1) * (index + 1) - 1 - 2 - num / 4));
-      ConnectorElement connect = this.Connects[index];
+      var point = new Point(this.LocationValue.X, this.LocationValue.Y + ((this.SizeValue.Height - num) / (this._inputStates.Length + 1) * (index + 1) - 1 - 2 - num / 4));
+      var connect = this.Connects[index];
       connect.Location = new Point(point.X - 3, point.Y);
       connect.Size = new Size(6, 6);
       connect.IsStart = true;
       connect.State = this._inputStates[index];
     }
-    for (int index = 0; index < this._outputStates.Length; ++index)
+    for (var index = 0; index < this._outputStates.Length; ++index)
     {
-      int num = 0;
+      var num = 0;
       if (this._outputStates.Length > 1 && this._outputStates.Length < 5)
         num = 20;
-      Point point = new Point(this.LocationValue.X + this.SizeValue.Width, this.LocationValue.Y + ((this.SizeValue.Height - num) / (this._outputStates.Length + 1) * (index + 1) - 1 - 2 - num / 4));
-      ConnectorElement connect = this.Connects[this._inputStates.Length + index];
+      var point = new Point(this.LocationValue.X + this.SizeValue.Width, this.LocationValue.Y + ((this.SizeValue.Height - num) / (this._outputStates.Length + 1) * (index + 1) - 1 - 2 - num / 4));
+      var connect = this.Connects[this._inputStates.Length + index];
       connect.Location = new Point(point.X - 3, point.Y);
       connect.Size = new Size(6, 6);
       connect.IsStart = false;
@@ -150,8 +150,8 @@ public class DiagramBlock : NodeElement, IControllable
 
   public Image GetImage()
   {
-    Bitmap image = new Bitmap(87, 81);
-    Graphics g = Graphics.FromImage((Image) image);
+    var image = new Bitmap(87, 81);
+    var g = Graphics.FromImage((Image) image);
     g.TranslateTransform(-47f, -50f);
     this.Draw(g);
     foreach (BaseElement connect in this.Connects)
@@ -162,8 +162,8 @@ public class DiagramBlock : NodeElement, IControllable
   internal override void Draw(Graphics g)
   {
     this.IsInvalidated = false;
-    ImageElement imageElement = new ImageElement(this._image, (BaseElement) this.Rectangle);
-    LabelElement labelElement = new LabelElement(this.Rectangle.Location.X, imageElement.Top + imageElement.Height + 2, this.Rectangle.Size.Width, 12)
+    var imageElement = new ImageElement(this._image, (BaseElement) this.Rectangle);
+    var labelElement = new LabelElement(this.Rectangle.Location.X, imageElement.Top + imageElement.Height + 2, this.Rectangle.Size.Width, 12)
     {
       Text = this._labelText,
       Font = new Font(FontFamily.GenericSansSerif, 8f)
@@ -171,9 +171,9 @@ public class DiagramBlock : NodeElement, IControllable
     this.Rectangle.Draw(g);
     imageElement.Draw(g);
     labelElement.Draw(g);
-    foreach (ConnectorElement connect in this.Connects)
+    foreach (var connect in this.Connects)
     {
-      string str = this._connectionTextProperty.GetValue(connect.State, (object[]) null).ToString();
+      var str = this._connectionTextProperty.GetValue(connect.State, (object[]) null).ToString();
       int top;
       StringAlignment stringAlignment;
       if (connect.IsStart)
@@ -280,16 +280,16 @@ public class DiagramBlock : NodeElement, IControllable
     }
     if (e.Link.Connector1.IsStart)
     {
-      ConnectorElement connector1 = e.Link.Connector1;
+      var connector1 = e.Link.Connector1;
       e.Link.Connector1 = e.Link.Connector2;
       e.Link.Connector2 = connector1;
       e.Link.Invalidate();
     }
-    for (int index = designer.Document.Elements.Count - 1; index >= 0; --index)
+    for (var index = designer.Document.Elements.Count - 1; index >= 0; --index)
     {
       if (e.Link != designer.Document.Elements[index] && designer.Document.Elements[index] is BaseLinkElement)
       {
-        BaseLinkElement element = (BaseLinkElement) designer.Document.Elements[index];
+        var element = (BaseLinkElement) designer.Document.Elements[index];
         if (element.Connector2 == e.Link.Connector2)
           designer.Document.DeleteLink(element, false);
       }

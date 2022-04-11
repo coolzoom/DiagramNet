@@ -29,12 +29,12 @@ internal class RightAngleLinkController :
     if (this.El.LineElements.Length == 3)
     {
       this.SelectionCorner = new RectangleElement[1];
-      RectangleElement[] selectionCorner = this.SelectionCorner;
-      RectangleElement rectangleElement1 = new RectangleElement(0, 0, 6, 6);
+      var selectionCorner = this.SelectionCorner;
+      var rectangleElement1 = new RectangleElement(0, 0, 6, 6);
       rectangleElement1.BorderColor = Color.Black;
       rectangleElement1.FillColor1 = Color.White;
       rectangleElement1.FillColor2 = Color.Empty;
-      RectangleElement rectangleElement2 = rectangleElement1;
+      var rectangleElement2 = rectangleElement1;
       selectionCorner[0] = rectangleElement2;
     }
     else
@@ -47,13 +47,13 @@ internal class RightAngleLinkController :
 
   bool IController.HitTest(Rectangle r)
   {
-    GraphicsPath graphicsPath = new GraphicsPath();
-    Matrix matrix = new Matrix();
-    Point location = this.El.Location;
-    Size size = this.El.Size;
+    var graphicsPath = new GraphicsPath();
+    var matrix = new Matrix();
+    var location = this.El.Location;
+    var size = this.El.Size;
     graphicsPath.AddRectangle(new Rectangle(location.X, location.Y, size.Width, size.Height));
     graphicsPath.Transform(matrix);
-    Rectangle rect = Rectangle.Round(graphicsPath.GetBounds());
+    var rect = Rectangle.Round(graphicsPath.GetBounds());
     return r.Contains(rect);
   }
 
@@ -69,8 +69,8 @@ internal class RightAngleLinkController :
   {
     if (this.SelectionCorner.Length != 1)
       return;
-    Point point1 = this.El.LineElements[1].Point1;
-    Point point2 = this.El.LineElements[1].Point2;
+    var point1 = this.El.LineElements[1].Point1;
+    var point2 = this.El.LineElements[1].Point2;
     this.SelectionCorner[0].Location = new Point(point1.X + (point2.X - point1.X) / 2 - 3, point1.Y + (point2.Y - point1.Y) / 2 - 3);
   }
 
@@ -92,8 +92,8 @@ internal class RightAngleLinkController :
 
   void IResizeController.Resize(Point posCurrent)
   {
-    RectangleElement rectangleElement = this.SelectionCorner[0];
-    Point point1 = posCurrent;
+    var rectangleElement = this.SelectionCorner[0];
+    var point1 = posCurrent;
     point1.Offset(this.DragOffset.X, this.DragOffset.Y);
     if (point1.X < 0)
       point1.X = 0;
@@ -102,14 +102,14 @@ internal class RightAngleLinkController :
     if (this.El.Orientation == Orientation.Horizontal)
     {
       rectangleElement.Location = new Point(point1.X, rectangleElement.Location.Y);
-      Point point2 = new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2);
+      var point2 = new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2);
       this.El.LineElements[1].Point1 = new Point(point2.X, this.El.LineElements[1].Point1.Y);
       this.El.LineElements[1].Point2 = new Point(point2.X, this.El.LineElements[1].Point2.Y);
     }
     else
     {
       rectangleElement.Location = new Point(rectangleElement.Location.X, point1.Y);
-      Point point3 = new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2);
+      var point3 = new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2);
       this.El.LineElements[1].Point1 = new Point(this.El.LineElements[1].Point1.X, point3.Y);
       this.El.LineElements[1].Point2 = new Point(this.El.LineElements[1].Point2.X, point3.Y);
     }
@@ -139,7 +139,7 @@ internal class RightAngleLinkController :
   {
     if (!this.IsDragging)
       return false;
-    Point point = posCurrent;
+    var point = posCurrent;
     point.Offset(this.DragOffset.X, this.DragOffset.Y);
     if (point.X < 0)
       point.X = 0;
@@ -152,7 +152,7 @@ internal class RightAngleLinkController :
   {
     if (!this.IsDragging)
       return;
-    Point point = posCurrent;
+    var point = posCurrent;
     point.Offset(this.DragOffset.X, this.DragOffset.Y);
     if (point.X < 0)
       point.X = 0;
@@ -169,7 +169,7 @@ internal class RightAngleLinkController :
 
   public void SetLabelPosition()
   {
-    LabelElement label = this.El.Label;
+    var label = this.El.Label;
     if (this.El.Lines.Length == 2)
       label.Location = this.El.Lines[0].Point2;
     else

@@ -15,7 +15,7 @@ internal class CommentBoxController : RectangleController, ILabelController
 
   public void SetLabelPosition()
   {
-    LabelElement label = ((ILabelElement) this.El).Label;
+    var label = ((ILabelElement) this.El).Label;
     label.Location = this.El.Location;
     label.Size = this.El.Size;
   }

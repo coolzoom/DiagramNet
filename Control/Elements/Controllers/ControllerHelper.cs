@@ -16,7 +16,7 @@ internal class ControllerHelper
   {
     if (el is IControllable)
     {
-      IController controller = ((IControllable) el).GetController();
+      var controller = ((IControllable) el).GetController();
       if (controller is IMoveController)
         return (IMoveController) controller;
     }

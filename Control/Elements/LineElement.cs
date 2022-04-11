@@ -86,7 +86,7 @@ public class LineElement : BaseElement, IControllable
   internal override void Draw(Graphics g)
   {
     this.IsInvalidated = false;
-    Pen pen = new Pen(this.OpacityValue == 100 ? this.BorderColorValue : Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this.BorderColorValue), (float) this.BorderWidthValue)
+    var pen = new Pen(this.OpacityValue == 100 ? this.BorderColorValue : Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this.BorderColorValue), (float) this.BorderWidthValue)
     {
       StartCap = this._startCap,
       EndCap = this._endCap

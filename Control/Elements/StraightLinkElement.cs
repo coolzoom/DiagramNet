@@ -95,10 +95,10 @@ public class StraightLinkElement : BaseLinkElement, IControllable, ILabelElement
       return;
     if (this.Line1 != null)
     {
-      Point location1 = this.Connector1Value.Location;
-      Point location2 = this.Connector2Value.Location;
-      Size size1 = this.Connector1Value.Size;
-      Size size2 = this.Connector2Value.Size;
+      var location1 = this.Connector1Value.Location;
+      var location2 = this.Connector2Value.Location;
+      var size1 = this.Connector1Value.Size;
+      var size2 = this.Connector2Value.Size;
       this.Line1.Point1 = new Point(location1.X + size1.Width / 2, location1.Y + size1.Height / 2);
       this.Line1.Point2 = new Point(location2.X + size2.Width / 2, location2.Y + size2.Height / 2);
       this.Line1.CalcLine();

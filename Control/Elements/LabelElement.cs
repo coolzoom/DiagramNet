@@ -237,7 +237,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
   {
     if (this._text.Length == 0)
       return;
-    Size size = Size.Round(Graphics.FromImage((Image) new Bitmap(1, 1)).MeasureString(this._text, this._font, this.SizeValue.Width, this._format));
+    var size = Size.Round(Graphics.FromImage((Image) new Bitmap(1, 1)).MeasureString(this._text, this._font, this.SizeValue.Width, this._format));
     if (this.SizeValue.Height >= size.Height)
       return;
     this.SizeValue.Height = size.Height;
@@ -279,9 +279,9 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
 
   internal override void Draw(Graphics g)
   {
-    Rectangle unsignedRectangle = this.GetUnsignedRectangle();
+    var unsignedRectangle = this.GetUnsignedRectangle();
     g.FillRectangle(this.GetBrushBackColor(unsignedRectangle), unsignedRectangle);
-    Brush brushForeColor = this.GetBrushForeColor(unsignedRectangle);
+    var brushForeColor = this.GetBrushForeColor(unsignedRectangle);
     g.DrawString(this._text, this._font, brushForeColor, (RectangleF) unsignedRectangle, this._format);
     this.DrawBorder(g, unsignedRectangle);
     brushForeColor.Dispose();
@@ -289,19 +289,19 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
 
   private void DrawBorder(Graphics g, Rectangle r)
   {
-    Pen pen = new Pen(this.BorderColorValue, (float) this.BorderWidthValue);
+    var pen = new Pen(this.BorderColorValue, (float) this.BorderWidthValue);
     g.DrawRectangle(pen, r);
     pen.Dispose();
   }
 
   private LabelElement(SerializationInfo info, StreamingContext context)
   {
-    Type type = typeof (LabelElement);
-    foreach (MemberInfo serializableMember in FormatterServices.GetSerializableMembers(type, context))
+    var type = typeof (LabelElement);
+    foreach (var serializableMember in FormatterServices.GetSerializableMembers(type, context))
     {
       if (!(serializableMember.DeclaringType == type))
       {
-        FieldInfo fieldInfo = (FieldInfo) serializableMember;
+        var fieldInfo = (FieldInfo) serializableMember;
         fieldInfo.SetValue((object) this, info.GetValue(fieldInfo.Name, fieldInfo.FieldType));
       }
     }
@@ -335,10 +335,10 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     info.AddValue("vertical", this._vertical);
     info.AddValue("readOnly", this._readOnly);
     info.AddValue("autoSize", this._autoSize);
-    FontConverter fontConverter = new FontConverter();
+    var fontConverter = new FontConverter();
     info.AddValue("font", (object) fontConverter.ConvertToString((object) this._font));
-    Type type = typeof (LabelElement);
-    foreach (MemberInfo serializableMember in FormatterServices.GetSerializableMembers(type, context))
+    var type = typeof (LabelElement);
+    foreach (var serializableMember in FormatterServices.GetSerializableMembers(type, context))
     {
       if (!(serializableMember.DeclaringType == type))
         info.AddValue(serializableMember.Name, ((FieldInfo) serializableMember).GetValue((object) this));
@@ -349,10 +349,10 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
 
   internal void PositionBySite(BaseElement site)
   {
-    Point empty = Point.Empty;
-    Point location = site.Location;
-    Size size1 = site.Size;
-    Size size2 = this.Size;
+    var empty = Point.Empty;
+    var location = site.Location;
+    var size1 = site.Size;
+    var size2 = this.Size;
     empty.X = location.X + size1.Width / 2 - size2.Width / 2;
     empty.Y = location.Y + size1.Height / 2 - size2.Height / 2;
     this.Location = empty;

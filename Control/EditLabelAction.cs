@@ -56,7 +56,7 @@ internal class EditLabelAction
     if (this._siteLabelElement == null)
       return;
     this._labelTextBox.KeyPress -= new KeyPressEventHandler(this.LabelTextBoxKeyPress);
-    ILabelController labelController = ControllerHelper.GetLabelController(this._siteLabelElement);
+    var labelController = ControllerHelper.GetLabelController(this._siteLabelElement);
     this._labelElement.Size = this.MeasureTextSize();
     this._labelElement.Text = this._labelTextBox.Text;
     this._labelTextBox.Hide();
@@ -74,7 +74,7 @@ internal class EditLabelAction
   {
     if (!(el is ILabelElement))
       return;
-    LabelElement label = ((ILabelElement) el).Label;
+    var label = ((ILabelElement) el).Label;
     el.Invalidate();
     label.Invalidate();
     if (label.Text.Length > 0)
@@ -84,7 +84,7 @@ internal class EditLabelAction
     }
     else
     {
-      Size size = DiagramUtil.MeasureString("XXXXXXX", label.Font, label.Size.Width, label.Format);
+      var size = DiagramUtil.MeasureString("XXXXXXX", label.Font, label.Size.Width, label.Format);
       if (el is BaseLinkElement)
       {
         tb.Size = size;
@@ -102,7 +102,7 @@ internal class EditLabelAction
 
   private static void SetTextBoxBorder(Control tb)
   {
-    Rectangle rectangle = new Rectangle(tb.Location, tb.Size);
+    var rectangle = new Rectangle(tb.Location, tb.Size);
     rectangle.Inflate(3, 3);
     tb.Location = rectangle.Location;
     tb.Size = rectangle.Size;
@@ -110,8 +110,8 @@ internal class EditLabelAction
 
   private Size MeasureTextSize()
   {
-    string text = this._labelTextBox.Text;
-    Size size = Size.Empty;
+    var text = this._labelTextBox.Text;
+    var size = Size.Empty;
     if (this._direction == LabelEditDirection.UpDown)
       size = DiagramUtil.MeasureString(text, this._labelElement.Font, this._labelTextBox.Size.Width, this._labelElement.Format);
     else if (this._direction == LabelEditDirection.Both)
@@ -124,8 +124,8 @@ internal class EditLabelAction
   {
     if (this._labelTextBox.Text.Length == 0)
       return;
-    Size size1 = this._labelTextBox.Size;
-    Size size2 = this.MeasureTextSize();
+    var size1 = this._labelTextBox.Size;
+    var size2 = this.MeasureTextSize();
     if (this._direction == LabelEditDirection.UpDown)
       size1.Height = size2.Height;
     else if (this._direction == LabelEditDirection.Both)

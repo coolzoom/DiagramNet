@@ -25,7 +25,7 @@ internal class ResizeAction
     this._document = document;
     if (document.SelectedElements.Count == 1 && document.SelectedElements[0] is IControllable)
     {
-      IController controller = ((IControllable) document.SelectedElements[0]).GetController();
+      var controller = ((IControllable) document.SelectedElements[0]).GetController();
       if (!(controller is IResizeController))
         return;
       controller.OwnerElement.Invalidate();
@@ -45,10 +45,10 @@ internal class ResizeAction
       return;
     this._onElementResizingDelegate = onElementResizingDelegate;
     this._resizeCtrl.OwnerElement.Invalidate();
-    CornerPosition corner = this._resizeCtrl.HitTestCorner(mousePoint);
+    var corner = this._resizeCtrl.HitTestCorner(mousePoint);
     if (corner == CornerPosition.Nothing)
       return;
-    ElementEventArgs e = new ElementEventArgs(this._resizeCtrl.OwnerElement);
+    var e = new ElementEventArgs(this._resizeCtrl.OwnerElement);
     onElementResizingDelegate(e);
     this._resizeCtrl.Start(mousePoint, corner);
     this.UpdateResizeCorner();
@@ -62,7 +62,7 @@ internal class ResizeAction
     this._onElementResizingDelegate(new ElementEventArgs(this._resizeCtrl.OwnerElement));
     this._resizeCtrl.OwnerElement.Invalidate();
     this._resizeCtrl.Resize(dragPoint);
-    ILabelController labelController = ControllerHelper.GetLabelController(this._resizeCtrl.OwnerElement);
+    var labelController = ControllerHelper.GetLabelController(this._resizeCtrl.OwnerElement);
     if (labelController != null)
       labelController.SetLabelPosition();
     else if (this._resizeCtrl.OwnerElement is ILabelElement)
@@ -84,7 +84,7 @@ internal class ResizeAction
   {
     if (this._resizeCtrl == null)
       return;
-    foreach (RectangleElement corner in this._resizeCtrl.Corners)
+    foreach (var corner in this._resizeCtrl.Corners)
     {
       if (this._document.Action == DesignerAction.Select)
       {
@@ -133,7 +133,7 @@ internal class ResizeAction
   {
     if (this._resizeCtrl == null)
       return;
-    bool canResize = this._resizeCtrl.CanResize;
+    var canResize = this._resizeCtrl.CanResize;
     foreach (BaseElement corner in this._resizeCtrl.Corners)
       corner.Visible = canResize && show;
     if (this._resizeCtrl.Corners.Length < 3)
