@@ -4,10 +4,10 @@
 // MVID: B9D60695-31B2-4147-A7EE-DFCE5218CFFE
 // Assembly location: C:\dev\trevorde\WaveletStudio\trunk\res\libs\Diagram.net\DiagramNet.dll
 
+namespace DiagramNet;
+
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-
-namespace DiagramNet;
 
 internal class UndoManager
 {

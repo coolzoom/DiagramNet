@@ -4,6 +4,8 @@
 // MVID: B9D60695-31B2-4147-A7EE-DFCE5218CFFE
 // Assembly location: C:\dev\trevorde\WaveletStudio\trunk\res\libs\Diagram.net\DiagramNet.dll
 
+namespace DiagramNet;
+
 using DiagramNet.Elements;
 using DiagramNet.Elements.Controllers;
 using DiagramNet.Events;
@@ -11,8 +13,6 @@ using System.Collections;
 using System.Drawing.Drawing2D;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-
-namespace DiagramNet;
 
 [Serializable]
 public class Document : IDeserializationCallback
