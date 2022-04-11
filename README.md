@@ -24,6 +24,21 @@ whereas the last available binary is at v0.5
 This has allowed us to decompile the component and make it compatible with newer technologies.
 
 </details>
+# Prerequisites
+* .NET Core 6.0
+* Windows
+
+# Getting started
+```bash
+$ git clone https://github.com/TrevorDArcyEvans/DiagramNet.git
+$ cd DiagramNet
+$ dotnet restore
+$ dotnet build
+
+# run test app
+$ dotnet run --project TestForm/TestForm.csproj
+```
+
 
 # TODO
 * ~~port to .NET Core 6~~
