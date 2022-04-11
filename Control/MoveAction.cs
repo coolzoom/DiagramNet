@@ -1,217 +1,168 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: DiagramNet.MoveAction
+// Assembly: DiagramNet, Version=0.5.0.31105, Culture=neutral, PublicKeyToken=null
+// MVID: B9D60695-31B2-4147-A7EE-DFCE5218CFFE
+// Assembly location: C:\dev\trevorde\WaveletStudio\trunk\res\libs\Diagram.net\DiagramNet.dll
+
+using DiagramNet.Elements;
+using DiagramNet.Elements.Controllers;
+using DiagramNet.Events;
 using System;
+using System.Collections;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 
-
-namespace Dalssoft.DiagramNet
+namespace DiagramNet
 {
-	/// <summary>
-	/// This class control the elements motion.
-	/// </summary>
-	
-	internal class MoveAction
-	{
-		public delegate void OnElementMovingDelegate(ElementEventArgs e);
-		private OnElementMovingDelegate onElementMovingDelegate;
+  internal class MoveAction
+  {
+    private MoveAction.OnElementMovingDelegate _onElementMovingDelegate;
+    private IMoveController[] _moveCtrl;
+    private Point _upperSelPoint = Point.Empty;
+    private Point _upperSelPointDragOffset = Point.Empty;
+    private Document _document;
 
-		private bool isMoving = false;
-		private IMoveController[] moveCtrl;
-		private Point upperSelPoint = Point.Empty;
-		private Point upperSelPointDragOffset = Point.Empty;
-		private Document document = null;
+    public bool IsMoving { get; private set; }
 
-		public MoveAction()
-		{
-		}
-		
-		public bool IsMoving
-		{
-			get
-			{
-				return isMoving;
-			}
-		}
+    public void Start(
+      Point mousePoint,
+      Document document,
+      MoveAction.OnElementMovingDelegate onElementMovingDelegate)
+    {
+      this._document = document;
+      this._onElementMovingDelegate = onElementMovingDelegate;
+      this._moveCtrl = new IMoveController[document.SelectedElements.Count];
+      IMoveController[] arr2 = new IMoveController[document.SelectedElements.Count];
+      for (int index = document.SelectedElements.Count - 1; index >= 0; --index)
+      {
+        this._moveCtrl[index] = ControllerHelper.GetMoveController(document.SelectedElements[index]);
+        if (this._moveCtrl[index] != null && this._moveCtrl[index].CanMove)
+        {
+          onElementMovingDelegate(new ElementEventArgs(document.SelectedElements[index]));
+          this._moveCtrl[index].Start(mousePoint);
+          if (document.SelectedElements[index] is ILabelElement && ControllerHelper.GetLabelController(document.SelectedElements[index]) == null)
+          {
+            LabelElement label = ((ILabelElement) document.SelectedElements[index]).Label;
+            arr2[index] = ControllerHelper.GetMoveController((BaseElement) label);
+            if (arr2[index] != null && arr2[index].CanMove)
+              arr2[index].Start(mousePoint);
+            else
+              arr2[index] = (IMoveController) null;
+          }
+        }
+        else
+          this._moveCtrl[index] = (IMoveController) null;
+      }
+      this._moveCtrl = (IMoveController[]) DiagramUtil.ArrayHelper.Append((Array) this._moveCtrl, (Array) arr2);
+      this._moveCtrl = (IMoveController[]) DiagramUtil.ArrayHelper.Shrink((Array) this._moveCtrl, (object) null);
+      bool flag = true;
+      foreach (IMoveController moveController in this._moveCtrl)
+      {
+        if (moveController != null)
+        {
+          moveController.OwnerElement.Invalidate();
+          if (!(moveController.OwnerElement is BaseLinkElement) && !(moveController.OwnerElement is LabelElement))
+          {
+            flag = false;
+            break;
+          }
+        }
+      }
+      if (flag)
+      {
+        foreach (IMoveController moveController in this._moveCtrl)
+          moveController?.End();
+        this._moveCtrl = new IMoveController[1];
+      }
+      this.UpdateUpperSelectionPoint();
+      this._upperSelPointDragOffset.X = this._upperSelPoint.X - mousePoint.X;
+      this._upperSelPointDragOffset.Y = this._upperSelPoint.Y - mousePoint.Y;
+      this.IsMoving = true;
+    }
 
-		public void Start(Point mousePoint, Document document, OnElementMovingDelegate onElementMovingDelegate)
-		{
-			this.document = document;
-			this.onElementMovingDelegate = onElementMovingDelegate;
+    public void Move(Point dragPoint)
+    {
+      Point point = dragPoint;
+      point.Offset(this._upperSelPointDragOffset.X, this._upperSelPointDragOffset.Y);
+      this._upperSelPoint = point;
+      if (point.X < 0)
+        point.X = 0;
+      if (point.Y < 0)
+        point.Y = 0;
+      if (point.X == 0)
+        dragPoint.X -= this._upperSelPoint.X;
+      if (point.Y == 0)
+        dragPoint.Y -= this._upperSelPoint.Y;
+      foreach (IMoveController moveController in this._moveCtrl)
+      {
+        if (moveController != null && moveController.WillMove(dragPoint))
+        {
+          moveController.OwnerElement.Invalidate();
+          this._onElementMovingDelegate(new ElementEventArgs(moveController.OwnerElement));
+          moveController.Move(dragPoint);
+          if (moveController.OwnerElement is NodeElement)
+            this.UpdateLinkPosition((NodeElement) moveController.OwnerElement);
+          ControllerHelper.GetLabelController(moveController.OwnerElement)?.SetLabelPosition();
+        }
+      }
+    }
 
-			// Get Controllers
-			moveCtrl = new IMoveController[document.SelectedElements.Count];
-			IMoveController[] moveLabelCtrl = new IMoveController[document.SelectedElements.Count];
-			for(int i = document.SelectedElements.Count - 1; i >= 0; i--)
-			{
-				moveCtrl[i] = ControllerHelper.GetMoveController(document.SelectedElements[i]);
-				
-				if ((moveCtrl[i] != null) && (moveCtrl[i].CanMove))
-				{
-					onElementMovingDelegate(new ElementEventArgs(document.SelectedElements[i]));
-					moveCtrl[i].Start(mousePoint);
-					
-					//ILabelElement - Move Label inside the element
-					if ((document.SelectedElements[i] is ILabelElement) &&
-						(ControllerHelper.GetLabelController(document.SelectedElements[i]) == null))
-					{
-						LabelElement label = ((ILabelElement) document.SelectedElements[i]).Label;
-						moveLabelCtrl[i] = ControllerHelper.GetMoveController(label);
-						if ((moveLabelCtrl[i] != null) && (moveLabelCtrl[i].CanMove))
-							moveLabelCtrl[i].Start(mousePoint);
-						else
-							moveLabelCtrl[i] = null;
-					}
-				}
-				else
-					moveCtrl[i] = null;
-			}
+    public void End()
+    {
+      this._upperSelPoint = Point.Empty;
+      this._upperSelPointDragOffset = Point.Empty;
+      foreach (IMoveController moveController in this._moveCtrl)
+      {
+        if (moveController != null)
+        {
+          if (moveController.OwnerElement is NodeElement)
+            this.UpdateLinkPosition((NodeElement) moveController.OwnerElement);
+          moveController.End();
+          this._onElementMovingDelegate(new ElementEventArgs(moveController.OwnerElement));
+        }
+      }
+      this.IsMoving = false;
+    }
 
-			moveCtrl = (IMoveController[]) DiagramUtil.ArrayHelper.Append(moveCtrl, moveLabelCtrl);
-			moveCtrl = (IMoveController[]) DiagramUtil.ArrayHelper.Shrink(moveCtrl, null);
+    private void UpdateUpperSelectionPoint()
+    {
+      Point[] points = new Point[this._document.SelectedElements.Count];
+      int index = 0;
+      foreach (BaseElement selectedElement in (ReadOnlyCollectionBase) this._document.SelectedElements)
+      {
+        points[index] = selectedElement.Location;
+        ++index;
+      }
+      this._upperSelPoint = DiagramUtil.GetUpperPoint(points);
+    }
 
-			// Can't move only links
-			bool isOnlyLink = true;
-			foreach (IMoveController ctrl in moveCtrl)
-			{
-				// Verify
-				if (ctrl != null)
-				{
-					ctrl.OwnerElement.Invalidate();
+    private void UpdateLinkPosition(NodeElement node)
+    {
+      foreach (ConnectorElement connector in node.Connectors)
+      {
+        foreach (BaseLinkElement link in (ReadOnlyCollectionBase) connector.Links)
+        {
+          IController controller = ((IControllable) link).GetController();
+          if (controller is IMoveController)
+          {
+            if (!((IMoveController) controller).IsMoving)
+              link.NeedCalcLink = true;
+          }
+          else
+            link.NeedCalcLink = true;
+          if (link is ILabelElement)
+          {
+            LabelElement label = ((ILabelElement) link).Label;
+            ILabelController labelController = ControllerHelper.GetLabelController((BaseElement) link);
+            if (labelController != null)
+              labelController.SetLabelPosition();
+            else
+              label.PositionBySite((BaseElement) link);
+            label.Invalidate();
+          }
+        }
+      }
+    }
 
-					if (!(ctrl.OwnerElement is BaseLinkElement) && !(ctrl.OwnerElement is LabelElement))
-					{
-						isOnlyLink = false;
-						break;
-					}
-				}
-			}
-			if (isOnlyLink)
-			{
-				//End Move the Links
-				foreach (IMoveController ctrl in moveCtrl)
-				{
-					if (ctrl !=null)
-						ctrl.End();
-				}
-				moveCtrl = new IMoveController[] {null};
-			}
-
-			//Upper selecion point controller
-			UpdateUpperSelectionPoint();
-			upperSelPointDragOffset.X = upperSelPoint.X - mousePoint.X;
-			upperSelPointDragOffset.Y = upperSelPoint.Y - mousePoint.Y;
-
-			isMoving = true;
-		}
-
-		public void Move(Point dragPoint)
-		{
-			//Upper selecion point controller
-			Point dragPointEl = dragPoint;
-			dragPointEl.Offset(upperSelPointDragOffset.X, upperSelPointDragOffset.Y);
-					
-			upperSelPoint = dragPointEl;
-					
-			if (dragPointEl.X < 0) dragPointEl.X = 0;
-			if (dragPointEl.Y < 0) dragPointEl.Y = 0;
-
-			//Move Controller
-			if (dragPointEl.X == 0) dragPoint.X = dragPoint.X - upperSelPoint.X;					
-			if (dragPointEl.Y == 0) dragPoint.Y = dragPoint.Y - upperSelPoint.Y;
-
-			foreach(IMoveController ctrl in moveCtrl)
-			{
-				if (ctrl != null)
-				{
-					ctrl.OwnerElement.Invalidate();
-
-					onElementMovingDelegate(new ElementEventArgs(ctrl.OwnerElement));
-					
-					ctrl.Move(dragPoint);
-
-					if (ctrl.OwnerElement is NodeElement)
-					{
-						UpdateLinkPosition((NodeElement) ctrl.OwnerElement);
-					}
-
-					ILabelController lblCtrl = ControllerHelper.GetLabelController(ctrl.OwnerElement);
-					if (lblCtrl != null)
-						lblCtrl.SetLabelPosition();
-				}
-			}
-		}
-
-		public void End()
-		{
-			upperSelPoint = Point.Empty;
-			upperSelPointDragOffset = Point.Empty;
-				
-//			ElementEventArgs eventClickArg = new ElementEventArgs(selectedElement);
-//			OnElementClick(eventClickArg);
-
-			foreach(IMoveController ctrl in moveCtrl)
-			{
-				if (ctrl !=null)
-				{
-					if (ctrl.OwnerElement is NodeElement)
-					{
-						UpdateLinkPosition((NodeElement) ctrl.OwnerElement);
-					}
-
-					ctrl.End();
-
-					onElementMovingDelegate(new ElementEventArgs(ctrl.OwnerElement));
-				}
-			}
-
-			isMoving = false;
-
-//			ElementMouseEventArgs eventMouseUpArg = new ElementMouseEventArgs(selectedElement, e.X, e.Y);
-//			OnElementMouseUp(eventMouseUpArg);
-		}
-
-		private void UpdateUpperSelectionPoint()
-		{
-			//Get upper selecion point
-			Point[] points = new Point[document.SelectedElements.Count];
-			int p = 0;
-			foreach(BaseElement el in document.SelectedElements)
-			{
-				points[p] = el.Location;
-				p++;
-			}
-			upperSelPoint = DiagramUtil.GetUpperPoint(points);
-		}
-
-		private void UpdateLinkPosition(NodeElement node)
-		{
-			foreach(ConnectorElement conn in node.Connectors)
-			{
-				foreach (BaseElement el in conn.Links)
-				{
-					BaseLinkElement lnk = (BaseLinkElement) el;
-					IController ctrl = ((IControllable) lnk).GetController();
-					if (ctrl is IMoveController)
-					{
-						IMoveController mctrl = (IMoveController) ctrl;
-						if (!mctrl.IsMoving) lnk.NeedCalcLink = true;
-					}
-					else lnk.NeedCalcLink = true;
-
-					if (lnk is ILabelElement)
-					{
-						LabelElement label = ((ILabelElement) lnk).Label;
-
-						ILabelController lblCtrl = ControllerHelper.GetLabelController(lnk);
-						if (lblCtrl != null)
-							lblCtrl.SetLabelPosition();
-						else
-						{
-							label.PositionBySite(lnk);
-						}		
-						label.Invalidate();
-					}
-				}
-			}
-		}
-	}
+    public delegate void OnElementMovingDelegate(ElementEventArgs e);
+  }
 }

@@ -1,262 +1,232 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: DiagramNet.DiagramUtil
+// Assembly: DiagramNet, Version=0.5.0.31105, Culture=neutral, PublicKeyToken=null
+// MVID: B9D60695-31B2-4147-A7EE-DFCE5218CFFE
+// Assembly location: C:\dev\trevorde\WaveletStudio\trunk\res\libs\Diagram.net\DiagramNet.dll
+
+using DiagramNet.Elements;
 using System;
 using System.Collections;
 using System.Drawing;
 
-namespace Dalssoft.DiagramNet
+namespace DiagramNet
 {
-	/// <summary>
-	/// Summary description for DiagramUtil.
-	/// </summary>
-	internal class DiagramUtil
-	{
-		private DiagramUtil()
-		{
-			//
-			// TODO: Add constructor logic here
-			//
-		}
-		#region Point Calc
-		public static Point DisplayToCartesianCoord(Point p, Rectangle referenceRec)
-		{
-			//int x0 = referenceRec.Location.X + (referenceRec.Width / 2);
-			//int y0 = referenceRec.Location.Y + (referenceRec.Height / 2);
-			int x0 = (referenceRec.Width / 2);
-			int y0 = (referenceRec.Height / 2);
-			
-			return new Point(p.X - x0, p.Y - y0);		
-		}
+  internal class DiagramUtil
+  {
+    private DiagramUtil()
+    {
+    }
 
-		public static double PointToAngle(Point cartPoint)
-		{
-			
-			double angle = (Math.Atan2(cartPoint.Y, cartPoint.X) * (180 / Math.PI));
+    public static Point DisplayToCartesianCoord(Point p, Rectangle referenceRec)
+    {
+      int num1 = referenceRec.Width / 2;
+      int num2 = referenceRec.Height / 2;
+      return new Point(p.X - num1, p.Y - num2);
+    }
 
-			if ((angle > 0) && (angle < 180))
-				angle = 360 - angle;
-			angle = Math.Abs(angle);
+    public static double PointToAngle(Point cartPoint)
+    {
+      double num = Math.Atan2((double) cartPoint.Y, (double) cartPoint.X) * (180.0 / Math.PI);
+      if (num > 0.0 && num < 180.0)
+        num = 360.0 - num;
+      return Math.Abs(num);
+    }
 
-			return angle;
+    public static CardinalDirection GetDirection(Rectangle rec, Point point)
+    {
+      double angle = DiagramUtil.PointToAngle(DiagramUtil.DisplayToCartesianCoord(point, rec));
+      if (angle >= 0.0 && angle < 45.0 || angle >= 315.0)
+        return CardinalDirection.East;
+      if (angle >= 45.0 && angle < 135.0)
+        return CardinalDirection.North;
+      if (angle >= 135.0 && angle < 225.0)
+        return CardinalDirection.West;
+      return angle >= 225.0 && angle < 315.0 ? CardinalDirection.South : CardinalDirection.Nothing;
+    }
 
-		}
+    public static Point GetUpperPoint(Point[] points)
+    {
+      Point empty = Point.Empty with
+      {
+        X = int.MaxValue,
+        Y = int.MaxValue
+      };
+      foreach (Point point in points)
+      {
+        if (point.X < empty.X)
+          empty.X = point.X;
+        if (point.Y < empty.Y)
+          empty.Y = point.Y;
+      }
+      return empty;
+    }
 
-		public static CardinalDirection GetDirection(Rectangle rec, Point point)
-		{
-			Point p = DisplayToCartesianCoord(point, rec);
-			
-			double angle = PointToAngle(p);
-			
-			//East
-			if (((angle >= 0) && (angle < 45)) || (angle >= 315))
-				return CardinalDirection.East;
-				//North
-			else if ((angle >= 45) && (angle < 135))
-				return CardinalDirection.North;
-				//West
-			else if ((angle >= 135) && (angle < 225))
-				return CardinalDirection.West;
-				//South
-			else if ((angle >= 225) && (angle < 315))
-				return CardinalDirection.South;
-			
-			return CardinalDirection.Nothing;
-		}
+    public static Point GetLowerPoint(Point[] points)
+    {
+      Point empty = Point.Empty with
+      {
+        X = int.MinValue,
+        Y = int.MinValue
+      };
+      foreach (Point point in points)
+      {
+        if (point.X > empty.X)
+          empty.X = point.X;
+        if (point.Y > empty.Y)
+          empty.Y = point.Y;
+      }
+      return empty;
+    }
 
-		public static Point GetUpperPoint(Point[] points)
-		{
-			Point upper = Point.Empty;
-			upper.X = Int32.MaxValue;
-			upper.Y = Int32.MaxValue;
-			foreach(Point p in points)
-			{
-				if (p.X < upper.X)
-					upper.X = p.X;
+    public static Point GetRelativePoint(Point location1, Point location2) => Point.Empty with
+    {
+      X = location2.X - location1.X,
+      Y = location2.Y - location1.Y
+    };
 
-				if (p.Y < upper.Y)
-					upper.Y = p.Y;
-			}
+    public static Size MeasureString(string text, Font font)
+    {
+      Bitmap bitmap = new Bitmap(1, 1);
+      Graphics graphics = Graphics.FromImage((Image) bitmap);
+      SizeF sizeF = graphics.MeasureString(text, font);
+      bitmap.Dispose();
+      graphics.Dispose();
+      return Size.Round(sizeF);
+    }
 
-			return upper;
-		}
+    public static Size MeasureString(string text, Font font, SizeF layoutArea)
+    {
+      Bitmap bitmap = new Bitmap(1, 1);
+      Graphics graphics = Graphics.FromImage((Image) bitmap);
+      SizeF sizeF = graphics.MeasureString(text, font, layoutArea);
+      bitmap.Dispose();
+      graphics.Dispose();
+      return Size.Round(sizeF);
+    }
 
-		public static Point GetLowerPoint(Point[] points)
-		{
-			Point lower = Point.Empty;
-			lower.X = Int32.MinValue;
-			lower.Y = Int32.MinValue;
-			foreach(Point p in points)
-			{
-				if (p.X > lower.X)
-					lower.X = p.X;
+    public static Size MeasureString(string text, Font font, int width)
+    {
+      Bitmap bitmap = new Bitmap(1, 1);
+      Graphics graphics = Graphics.FromImage((Image) bitmap);
+      SizeF sizeF = graphics.MeasureString(text, font, width);
+      bitmap.Dispose();
+      graphics.Dispose();
+      return Size.Round(sizeF);
+    }
 
-				if (p.Y > lower.Y)
-					lower.Y = p.Y;
-			}
+    public static Size MeasureString(
+      string text,
+      Font font,
+      PointF origin,
+      StringFormat stringFormat)
+    {
+      Bitmap bitmap = new Bitmap(1, 1);
+      Graphics graphics = Graphics.FromImage((Image) bitmap);
+      SizeF sizeF = graphics.MeasureString(text, font, origin, stringFormat);
+      bitmap.Dispose();
+      graphics.Dispose();
+      return Size.Round(sizeF);
+    }
 
-			return lower;
-		}
+    public static Size MeasureString(
+      string text,
+      Font font,
+      SizeF layoutArea,
+      StringFormat stringFormat)
+    {
+      Bitmap bitmap = new Bitmap(1, 1);
+      Graphics graphics = Graphics.FromImage((Image) bitmap);
+      SizeF sizeF = graphics.MeasureString(text, font, layoutArea, stringFormat);
+      bitmap.Dispose();
+      graphics.Dispose();
+      return Size.Round(sizeF);
+    }
 
-		public static Point GetRelativePoint(Point location1, Point location2)
-		{
-			Point ret = Point.Empty;
-			ret.X = location2.X - location1.X;
-			ret.Y = location2.Y - location1.Y;
-			return ret;
-		}
-		#endregion
+    public static Size MeasureString(string text, Font font, int width, StringFormat format)
+    {
+      Bitmap bitmap = new Bitmap(1, 1);
+      Graphics graphics = Graphics.FromImage((Image) bitmap);
+      SizeF sizeF = graphics.MeasureString(text, font, width, format);
+      bitmap.Dispose();
+      graphics.Dispose();
+      return Size.Round(sizeF);
+    }
 
-		#region Draw Font
-		public static Size MeasureString(string text, Font font)
-		{
-			Bitmap bmp = new Bitmap(1,1);
-			Graphics g = Graphics.FromImage(bmp);
-			SizeF sizeF = g.MeasureString(text, font);
-			bmp.Dispose();
-			g.Dispose();
-			return Size.Round(sizeF);
-		}
+    public static Size MeasureString(
+      string text,
+      Font font,
+      SizeF layoutArea,
+      StringFormat stringFormat,
+      out int charactersFitted,
+      out int linesFilled)
+    {
+      Bitmap bitmap = new Bitmap(1, 1);
+      Graphics graphics = Graphics.FromImage((Image) bitmap);
+      SizeF sizeF = graphics.MeasureString(text, font, layoutArea, stringFormat, out charactersFitted, out linesFilled);
+      bitmap.Dispose();
+      graphics.Dispose();
+      return Size.Round(sizeF);
+    }
 
-		public static Size MeasureString(string text, Font font, SizeF layoutArea)
-		{
-			Bitmap bmp = new Bitmap(1,1);
-			Graphics g = Graphics.FromImage(bmp);
-			SizeF sizeF = g.MeasureString(text, font, layoutArea);
-			bmp.Dispose();
-			g.Dispose();
-			return Size.Round(sizeF);
-		}
+    public static int GetInnerElementsCount(BaseElement el)
+    {
+      int innerElementsCount = 0;
+      if (el is ILabelElement)
+        ++innerElementsCount;
+      if (el is NodeElement)
+      {
+        NodeElement nodeElement = (NodeElement) el;
+        innerElementsCount += nodeElement.Connectors.Length;
+      }
+      return innerElementsCount;
+    }
 
-		public static Size MeasureString(string text, Font font, int width)
-		{
-			Bitmap bmp = new Bitmap(1,1);
-			Graphics g = Graphics.FromImage(bmp);
-			SizeF sizeF = g.MeasureString(text, font, width);
-			bmp.Dispose();
-			g.Dispose();
-			return Size.Round(sizeF);
-		}
+    public static BaseElement[] GetInnerElements(BaseElement el)
+    {
+      BaseElement[] destinationArray = new BaseElement[DiagramUtil.GetInnerElementsCount(el)];
+      int destinationIndex = 0;
+      if (el is ILabelElement)
+      {
+        destinationArray[destinationIndex] = (BaseElement) ((ILabelElement) el).Label;
+        ++destinationIndex;
+      }
+      if (el is NodeElement)
+      {
+        ConnectorElement[] connectors = ((NodeElement) el).Connectors;
+        Array.Copy((Array) connectors, 0, (Array) destinationArray, destinationIndex, connectors.Length);
+      }
+      return destinationArray;
+    }
 
-		public static Size MeasureString(string text, Font font, PointF origin, StringFormat stringFormat)
-		{
-			Bitmap bmp = new Bitmap(1,1);
-			Graphics g = Graphics.FromImage(bmp);
-			SizeF sizeF = g.MeasureString(text, font, origin, stringFormat);
-			bmp.Dispose();
-			g.Dispose();
-			return Size.Round(sizeF);
-		}
+    public class ArrayHelper
+    {
+      private ArrayHelper()
+      {
+      }
 
-		public static Size MeasureString(string text, Font font, SizeF layoutArea, StringFormat stringFormat)
-		{
-			Bitmap bmp = new Bitmap(1,1);
-			Graphics g = Graphics.FromImage(bmp);
-			SizeF sizeF = g.MeasureString(text, font, layoutArea, stringFormat);
-			bmp.Dispose();
-			g.Dispose();
-			return Size.Round(sizeF);
-		}
+      public static Array Append(Array arr1, Array arr2)
+      {
+        Type elementType1 = arr1.GetType().GetElementType();
+        Type elementType2 = arr1.GetType().GetElementType();
+        if (elementType1 != elementType2)
+          throw new Exception("Arrays isn't the same type");
+        ArrayList arrayList = new ArrayList(arr1.Length + arr2.Length - 1);
+        arrayList.AddRange((ICollection) arr1);
+        arrayList.AddRange((ICollection) arr2);
+        return arrayList.ToArray(elementType1);
+      }
 
-		public static Size MeasureString(string text, Font font, int width, StringFormat format)
-		{
-			Bitmap bmp = new Bitmap(1,1);
-			Graphics g = Graphics.FromImage(bmp);
-			SizeF sizeF = g.MeasureString(text, font, width, format);
-			bmp.Dispose();
-			g.Dispose();
-			return Size.Round(sizeF);
-		}
-
-		public static Size MeasureString(string text, Font font, SizeF layoutArea, StringFormat stringFormat, out int charactersFitted, out int linesFilled)
-		{
-			Bitmap bmp = new Bitmap(1,1);
-			Graphics g = Graphics.FromImage(bmp);
-			SizeF sizeF = g.MeasureString(text, font, layoutArea, stringFormat, out charactersFitted, out linesFilled);
-			bmp.Dispose();
-			g.Dispose();
-			return Size.Round(sizeF);
-		}
-		#endregion
-
-		public static int GetInnerElementsCount(BaseElement el)
-		{
-			int ret = 0;
-			if (el is ILabelElement) ret++;
-
-			if (el is NodeElement)
-			{
-				NodeElement nel = (NodeElement) el;
-				ret += nel.Connectors.Length;
-			}
-
-//			if (el is IContainer)
-//			{
-//				IContainer cel = (IContainer) el;
-//				ret += cel.Elements.Count;
-//			}
-
-			return ret;
-		}
-
-		public static BaseElement[] GetInnerElements(BaseElement el)
-		{
-			BaseElement[] ret = new BaseElement[GetInnerElementsCount(el)];
-
-			int i = 0;
-
-			if (el is ILabelElement)
-			{
-				ret[i] = ((ILabelElement) el).Label;
-				i++;
-			}
-			if (el is NodeElement)
-			{
-				NodeElement nel = (NodeElement) el;
-				ConnectorElement[] innerConnectors = nel.Connectors;
-				Array.Copy(innerConnectors, 0, ret, i, innerConnectors.Length);
-				i += innerConnectors.Length;
-			}
-
-//			if (el is IContainer)
-//			{
-//				IContainer cel = (IContainer) el;
-//				BaseElement [] innerElements = cel.Elements.GetArray();
-//				Array.Copy(innerElements, 0, ret, i, innerElements.Length);
-//				i += innerElements.Length;
-//			}
-
-			return ret;
-
-		}
-
-		public class ArrayHelper
-		{
-			private ArrayHelper(){}
-
-			public static Array Append(Array arr1, Array arr2)
-			{
-				Type arr1Type = arr1.GetType().GetElementType();
-				Type arr2Type = arr1.GetType().GetElementType();
-				
-				if (arr1Type != arr2Type) throw new Exception("Arrays isn't the same type");
-				
-				ArrayList arrNew = new ArrayList(arr1.Length + arr2.Length - 1);
-				arrNew.AddRange(arr1);
-				arrNew.AddRange(arr2);
-				return arrNew.ToArray(arr1Type);
-			}
-
-			public static Array Shrink(Array arr, object removeValue)
-			{
-				ArrayList arrNew = new ArrayList(arr.Length - 1);
-				foreach(object o in arr)
-				{
-					if (o != removeValue)
-						arrNew.Add(o);
-				}
-				arrNew.TrimToSize();
-				return arrNew.ToArray(arr.GetType().GetElementType());
-			}
-		}
-	}
+      public static Array Shrink(Array arr, object removeValue)
+      {
+        ArrayList arrayList = new ArrayList(arr.Length - 1);
+        foreach (object obj in arr)
+        {
+          if (obj != removeValue)
+            arrayList.Add(obj);
+        }
+        arrayList.TrimToSize();
+        return arrayList.ToArray(arr.GetType().GetElementType());
+      }
+    }
+  }
 }
-
-

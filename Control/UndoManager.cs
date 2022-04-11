@@ -1,137 +1,100 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: DiagramNet.UndoManager
+// Assembly: DiagramNet, Version=0.5.0.31105, Culture=neutral, PublicKeyToken=null
+// MVID: B9D60695-31B2-4147-A7EE-DFCE5218CFFE
+// Assembly location: C:\dev\trevorde\WaveletStudio\trunk\res\libs\Diagram.net\DiagramNet.dll
+
 using System;
-using System.Collections;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Dalssoft.DiagramNet
+namespace DiagramNet
 {
-	internal class UndoManager
-	{
-		protected MemoryStream[] list;
-		protected int currPos = -1;
-		protected int lastPos = -1;
-		protected bool canUndo = false;
-		protected bool canRedo = false;
-		protected int capacity;
-		protected bool enabled = true;
+  internal class UndoManager
+  {
+    protected MemoryStream[] List;
+    protected int CurrPos = -1;
+    protected int LastPos = -1;
+    protected int Capacity;
 
+    public UndoManager(int capacity)
+    {
+      this.Enabled = true;
+      this.List = new MemoryStream[capacity];
+      this.Capacity = capacity;
+    }
 
-		public UndoManager(int capacity)
-		{
-			list = new MemoryStream[capacity];
-			this.capacity = capacity;
-		}
+    public bool CanUndo => this.CurrPos != -1;
 
-		public bool CanUndo
-		{
-			get
-			{
-				return (currPos != -1);
-			}
-		}
+    public bool CanRedo => this.CurrPos != this.LastPos;
 
-		public bool CanRedo
-		{
-			get
-			{
-				return (currPos != lastPos);
-			}
-		}
+    public bool Enabled { get; set; }
 
-		public bool Enabled
-		{
-			get
-			{
-				return enabled;
-			}
-			set
-			{
-				enabled = value;
-			}
-		}
+    public void AddUndo(object o)
+    {
+      if (!this.Enabled)
+        return;
+      ++this.CurrPos;
+      if (this.CurrPos >= this.Capacity)
+        --this.CurrPos;
+      this.ClearList(this.CurrPos);
+      this.PushList();
+      this.List[this.CurrPos] = this.SerializeObject(o);
+      this.LastPos = this.CurrPos;
+    }
 
-		public void AddUndo(object o)
-		{
-			if (!enabled) return;
+    public object Undo()
+    {
+      if (!this.CanUndo)
+        throw new ApplicationException("Can't Undo.");
+      object obj = this.DeserializeObject((Stream) this.List[this.CurrPos]);
+      --this.CurrPos;
+      return obj;
+    }
 
-			currPos++;
-			if (currPos >= capacity)
-				currPos--;
+    public object Redo()
+    {
+      if (!this.CanRedo)
+        throw new ApplicationException("Can't Undo.");
+      ++this.CurrPos;
+      return this.DeserializeObject((Stream) this.List[this.CurrPos]);
+    }
 
-			ClearList(currPos);
+    private MemoryStream SerializeObject(object o)
+    {
+      IFormatter formatter = (IFormatter) new BinaryFormatter();
+      MemoryStream serializationStream = new MemoryStream();
+      formatter.Serialize((Stream) serializationStream, o);
+      serializationStream.Position = 0L;
+      return serializationStream;
+    }
 
-			PushList();
+    private object DeserializeObject(Stream mem)
+    {
+      mem.Position = 0L;
+      return new BinaryFormatter().Deserialize(mem);
+    }
 
-			list[currPos] = SerializeObject(o);
-			lastPos = currPos;
-		}
+    private void ClearList(int p = 0)
+    {
+      if (this.CurrPos >= this.Capacity - 1)
+        return;
+      for (int index = p; index < this.Capacity; ++index)
+      {
+        if (this.List[index] != null)
+          this.List[index].Close();
+        this.List[index] = (MemoryStream) null;
+      }
+    }
 
-		public object Undo()
-		{
-			if (!CanUndo)
-				throw new ApplicationException("Can't Undo.");
-
-			object ret = DeserializeObject(list[currPos]);
-			
-			currPos--;
-		
-			return ret;
-		}
-
-		public object Redo()
-		{
-			if (!CanRedo)
-				throw new ApplicationException("Can't Undo.");
-
-			currPos++;
-
-			return DeserializeObject(list[currPos]);
-		}
-
-		private MemoryStream SerializeObject(object o)
-		{
-			IFormatter formatter = new BinaryFormatter();
-			MemoryStream mem = new MemoryStream();
-			formatter.Serialize(mem, o);
-			mem.Position = 0;
-			return mem;
-		}
-
-		private object DeserializeObject(MemoryStream mem)
-		{
-			mem.Position = 0;
-			IFormatter formatter = new BinaryFormatter();
-			return (object) formatter.Deserialize(mem);
-		}
-
-		private void ClearList()
-		{
-			ClearList(0);
-		}
-
-		private void ClearList(int p)
-		{
-			if (currPos >= capacity - 1)
-				return;
-
-			for(int i = p; i < capacity; i++)
-			{
-				if (list[i] != null) list[i].Close();
-				list[i] = null;
-			}
-		}
-
-		private void PushList()
-		{
-			if ((currPos >= capacity - 1) && (list[currPos] != null))
-			{
-				list[0].Close();
-				for (int i = 1; i <= currPos; i++)
-				{
-					list[i - 1] = list[i];
-				}
-			}		
-		}
-	}
+    private void PushList()
+    {
+      if (this.CurrPos < this.Capacity - 1 || this.List[this.CurrPos] == null)
+        return;
+      this.List[0].Close();
+      for (int index = 1; index <= this.CurrPos; ++index)
+        this.List[index - 1] = this.List[index];
+    }
+  }
 }
