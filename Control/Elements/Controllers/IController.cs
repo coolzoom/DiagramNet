@@ -4,18 +4,15 @@
 // MVID: B9D60695-31B2-4147-A7EE-DFCE5218CFFE
 // Assembly location: C:\dev\trevorde\WaveletStudio\trunk\res\libs\Diagram.net\DiagramNet.dll
 
-using System.Drawing;
+namespace DiagramNet.Elements.Controllers;
 
-namespace DiagramNet.Elements.Controllers
+internal interface IController
 {
-  internal interface IController
-  {
-    BaseElement OwnerElement { get; }
+  BaseElement OwnerElement { get; }
 
-    bool HitTest(Point p);
+  bool HitTest(Point p);
 
-    bool HitTest(Rectangle r);
+  bool HitTest(Rectangle r);
 
-    void DrawSelection(Graphics g);
-  }
+  void DrawSelection(Graphics g);
 }

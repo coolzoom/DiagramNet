@@ -5,27 +5,25 @@
 // Assembly location: C:\dev\trevorde\WaveletStudio\trunk\res\libs\Diagram.net\DiagramNet.dll
 
 using DiagramNet.Elements;
-using System;
 
-namespace DiagramNet.Events
+namespace DiagramNet.Events;
+
+public class ElementEventArgs : EventArgs
 {
-  public class ElementEventArgs : EventArgs
+  private readonly BaseElement _element;
+  private readonly BaseElement _previousElement;
+
+  public ElementEventArgs(BaseElement el) => this._element = el;
+
+  public ElementEventArgs(BaseElement el, BaseElement previousEl)
   {
-    private readonly BaseElement _element;
-    private readonly BaseElement _previousElement;
-
-    public ElementEventArgs(BaseElement el) => this._element = el;
-
-    public ElementEventArgs(BaseElement el, BaseElement previousEl)
-    {
-      this._element = el;
-      this._previousElement = previousEl;
-    }
-
-    public BaseElement Element => this._element;
-
-    public BaseElement PreviousElement => this._previousElement;
-
-    public override string ToString() => "el: " + (object) this._element.GetHashCode();
+    this._element = el;
+    this._previousElement = previousEl;
   }
+
+  public BaseElement Element => this._element;
+
+  public BaseElement PreviousElement => this._previousElement;
+
+  public override string ToString() => "el: " + (object) this._element.GetHashCode();
 }

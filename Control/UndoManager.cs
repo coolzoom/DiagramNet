@@ -4,97 +4,94 @@
 // MVID: B9D60695-31B2-4147-A7EE-DFCE5218CFFE
 // Assembly location: C:\dev\trevorde\WaveletStudio\trunk\res\libs\Diagram.net\DiagramNet.dll
 
-using System;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace DiagramNet
+namespace DiagramNet;
+
+internal class UndoManager
 {
-  internal class UndoManager
+  protected MemoryStream[] List;
+  protected int CurrPos = -1;
+  protected int LastPos = -1;
+  protected int Capacity;
+
+  public UndoManager(int capacity)
   {
-    protected MemoryStream[] List;
-    protected int CurrPos = -1;
-    protected int LastPos = -1;
-    protected int Capacity;
+    this.Enabled = true;
+    this.List = new MemoryStream[capacity];
+    this.Capacity = capacity;
+  }
 
-    public UndoManager(int capacity)
-    {
-      this.Enabled = true;
-      this.List = new MemoryStream[capacity];
-      this.Capacity = capacity;
-    }
+  public bool CanUndo => this.CurrPos != -1;
 
-    public bool CanUndo => this.CurrPos != -1;
+  public bool CanRedo => this.CurrPos != this.LastPos;
 
-    public bool CanRedo => this.CurrPos != this.LastPos;
+  public bool Enabled { get; set; }
 
-    public bool Enabled { get; set; }
-
-    public void AddUndo(object o)
-    {
-      if (!this.Enabled)
-        return;
-      ++this.CurrPos;
-      if (this.CurrPos >= this.Capacity)
-        --this.CurrPos;
-      this.ClearList(this.CurrPos);
-      this.PushList();
-      this.List[this.CurrPos] = this.SerializeObject(o);
-      this.LastPos = this.CurrPos;
-    }
-
-    public object Undo()
-    {
-      if (!this.CanUndo)
-        throw new ApplicationException("Can't Undo.");
-      object obj = this.DeserializeObject((Stream) this.List[this.CurrPos]);
+  public void AddUndo(object o)
+  {
+    if (!this.Enabled)
+      return;
+    ++this.CurrPos;
+    if (this.CurrPos >= this.Capacity)
       --this.CurrPos;
-      return obj;
-    }
+    this.ClearList(this.CurrPos);
+    this.PushList();
+    this.List[this.CurrPos] = this.SerializeObject(o);
+    this.LastPos = this.CurrPos;
+  }
 
-    public object Redo()
-    {
-      if (!this.CanRedo)
-        throw new ApplicationException("Can't Undo.");
-      ++this.CurrPos;
-      return this.DeserializeObject((Stream) this.List[this.CurrPos]);
-    }
+  public object Undo()
+  {
+    if (!this.CanUndo)
+      throw new ApplicationException("Can't Undo.");
+    object obj = this.DeserializeObject((Stream) this.List[this.CurrPos]);
+    --this.CurrPos;
+    return obj;
+  }
 
-    private MemoryStream SerializeObject(object o)
-    {
-      IFormatter formatter = (IFormatter) new BinaryFormatter();
-      MemoryStream serializationStream = new MemoryStream();
-      formatter.Serialize((Stream) serializationStream, o);
-      serializationStream.Position = 0L;
-      return serializationStream;
-    }
+  public object Redo()
+  {
+    if (!this.CanRedo)
+      throw new ApplicationException("Can't Undo.");
+    ++this.CurrPos;
+    return this.DeserializeObject((Stream) this.List[this.CurrPos]);
+  }
 
-    private object DeserializeObject(Stream mem)
-    {
-      mem.Position = 0L;
-      return new BinaryFormatter().Deserialize(mem);
-    }
+  private MemoryStream SerializeObject(object o)
+  {
+    IFormatter formatter = (IFormatter) new BinaryFormatter();
+    MemoryStream serializationStream = new MemoryStream();
+    formatter.Serialize((Stream) serializationStream, o);
+    serializationStream.Position = 0L;
+    return serializationStream;
+  }
 
-    private void ClearList(int p = 0)
-    {
-      if (this.CurrPos >= this.Capacity - 1)
-        return;
-      for (int index = p; index < this.Capacity; ++index)
-      {
-        if (this.List[index] != null)
-          this.List[index].Close();
-        this.List[index] = (MemoryStream) null;
-      }
-    }
+  private object DeserializeObject(Stream mem)
+  {
+    mem.Position = 0L;
+    return new BinaryFormatter().Deserialize(mem);
+  }
 
-    private void PushList()
+  private void ClearList(int p = 0)
+  {
+    if (this.CurrPos >= this.Capacity - 1)
+      return;
+    for (int index = p; index < this.Capacity; ++index)
     {
-      if (this.CurrPos < this.Capacity - 1 || this.List[this.CurrPos] == null)
-        return;
-      this.List[0].Close();
-      for (int index = 1; index <= this.CurrPos; ++index)
-        this.List[index - 1] = this.List[index];
+      if (this.List[index] != null)
+        this.List[index].Close();
+      this.List[index] = (MemoryStream) null;
     }
+  }
+
+  private void PushList()
+  {
+    if (this.CurrPos < this.Capacity - 1 || this.List[this.CurrPos] == null)
+      return;
+    this.List[0].Close();
+    for (int index = 1; index <= this.CurrPos; ++index)
+      this.List[index - 1] = this.List[index];
   }
 }

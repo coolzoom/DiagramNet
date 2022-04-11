@@ -4,26 +4,23 @@
 // MVID: B9D60695-31B2-4147-A7EE-DFCE5218CFFE
 // Assembly location: C:\dev\trevorde\WaveletStudio\trunk\res\libs\Diagram.net\DiagramNet.dll
 
-using System.Drawing;
+namespace DiagramNet.Elements.Controllers;
 
-namespace DiagramNet.Elements.Controllers
+internal interface IResizeController : IController
 {
-  internal interface IResizeController : IController
-  {
-    RectangleElement[] Corners { get; }
+  RectangleElement[] Corners { get; }
 
-    void UpdateCornersPos();
+  void UpdateCornersPos();
 
-    CornerPosition HitTestCorner(Point p);
+  CornerPosition HitTestCorner(Point p);
 
-    void Start(Point posStart, CornerPosition corner);
+  void Start(Point posStart, CornerPosition corner);
 
-    void Resize(Point posCurrent);
+  void Resize(Point posCurrent);
 
-    void End(Point posEnd);
+  void End(Point posEnd);
 
-    bool IsResizing { get; }
+  bool IsResizing { get; }
 
-    bool CanResize { get; }
-  }
+  bool CanResize { get; }
 }

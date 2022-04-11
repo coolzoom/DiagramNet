@@ -4,10 +4,9 @@
 // MVID: B9D60695-31B2-4147-A7EE-DFCE5218CFFE
 // Assembly location: C:\dev\trevorde\WaveletStudio\trunk\res\libs\Diagram.net\DiagramNet.dll
 
-namespace DiagramNet.Elements
+namespace DiagramNet.Elements;
+
+public interface ILabelElement
 {
-  public interface ILabelElement
-  {
-    LabelElement Label { get; set; }
-  }
+  LabelElement Label { get; set; }
 }
