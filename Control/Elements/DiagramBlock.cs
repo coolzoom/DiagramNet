@@ -174,7 +174,7 @@ public class DiagramBlock : NodeElement, IControllable
     labelElement.Draw(g);
     foreach (var connect in Connects)
     {
-      var str = _connectionTextProperty.GetValue(connect.State, null).ToString();
+      var str = _connectionTextProperty?.GetValue(connect.State, null)?.ToString() ?? string.Empty;
       int top;
       StringAlignment stringAlignment;
       if (connect.IsStart)
