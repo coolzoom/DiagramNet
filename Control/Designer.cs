@@ -773,11 +773,11 @@ public class Designer : UserControl
       case ElementType.RectangleNode:
         el = (BaseElement) new RectangleNode(selectionRectangle);
         break;
-      case ElementType.Elipse:
-        el = (BaseElement) new ElipseElement(selectionRectangle);
+      case ElementType.Ellipse:
+        el = (BaseElement) new EllipseElement(selectionRectangle);
         break;
-      case ElementType.ElipseNode:
-        el = (BaseElement) new ElipseNode(selectionRectangle);
+      case ElementType.EllipseNode:
+        el = (BaseElement) new EllipseNode(selectionRectangle);
         break;
       case ElementType.CommentBox:
         el = (BaseElement) new CommentBoxElement(selectionRectangle);

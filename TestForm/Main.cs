@@ -50,9 +50,9 @@ namespace TestForm
     private System.Windows.Forms.ToolStripMenuItem mnuRedo;
     private System.Windows.Forms.ToolStripMenuItem mnuAdd;
     private System.Windows.Forms.ToolStripMenuItem mnuRectangle;
-    private System.Windows.Forms.ToolStripMenuItem mnuElipse;
+    private System.Windows.Forms.ToolStripMenuItem mnuEllipse;
     private System.Windows.Forms.ToolStripMenuItem mnuRectangleNode;
-    private System.Windows.Forms.ToolStripMenuItem mnuElipseNode;
+    private System.Windows.Forms.ToolStripMenuItem mnuEllipseNode;
     private System.Windows.Forms.ToolStripMenuItem mnuDelete;
     private System.Windows.Forms.ToolStripMenuItem mnuConnect;
     private System.Windows.Forms.ToolStripMenuItem mnuOrder;
@@ -64,9 +64,9 @@ namespace TestForm
     private System.Windows.Forms.ToolStripMenuItem mnuAbout;
     private System.Windows.Forms.ToolStripMenuItem mnuSize;
     private System.Windows.Forms.ToolStripMenuItem mnuTbRectangle;
-    private System.Windows.Forms.ToolStripMenuItem mnuTbElipse;
+    private System.Windows.Forms.ToolStripMenuItem mnuTbEllipse;
     private System.Windows.Forms.ToolStripMenuItem mnuTbRectangleNode;
-    private System.Windows.Forms.ToolStripMenuItem mnuTbElipseNode;
+    private System.Windows.Forms.ToolStripMenuItem mnuTbEllipseNode;
     private System.Windows.Forms.OpenFileDialog openFileDialog1;
     private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     private System.Windows.Forms.ToolStripMenuItem mnuUndo;
@@ -150,9 +150,9 @@ namespace TestForm
       this.btnAdd = new System.Windows.Forms.ToolStripDropDownButton();
       this.contextMenu1 = new System.Windows.Forms.ContextMenuStrip();
       this.mnuTbRectangle = new System.Windows.Forms.ToolStripMenuItem();
-      this.mnuTbElipse = new System.Windows.Forms.ToolStripMenuItem();
+      this.mnuTbEllipse = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuTbRectangleNode = new System.Windows.Forms.ToolStripMenuItem();
-      this.mnuTbElipseNode = new System.Windows.Forms.ToolStripMenuItem();
+      this.mnuTbEllipseNode = new System.Windows.Forms.ToolStripMenuItem();
       this.TbCommentBox = new System.Windows.Forms.ToolStripMenuItem();
       this.btnConnect = new System.Windows.Forms.ToolStripDropDownButton();
       this.contextMenu2 = new System.Windows.Forms.ContextMenuStrip();
@@ -196,9 +196,9 @@ namespace TestForm
       this.mnuSize = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuAdd = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuRectangle = new System.Windows.Forms.ToolStripMenuItem();
-      this.mnuElipse = new System.Windows.Forms.ToolStripMenuItem();
+      this.mnuEllipse = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuRectangleNode = new System.Windows.Forms.ToolStripMenuItem();
-      this.mnuElipseNode = new System.Windows.Forms.ToolStripMenuItem();
+      this.mnuEllipseNode = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuConnect = new System.Windows.Forms.ToolStripMenuItem();
       this.menuItem20 = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuOrder = new System.Windows.Forms.ToolStripMenuItem();
@@ -333,9 +333,9 @@ namespace TestForm
       // 
       this.contextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
             this.mnuTbRectangle,
-            this.mnuTbElipse,
+            this.mnuTbEllipse,
             this.mnuTbRectangleNode,
-            this.mnuTbElipseNode,
+            this.mnuTbEllipseNode,
             this.TbCommentBox,
             this.TbCommentBoxNode});
       // 
@@ -344,20 +344,20 @@ namespace TestForm
       this.mnuTbRectangle.Text = "&Rectangle";
       this.mnuTbRectangle.Click += new System.EventHandler(this.mnuTbRectangle_Click);
       // 
-      // mnuTbElipse
+      // mnuTbEllipse
       // 
-      this.mnuTbElipse.Text = "&Elipse";
-      this.mnuTbElipse.Click += new System.EventHandler(this.mnuTbElipse_Click);
+      this.mnuTbEllipse.Text = "&Ellipse";
+      this.mnuTbEllipse.Click += new System.EventHandler(this.mnuTbEllipse_Click);
       // 
       // mnuTbRectangleNode
       // 
       this.mnuTbRectangleNode.Text = "&Node Rectangle";
       this.mnuTbRectangleNode.Click += new System.EventHandler(this.mnuTbRectangleNode_Click);
       // 
-      // mnuTbElipseNode
+      // mnuTbEllipseNode
       // 
-      this.mnuTbElipseNode.Text = "N&ode Elipse";
-      this.mnuTbElipseNode.Click += new System.EventHandler(this.mnuTbElipseNode_Click);
+      this.mnuTbEllipseNode.Text = "N&ode Ellipse";
+      this.mnuTbEllipseNode.Click += new System.EventHandler(this.mnuTbEllipseNode_Click);
       // 
       // TbCommentBox
       // 
@@ -628,9 +628,9 @@ namespace TestForm
       // 
       this.mnuAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
             this.mnuRectangle,
-            this.mnuElipse,
+            this.mnuEllipse,
             this.mnuRectangleNode,
-            this.mnuElipseNode});
+            this.mnuEllipseNode});
       this.mnuAdd.Text = "&Add";
       // 
       // mnuRectangle
@@ -638,20 +638,20 @@ namespace TestForm
       this.mnuRectangle.Text = "&Rectangle";
       this.mnuRectangle.Click += new System.EventHandler(this.mnuRectangle_Click);
       // 
-      // mnuElipse
+      // mnuEllipse
       // 
-      this.mnuElipse.Text = "&Elipse";
-      this.mnuElipse.Click += new System.EventHandler(this.mnuElipse_Click);
+      this.mnuEllipse.Text = "&Ellipse";
+      this.mnuEllipse.Click += new System.EventHandler(this.mnuEllipse_Click);
       // 
       // mnuRectangleNode
       // 
       this.mnuRectangleNode.Text = "&Node Rectangle";
       this.mnuRectangleNode.Click += new System.EventHandler(this.mnuRectangleNode_Click);
       // 
-      // mnuElipseNode
+      // mnuEllipseNode
       // 
-      this.mnuElipseNode.Text = "N&ode Elipse";
-      this.mnuElipseNode.Click += new System.EventHandler(this.mnuElipseNode_Click);
+      this.mnuEllipseNode.Text = "N&ode Ellipse";
+      this.mnuEllipseNode.Click += new System.EventHandler(this.mnuEllipseNode_Click);
       // 
       // mnuConnect
       // 
@@ -869,12 +869,12 @@ namespace TestForm
 
       mnuRectangle.Checked = false;
       mnuTbRectangle.Checked = false;
-      mnuElipse.Checked = false;
-      mnuTbElipse.Checked = false;
+      mnuEllipse.Checked = false;
+      mnuTbEllipse.Checked = false;
       mnuRectangleNode.Checked = false;
       mnuTbRectangleNode.Checked = false;
-      mnuElipseNode.Checked = false;
-      mnuTbElipseNode.Checked = false;
+      mnuEllipseNode.Checked = false;
+      mnuTbEllipseNode.Checked = false;
 
 
     }
@@ -898,17 +898,17 @@ namespace TestForm
           mnuRectangle.Checked = true;
           mnuTbRectangle.Checked = true;
           break;
-        case ElementType.Elipse:
-          mnuElipse.Checked = true;
-          mnuTbElipse.Checked = true;
+        case ElementType.Ellipse:
+          mnuEllipse.Checked = true;
+          mnuTbEllipse.Checked = true;
           break;
         case ElementType.RectangleNode:
           mnuRectangleNode.Checked = true;
           mnuTbRectangleNode.Checked = true;
           break;
-        case ElementType.ElipseNode:
-          mnuElipseNode.Checked = true;
-          mnuTbElipseNode.Checked = true;
+        case ElementType.EllipseNode:
+          mnuEllipseNode.Checked = true;
+          mnuTbEllipseNode.Checked = true;
           break;
 
       }
@@ -1078,9 +1078,9 @@ namespace TestForm
       Action_Add(ElementType.Rectangle);
     }
 
-    private void mnuElipse_Click(object sender, System.EventArgs e)
+    private void mnuEllipse_Click(object sender, System.EventArgs e)
     {
-      Action_Add(ElementType.Elipse);
+      Action_Add(ElementType.Ellipse);
     }
 
     private void mnuRectangleNode_Click(object sender, System.EventArgs e)
@@ -1088,9 +1088,9 @@ namespace TestForm
       Action_Add(ElementType.RectangleNode);
     }
 
-    private void mnuElipseNode_Click(object sender, System.EventArgs e)
+    private void mnuEllipseNode_Click(object sender, System.EventArgs e)
     {
-      Action_Add(ElementType.ElipseNode);
+      Action_Add(ElementType.EllipseNode);
     }
 
     private void mnuDelete_Click(object sender, System.EventArgs e)
@@ -1192,9 +1192,9 @@ namespace TestForm
       Action_Add(ElementType.Rectangle);
     }
 
-    private void mnuTbElipse_Click(object sender, System.EventArgs e)
+    private void mnuTbEllipse_Click(object sender, System.EventArgs e)
     {
-      Action_Add(ElementType.Elipse);
+      Action_Add(ElementType.Ellipse);
     }
 
     private void mnuTbRectangleNode_Click(object sender, System.EventArgs e)
@@ -1202,9 +1202,9 @@ namespace TestForm
       Action_Add(ElementType.RectangleNode);
     }
 
-    private void mnuTbElipseNode_Click(object sender, System.EventArgs e)
+    private void mnuTbEllipseNode_Click(object sender, System.EventArgs e)
     {
-      Action_Add(ElementType.ElipseNode);
+      Action_Add(ElementType.EllipseNode);
     }
 
     private void TbCommentBox_Click(object sender, System.EventArgs e)

@@ -10,7 +10,7 @@ public enum ElementType
 {
   Rectangle,
   RectangleNode,
-  Elipse,
-  ElipseNode,
+  Ellipse,
+  EllipseNode,
   CommentBox,
 }
