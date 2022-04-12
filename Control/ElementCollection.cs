@@ -18,10 +18,6 @@ public class ElementCollection : Collection<BaseElement>
   private bool _enabledCalc = true;
   private bool _needCalc = true;
 
-  public ElementCollection()
-  {
-  }
-
   public new virtual void Add(BaseElement element)
   {
     this._needCalc = true;
@@ -48,9 +44,7 @@ public class ElementCollection : Collection<BaseElement>
 
   public void ChangeIndex(int i, int y)
   {
-    var inner = this[y];
-    // TODO   this[y] = this[i];
-    // TODO   this[i] = inner;
+    (this[y], this[i]) = (this[i], this[y]);
   }
 
   public BaseElement[] GetArray()
