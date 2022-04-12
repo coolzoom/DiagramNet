@@ -965,7 +965,7 @@ namespace TestForm
     private void File_Open()
     {
       openFileDialog1.FileName = FileName;
-      openFileDialog1.Filter = "全部dgn文件(*.dgn)|*.dgn|全部文件(*.*)|*.*";
+      openFileDialog1.Filter = "Diagram.Net files (*.dgn)|*.dgn|All files (*.*)|*.*";
       openFileDialog1.DefaultExt = ".dgn";
       if (openFileDialog1.ShowDialog(this) == DialogResult.OK)
       {
@@ -992,7 +992,7 @@ namespace TestForm
     private void File_SaveAs()
     {
       saveFileDialog1.FileName = FileName;
-      saveFileDialog1.Filter = "全部dgn文件(*.dgn)|*.dgn|全部文件(*.*)|*.*";
+      saveFileDialog1.Filter = "Diagram.Net files (*.dgn)|*.dgn|All files (*.*)|*.*";
       saveFileDialog1.DefaultExt = ".dgn";
       if (saveFileDialog1.ShowDialog(this) == DialogResult.OK)
       {
