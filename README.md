@@ -7,7 +7,7 @@ Put _Diagram.NET_ WinForm Control into your form and, like Microsoft Visio®,
 the user can draw shapes and links. With some code you can control, change,
 add and delete these elements.
 
-## Background
+# Background
 <details>
 
 This would appear to have been a reasonably popular diagramming control
