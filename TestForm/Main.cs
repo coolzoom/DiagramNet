@@ -19,9 +19,9 @@ namespace TestForm
 
     private System.Windows.Forms.ToolStrip toolBar1;
     private System.Windows.Forms.ToolStripButton btnSize;
-    private System.Windows.Forms.ToolStripButton btnAdd;
+    private System.Windows.Forms.ToolStripDropDownButton btnAdd;
     private System.Windows.Forms.ToolStripButton btnDelete;
-    private System.Windows.Forms.ToolStripButton btnConnect;
+    private System.Windows.Forms.ToolStripDropDownButton btnConnect;
     private System.Windows.Forms.ImageList imageList1;
     private System.Windows.Forms.ContextMenuStrip contextMenu1;
     private System.Windows.Forms.ToolStripSeparator sep1;
@@ -82,7 +82,7 @@ namespace TestForm
     private System.Windows.Forms.ToolStripButton btnCopy;
     private System.Windows.Forms.ToolStripButton btnPaste;
     private System.Windows.Forms.ToolStripSeparator sep5;
-    private System.Windows.Forms.ToolStripButton btnZoom;
+    private System.Windows.Forms.ToolStripDropDownButton btnZoom;
     private System.Windows.Forms.ContextMenuStrip contextMenu_Zoom;
     private System.Windows.Forms.ToolStripMenuItem mnuZoom_10;
     private System.Windows.Forms.ToolStripMenuItem mnuZoom_25;
@@ -147,14 +147,14 @@ namespace TestForm
       this.btnDelete = new System.Windows.Forms.ToolStripButton();
       this.sep4 = new System.Windows.Forms.ToolStripSeparator();
       this.btnSize = new System.Windows.Forms.ToolStripButton();
-      this.btnAdd = new System.Windows.Forms.ToolStripButton();
+      this.btnAdd = new System.Windows.Forms.ToolStripDropDownButton();
       this.contextMenu1 = new System.Windows.Forms.ContextMenuStrip();
       this.mnuTbRectangle = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuTbElipse = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuTbRectangleNode = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuTbElipseNode = new System.Windows.Forms.ToolStripMenuItem();
       this.TbCommentBox = new System.Windows.Forms.ToolStripMenuItem();
-      this.btnConnect = new System.Windows.Forms.ToolStripButton();
+      this.btnConnect = new System.Windows.Forms.ToolStripDropDownButton();
       this.contextMenu2 = new System.Windows.Forms.ContextMenuStrip();
       this.mnuTbStraightLink = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuTbRightAngleLink = new System.Windows.Forms.ToolStripMenuItem();
@@ -162,7 +162,7 @@ namespace TestForm
       this.btnUndo = new System.Windows.Forms.ToolStripButton();
       this.btnRedo = new System.Windows.Forms.ToolStripButton();
       this.sep3 = new System.Windows.Forms.ToolStripSeparator();
-      this.btnZoom = new System.Windows.Forms.ToolStripButton();
+      this.btnZoom = new System.Windows.Forms.ToolStripDropDownButton();
       this.contextMenu_Zoom = new System.Windows.Forms.ContextMenuStrip();
       this.mnuZoom_10 = new System.Windows.Forms.ToolStripMenuItem();
       this.mnuZoom_25 = new System.Windows.Forms.ToolStripMenuItem();
@@ -322,7 +322,7 @@ namespace TestForm
       // 
       // btnAdd
       // 
-      // TODO   this.btnAdd.DropDown= this.contextMenu1;
+      this.btnAdd.DropDown= this.contextMenu1;
       this.btnAdd.ImageIndex = 1;
       this.btnAdd.Name = "btnAdd";
       // TODO   this.btnAdd.Style = System.Windows.Forms.ToolBarButtonStyle.DropDownButton;
@@ -366,7 +366,7 @@ namespace TestForm
       // 
       // btnConnect
       // 
-      // TODO   this.btnConnect.DropDownMenu = this.contextMenu2;
+      this.btnConnect.DropDown = this.contextMenu2;
       this.btnConnect.ImageIndex = 3;
       this.btnConnect.Name = "btnConnect";
       // TODO   this.btnConnect.Style = System.Windows.Forms.ToolBarButtonStyle.DropDownButton;
@@ -415,7 +415,7 @@ namespace TestForm
       // 
       // btnZoom
       // 
-      // TODO   this.btnZoom.DropDownMenu = this.contextMenu_Zoom;
+      this.btnZoom.DropDown = this.contextMenu_Zoom;
       this.btnZoom.ImageIndex = 16;
       this.btnZoom.Name = "btnZoom";
       // TODO   this.btnZoom.Style = System.Windows.Forms.ToolBarButtonStyle.DropDownButton;
@@ -863,9 +863,9 @@ namespace TestForm
       mnuConnect.Checked = false;
 
       btnSize.CheckOnClick = false;
-      btnAdd.CheckOnClick = false;
+      // TODO   btnAdd.Pushed = false;
       btnDelete.CheckOnClick = false;
-      btnConnect.CheckOnClick = false;
+      // TODO   btnConnect.Pushed = false;
 
       mnuRectangle.Checked = false;
       mnuTbRectangle.Checked = false;
@@ -891,7 +891,7 @@ namespace TestForm
     private void Action_Add(ElementType e)
     {
       Action_None();
-      btnAdd.CheckOnClick = true;
+      // TODO   btnAdd.Pushed = true;
       switch (e)
       {
         case ElementType.Rectangle:
@@ -934,7 +934,7 @@ namespace TestForm
     {
       Action_None();
       mnuConnect.Checked = true;
-      btnConnect.CheckOnClick = true;
+      // TODO   btnConnect.Pushed = true;
       if (changeDocumentProp)
         designer1.Document.Action = DesignerAction.Connect;
     }
