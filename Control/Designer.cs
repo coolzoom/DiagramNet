@@ -781,6 +781,15 @@ public class Designer : UserControl
       case ElementType.CommentBox:
         el = new CommentBoxElement(selectionRectangle);
         break;
+      case ElementType.DiagramBlock:
+        // TODO   DiagramBlock
+        var img = new Bitmap(selectionRectangle.Width, selectionRectangle.Height);
+        var labelText = "LabelText";
+        var blockState = new object();
+        var inputStates = new[] { new object() };
+        var outputStates = new[] { new object() };
+        el = new DiagramBlock(img, labelText, blockState, inputStates, outputStates, null);
+        break;
       default:
         el = new RectangleNode(selectionRectangle);
         break;

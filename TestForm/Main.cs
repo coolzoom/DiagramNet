@@ -92,6 +92,7 @@ public class Form1 : System.Windows.Forms.Form
   private System.Windows.Forms.ToolStripMenuItem TbCommentBox;
   private ToolStripMenuItem menuSaveas;
   private ToolStripMenuItem TbCommentBoxNode;
+  private ToolStripMenuItem TbDiagramBlockNode;
   private System.ComponentModel.IContainer components;
 
   public Form1()
@@ -212,6 +213,7 @@ public class Form1 : System.Windows.Forms.Form
     this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
     this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
     this.TbCommentBoxNode = new System.Windows.Forms.ToolStripMenuItem();
+    this.TbDiagramBlockNode = new System.Windows.Forms.ToolStripMenuItem();
     this.panel1.SuspendLayout();
     this.SuspendLayout();
     // 
@@ -330,7 +332,9 @@ public class Form1 : System.Windows.Forms.Form
       this.mnuTbRectangleNode,
       this.mnuTbEllipseNode,
       this.TbCommentBox,
-      this.TbCommentBoxNode});
+      this.TbCommentBoxNode,
+      this.TbDiagramBlockNode
+    });
     // 
     // mnuTbRectangle
     // 
@@ -792,6 +796,11 @@ public class Form1 : System.Windows.Forms.Form
     this.TbCommentBoxNode.Text = "Comment Box Node";
     this.TbCommentBoxNode.Click += new System.EventHandler(this.TbCommentBoxNode_Click);
     // 
+    // TbDiagramBlockNode
+    // 
+    this.TbDiagramBlockNode.Text = "Diagram Block Node";
+    this.TbDiagramBlockNode.Click += new System.EventHandler(this.TbDiagramBlockNode_Click);
+    // 
     // Form1
     // 
     this.AutoScaleBaseSize = new System.Drawing.Size(6, 14);
@@ -808,7 +817,6 @@ public class Form1 : System.Windows.Forms.Form
     this.panel1.PerformLayout();
     this.ResumeLayout(false);
     this.PerformLayout();
-
   }
   #endregion
 
@@ -869,8 +877,6 @@ public class Form1 : System.Windows.Forms.Form
     mnuTbRectangleNode.Checked = false;
     mnuEllipseNode.Checked = false;
     mnuTbEllipseNode.Checked = false;
-
-
   }
 
   private void Action_Size()
@@ -904,7 +910,8 @@ public class Form1 : System.Windows.Forms.Form
         mnuEllipseNode.Checked = true;
         mnuTbEllipseNode.Checked = true;
         break;
-
+      case ElementType.DiagramBlock:
+        break;
     }
 
     if (changeDocumentProp)
@@ -1388,5 +1395,10 @@ public class Form1 : System.Windows.Forms.Form
   private void TbCommentBoxNode_Click(object sender, EventArgs e)
   {
     Action_Add(ElementType.CommentBox);
+  }
+
+  private void TbDiagramBlockNode_Click(object sender, EventArgs e)
+  {
+    Action_Add(ElementType.DiagramBlock);
   }
 }
