@@ -21,6 +21,7 @@ public class DiagramBlock : NodeElement, IControllable
   private string _labelText;
   private object[] _inputStates;
   private object[] _outputStates;
+  [NonSerialized]
   private PropertyInfo _connectionTextProperty;
   private static int _nextPosition = 50;
 
