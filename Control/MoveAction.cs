@@ -125,7 +125,7 @@ internal class MoveAction
   {
     var points = new Point[this._document.SelectedElements.Count];
     var index = 0;
-    foreach (BaseElement selectedElement in (ReadOnlyCollectionBase) this._document.SelectedElements)
+    foreach (BaseElement selectedElement in this._document.SelectedElements)
     {
       points[index] = selectedElement.Location;
       ++index;
@@ -137,7 +137,7 @@ internal class MoveAction
   {
     foreach (var connector in node.Connectors)
     {
-      foreach (BaseLinkElement link in (ReadOnlyCollectionBase) connector.Links)
+      foreach (BaseLinkElement link in connector.Links)
       {
         var controller = ((IControllable) link).GetController();
         if (controller is IMoveController)

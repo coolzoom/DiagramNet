@@ -56,7 +56,7 @@ public class ConnectorElement : RectangleElement, IControllable
     {
       if (value == base.Location)
         return;
-      foreach (BaseLinkElement link in (ReadOnlyCollectionBase) this.Links)
+      foreach (BaseLinkElement link in this.Links)
         link.NeedCalcLink = true;
       base.Location = value;
     }
@@ -69,7 +69,7 @@ public class ConnectorElement : RectangleElement, IControllable
     {
       if (value == base.Size)
         return;
-      foreach (BaseLinkElement link in (ReadOnlyCollectionBase) this.Links)
+      foreach (BaseLinkElement link in this.Links)
         link.NeedCalcLink = true;
       base.Size = value;
     }

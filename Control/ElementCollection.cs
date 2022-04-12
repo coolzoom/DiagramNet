@@ -7,10 +7,10 @@
 namespace DiagramNet;
 
 using DiagramNet.Elements;
-using System.Collections;
+using System.Collections.ObjectModel;
 
 [Serializable]
-public class ElementCollection : ReadOnlyCollectionBase
+public class ElementCollection : Collection<BaseElement>
 {
   public const int MaxIntSize = 100;
   private Point _location = new Point(100, 100);
@@ -18,60 +18,54 @@ public class ElementCollection : ReadOnlyCollectionBase
   private bool _enabledCalc = true;
   private bool _needCalc = true;
 
-  internal ElementCollection()
+  public ElementCollection()
   {
   }
 
-  public BaseElement this[int item] => (BaseElement) this.InnerList[item];
-
-  public virtual int Add(BaseElement element)
+  public new virtual void Add(BaseElement element)
   {
     this._needCalc = true;
-    return this.InnerList.Add((object) element);
+    base.Add(element);
   }
 
-  public bool Contains(BaseElement element) => this.InnerList.Contains((object) element);
-
-  public int IndexOf(BaseElement element) => this.InnerList.IndexOf((object) element);
-
-  internal void Insert(int index, BaseElement element)
+  public new void Insert(int index, BaseElement element)
   {
     this._needCalc = true;
-    this.InnerList.Insert(index, (object) element);
+    base.Insert(index, element);
   }
 
-  internal void Remove(BaseElement element)
+  public new void Remove(BaseElement element)
   {
-    this.InnerList.Remove((object) element);
+    base.Remove(element);
     this._needCalc = true;
   }
 
-  internal void Clear()
+  public new void Clear()
   {
-    this.InnerList.Clear();
+    base.Clear();
     this._needCalc = true;
   }
 
-  internal void ChangeIndex(int i, int y)
+  public void ChangeIndex(int i, int y)
   {
-    var inner = this.InnerList[y];
-    this.InnerList[y] = this.InnerList[i];
-    this.InnerList[i] = inner;
+    var inner = this[y];
+    // TODO   this[y] = this[i];
+    // TODO   this[i] = inner;
   }
 
   public BaseElement[] GetArray()
   {
-    var array = new BaseElement[this.InnerList.Count];
-    for (var index = 0; index <= this.InnerList.Count - 1; ++index)
-      array[index] = (BaseElement) this.InnerList[index];
+    var array = new BaseElement[this.Count];
+    for (var index = 0; index <= this.Count - 1; ++index)
+      array[index] = (BaseElement) this[index];
     return array;
   }
 
   public BaseElement[] GetArrayClone()
   {
-    var arrayClone = new BaseElement[this.InnerList.Count];
-    for (var index = 0; index <= this.InnerList.Count - 1; ++index)
-      arrayClone[index] = ((BaseElement) this.InnerList[index]).Clone();
+    var arrayClone = new BaseElement[this.Count];
+    for (var index = 0; index <= this.Count - 1; ++index)
+      arrayClone[index] = ((BaseElement) this[index]).Clone();
     return arrayClone;
   }
 
@@ -120,9 +114,9 @@ public class ElementCollection : ReadOnlyCollectionBase
     this._location.Y = 100;
     this._size.Width = 0;
     this._size.Height = 0;
-    foreach (BaseElement element in (ReadOnlyCollectionBase) this)
+    foreach (BaseElement element in this)
       this.CalcWindowLocation(element);
-    foreach (BaseElement element in (ReadOnlyCollectionBase) this)
+    foreach (BaseElement element in this)
       this.CalcWindowSize(element);
     this._needCalc = false;
   }
@@ -152,29 +146,5 @@ public class ElementCollection : ReadOnlyCollectionBase
     if (num2 <= this._size.Height)
       return;
     this._size.Height = num2;
-  }
-
-  public class BaseElementEnumarator : IEnumerator
-  {
-    private readonly IEnumerator _baseEnumarator;
-    private readonly IEnumerable _tmp;
-
-    private BaseElementEnumarator(IEnumerable mapping)
-    {
-      this._tmp = mapping;
-      this._baseEnumarator = this._tmp.GetEnumerator();
-    }
-
-    void IEnumerator.Reset() => this._baseEnumarator.Reset();
-
-    bool IEnumerator.MoveNext() => this._baseEnumarator.MoveNext();
-
-    object IEnumerator.Current => this._baseEnumarator.Current;
-
-    public void Reset() => this._baseEnumarator.Reset();
-
-    public bool MoveNext() => this._baseEnumarator.MoveNext();
-
-    public BaseElement Current => (BaseElement) this._baseEnumarator.Current;
   }
 }

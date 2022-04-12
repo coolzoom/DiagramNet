@@ -125,7 +125,7 @@ public abstract class NodeElement : BaseElement
     var linkedNodes = new ElementCollection();
     foreach (var connect in this.Connects)
     {
-      foreach (BaseLinkElement link in (ReadOnlyCollectionBase) connect.Links)
+      foreach (BaseLinkElement link in connect.Links)
         linkedNodes.Add(link.Connector1 == connect ? (BaseElement) link.Connector2.ParentElement : (BaseElement) link.Connector1.ParentElement);
     }
     return linkedNodes;

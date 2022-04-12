@@ -841,7 +841,7 @@ public class Designer : UserControl
   private void MoveElement(Keys key)
   {
     var num = (Control.ModifierKeys & Keys.Shift) == Keys.Shift ? 10 : 1;
-    foreach (BaseElement selectedElement in (ReadOnlyCollectionBase) this.Document.SelectedElements)
+    foreach (BaseElement selectedElement in this.Document.SelectedElements)
     {
       var location = selectedElement.Location;
       if ((key & Keys.Down) == Keys.Down)
@@ -894,12 +894,12 @@ public class Designer : UserControl
       {
         if ((keyData & Keys.Down) == Keys.Down)
         {
-          foreach (BaseElement selectedElement in (ReadOnlyCollectionBase) this.Document.SelectedElements)
+          foreach (BaseElement selectedElement in this.Document.SelectedElements)
             this.Document.SendToBackElement(selectedElement);
         }
         if ((keyData & Keys.Up) == Keys.Up)
         {
-          foreach (BaseElement selectedElement in (ReadOnlyCollectionBase) this.Document.SelectedElements)
+          foreach (BaseElement selectedElement in this.Document.SelectedElements)
             this.Document.BringToFrontElement(selectedElement);
         }
       }

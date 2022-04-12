@@ -165,7 +165,7 @@ public class Document : IDeserializationCallback
   {
     this.SelectedElements.EnabledCalc = false;
     this.SelectedNodes.EnabledCalc = false;
-    foreach (BaseElement element in (ReadOnlyCollectionBase) this.Elements)
+    foreach (BaseElement element in this.Elements)
     {
       if (element is IControllable && ((IControllable) element).GetController().HitTest(selectionRectangle))
       {
@@ -177,7 +177,7 @@ public class Document : IDeserializationCallback
     }
     if (this.SelectedElements.Count > 1)
     {
-      foreach (BaseElement element1 in (ReadOnlyCollectionBase) this.Elements)
+      foreach (BaseElement element1 in this.Elements)
       {
         if (element1 is BaseLinkElement element2 && (!this.SelectedElements.Contains((BaseElement) element2.Connector1.ParentElement) || !this.SelectedElements.Contains((BaseElement) element2.Connector2.ParentElement)))
           this.SelectedElements.Remove((BaseElement) element2);
@@ -192,7 +192,7 @@ public class Document : IDeserializationCallback
   {
     this.SelectedElements.EnabledCalc = false;
     this.SelectedNodes.EnabledCalc = false;
-    foreach (BaseElement element in (ReadOnlyCollectionBase) this.Elements)
+    foreach (BaseElement element in this.Elements)
     {
       if (!(element is ConnectorElement))
         this.SelectedElements.Add(element);
@@ -242,7 +242,7 @@ public class Document : IDeserializationCallback
 
   private BaseElement FindInnerElement(IContainer parent, Point hitPos)
   {
-    foreach (BaseElement element in (ReadOnlyCollectionBase) parent.Elements)
+    foreach (BaseElement element in parent.Elements)
     {
       if (element is IContainer)
       {
@@ -617,7 +617,7 @@ public class Document : IDeserializationCallback
 
   private void RecreateEventsHandlers()
   {
-    foreach (BaseElement element in (ReadOnlyCollectionBase) this.Elements)
+    foreach (BaseElement element in this.Elements)
       element.AppearanceChanged += new EventHandler(this.ElementAppearanceChanged);
   }
 
