@@ -13,4 +13,5 @@ public enum ElementType
   Ellipse,
   EllipseNode,
   CommentBox,
+  DiagramBlock
 }
