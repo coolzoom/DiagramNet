@@ -42,7 +42,7 @@ $ dotnet run --project TestForm/TestForm.csproj
 
 # TODO
 * ~~port to .NET Core 6~~
-* fix test app
+* ~~fix test app~~
+* use JSON serialisation
 * test round trip serialisation
 * ~~company+author+copyright credits~~
-
