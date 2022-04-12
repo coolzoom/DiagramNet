@@ -41,9 +41,9 @@ internal class RightAngleLinkController :
       SelectionCorner = new RectangleElement[0];
   }
 
-  public BaseElement OwnerElement => (BaseElement) El;
+  public BaseElement OwnerElement => El;
 
-  public bool HitTest(Point p) => ((IEnumerable<LineElement>) El.LineElements).Select<LineElement, IController>((Func<LineElement, IController>) (l => ((IControllable) l).GetController())).Any<IController>((Func<IController, bool>) (ctrl => ctrl.HitTest(p)));
+  public bool HitTest(Point p) => El.LineElements.Select<LineElement, IController>(l => ((IControllable) l).GetController()).Any<IController>(ctrl => ctrl.HitTest(p));
 
   bool IController.HitTest(Rectangle r)
   {
@@ -173,6 +173,6 @@ internal class RightAngleLinkController :
     if (El.Lines.Length == 2)
       label.Location = El.Lines[0].Point2;
     else
-      label.PositionBySite((BaseElement) El.Lines[1]);
+      label.PositionBySite(El.Lines[1]);
   }
 }

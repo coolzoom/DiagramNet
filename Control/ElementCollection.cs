@@ -51,7 +51,7 @@ public class ElementCollection : Collection<BaseElement>
   {
     var array = new BaseElement[Count];
     for (var index = 0; index <= Count - 1; ++index)
-      array[index] = (BaseElement) this[index];
+      array[index] = this[index];
     return array;
   }
 
@@ -59,7 +59,7 @@ public class ElementCollection : Collection<BaseElement>
   {
     var arrayClone = new BaseElement[Count];
     for (var index = 0; index <= Count - 1; ++index)
-      arrayClone[index] = ((BaseElement) this[index]).Clone();
+      arrayClone[index] = this[index].Clone();
     return arrayClone;
   }
 

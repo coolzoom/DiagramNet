@@ -40,7 +40,7 @@ public abstract class BaseLinkElement : BaseElement
       Connector1Value = value;
       NeedCalcLinkValue = true;
       Connector1Value.AddLink(this);
-      OnConnectorChanged(new EventArgs());
+      OnConnectorChanged(EventArgs.Empty);
     }
   }
 
@@ -56,7 +56,7 @@ public abstract class BaseLinkElement : BaseElement
       Connector2Value = value;
       NeedCalcLinkValue = true;
       Connector2Value.AddLink(this);
-      OnConnectorChanged(new EventArgs());
+      OnConnectorChanged(EventArgs.Empty);
     }
   }
 
@@ -100,6 +100,6 @@ public abstract class BaseLinkElement : BaseElement
   {
     if (ConnectorChanged == null)
       return;
-    ConnectorChanged((object) this, e);
+    ConnectorChanged(this, e);
   }
 }

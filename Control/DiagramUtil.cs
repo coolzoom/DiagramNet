@@ -24,7 +24,7 @@ internal class DiagramUtil
 
   public static double PointToAngle(Point cartPoint)
   {
-    var num = Math.Atan2((double) cartPoint.Y, (double) cartPoint.X) * (180.0 / Math.PI);
+    var num = Math.Atan2(cartPoint.Y, cartPoint.X) * (180.0 / Math.PI);
     if (num > 0.0 && num < 180.0)
       num = 360.0 - num;
     return Math.Abs(num);
@@ -85,7 +85,7 @@ internal class DiagramUtil
   public static Size MeasureString(string text, Font font)
   {
     var bitmap = new Bitmap(1, 1);
-    var graphics = Graphics.FromImage((Image) bitmap);
+    var graphics = Graphics.FromImage(bitmap);
     var sizeF = graphics.MeasureString(text, font);
     bitmap.Dispose();
     graphics.Dispose();
@@ -95,7 +95,7 @@ internal class DiagramUtil
   public static Size MeasureString(string text, Font font, SizeF layoutArea)
   {
     var bitmap = new Bitmap(1, 1);
-    var graphics = Graphics.FromImage((Image) bitmap);
+    var graphics = Graphics.FromImage(bitmap);
     var sizeF = graphics.MeasureString(text, font, layoutArea);
     bitmap.Dispose();
     graphics.Dispose();
@@ -105,7 +105,7 @@ internal class DiagramUtil
   public static Size MeasureString(string text, Font font, int width)
   {
     var bitmap = new Bitmap(1, 1);
-    var graphics = Graphics.FromImage((Image) bitmap);
+    var graphics = Graphics.FromImage(bitmap);
     var sizeF = graphics.MeasureString(text, font, width);
     bitmap.Dispose();
     graphics.Dispose();
@@ -119,7 +119,7 @@ internal class DiagramUtil
     StringFormat stringFormat)
   {
     var bitmap = new Bitmap(1, 1);
-    var graphics = Graphics.FromImage((Image) bitmap);
+    var graphics = Graphics.FromImage(bitmap);
     var sizeF = graphics.MeasureString(text, font, origin, stringFormat);
     bitmap.Dispose();
     graphics.Dispose();
@@ -133,7 +133,7 @@ internal class DiagramUtil
     StringFormat stringFormat)
   {
     var bitmap = new Bitmap(1, 1);
-    var graphics = Graphics.FromImage((Image) bitmap);
+    var graphics = Graphics.FromImage(bitmap);
     var sizeF = graphics.MeasureString(text, font, layoutArea, stringFormat);
     bitmap.Dispose();
     graphics.Dispose();
@@ -143,7 +143,7 @@ internal class DiagramUtil
   public static Size MeasureString(string text, Font font, int width, StringFormat format)
   {
     var bitmap = new Bitmap(1, 1);
-    var graphics = Graphics.FromImage((Image) bitmap);
+    var graphics = Graphics.FromImage(bitmap);
     var sizeF = graphics.MeasureString(text, font, width, format);
     bitmap.Dispose();
     graphics.Dispose();
@@ -159,7 +159,7 @@ internal class DiagramUtil
     out int linesFilled)
   {
     var bitmap = new Bitmap(1, 1);
-    var graphics = Graphics.FromImage((Image) bitmap);
+    var graphics = Graphics.FromImage(bitmap);
     var sizeF = graphics.MeasureString(text, font, layoutArea, stringFormat, out charactersFitted, out linesFilled);
     bitmap.Dispose();
     graphics.Dispose();
@@ -185,13 +185,13 @@ internal class DiagramUtil
     var destinationIndex = 0;
     if (el is ILabelElement)
     {
-      destinationArray[destinationIndex] = (BaseElement) ((ILabelElement) el).Label;
+      destinationArray[destinationIndex] = ((ILabelElement) el).Label;
       ++destinationIndex;
     }
     if (el is NodeElement)
     {
       var connectors = ((NodeElement) el).Connectors;
-      Array.Copy((Array) connectors, 0, (Array) destinationArray, destinationIndex, connectors.Length);
+      Array.Copy(connectors, 0, destinationArray, destinationIndex, connectors.Length);
     }
     return destinationArray;
   }
@@ -209,8 +209,8 @@ internal class DiagramUtil
       if (elementType1 != elementType2)
         throw new Exception("Arrays isn't the same type");
       var arrayList = new ArrayList(arr1.Length + arr2.Length - 1);
-      arrayList.AddRange((ICollection) arr1);
-      arrayList.AddRange((ICollection) arr2);
+      arrayList.AddRange(arr1);
+      arrayList.AddRange(arr2);
       return arrayList.ToArray(elementType1);
     }
 

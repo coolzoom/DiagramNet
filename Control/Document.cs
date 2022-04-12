@@ -9,7 +9,6 @@ namespace DiagramNet;
 using Elements;
 using Elements.Controllers;
 using Events;
-using System.Collections;
 using System.Drawing.Drawing2D;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -39,8 +38,8 @@ public class Document : IDeserializationCallback
   public void AddElement(BaseElement el)
   {
     Elements.Add(el);
-    el.AppearanceChanged += new EventHandler(ElementAppearanceChanged);
-    OnAppearancePropertyChanged(new EventArgs());
+    el.AppearanceChanged += ElementAppearanceChanged;
+    OnAppearancePropertyChanged(EventArgs.Empty);
   }
 
   public void AddElements(ElementCollection els) => AddElements(els.GetArray());
@@ -60,11 +59,11 @@ public class Document : IDeserializationCallback
     ConnectorElement connEnd)
   {
     if (!CanAddLink(connStart, connEnd))
-      return (BaseLinkElement) null;
-    var element = _linkType != LinkType.Straight ? (BaseLinkElement) new RightAngleLinkElement(connStart, connEnd) : (BaseLinkElement) new StraightLinkElement(connStart, connEnd);
-    Elements.Add((BaseElement) element);
-    element.AppearanceChanged += new EventHandler(ElementAppearanceChanged);
-    OnAppearancePropertyChanged(new EventArgs());
+      return null;
+    var element = _linkType != LinkType.Straight ? new RightAngleLinkElement(connStart, connEnd) : (BaseLinkElement) new StraightLinkElement(connStart, connEnd);
+    Elements.Add(element);
+    element.AppearanceChanged += ElementAppearanceChanged;
+    OnAppearancePropertyChanged(EventArgs.Empty);
     return element;
   }
 
@@ -95,7 +94,7 @@ public class Document : IDeserializationCallback
     if (SelectedElements.Contains(el))
       SelectedElements.Remove(el);
     Elements.Remove(el);
-    OnAppearancePropertyChanged(new EventArgs());
+    OnAppearancePropertyChanged(EventArgs.Empty);
   }
 
   public void DeleteElement(Point p) => DeleteElement(FindElement(p));
@@ -116,20 +115,20 @@ public class Document : IDeserializationCallback
       return;
     lnk.Connector1.RemoveLink(lnk);
     lnk.Connector2.RemoveLink(lnk);
-    if (Elements.Contains((BaseElement) lnk))
-      Elements.Remove((BaseElement) lnk);
-    if (SelectedElements.Contains((BaseElement) lnk))
-      SelectedElements.Remove((BaseElement) lnk);
+    if (Elements.Contains(lnk))
+      Elements.Remove(lnk);
+    if (SelectedElements.Contains(lnk))
+      SelectedElements.Remove(lnk);
     if (callHandler)
-      OnLinkRemoved(new ElementEventArgs((BaseElement) lnk));
-    OnAppearancePropertyChanged(new EventArgs());
+      OnLinkRemoved(new ElementEventArgs(lnk));
+    OnAppearancePropertyChanged(EventArgs.Empty);
   }
 
   public void ClearSelection()
   {
     SelectedElements.Clear();
     SelectedNodes.Clear();
-    OnElementSelection((object) this, new ElementSelectionEventArgs(SelectedElements));
+    OnElementSelection(this, new ElementSelectionEventArgs(SelectedElements));
   }
 
   public void SelectElement(BaseElement el)
@@ -139,7 +138,7 @@ public class Document : IDeserializationCallback
       SelectedNodes.Add(el);
     if (!_canFireEvents)
       return;
-    OnElementSelection((object) this, new ElementSelectionEventArgs(SelectedElements));
+    OnElementSelection(this, new ElementSelectionEventArgs(SelectedElements));
   }
 
   public void SelectElements(BaseElement[] els)
@@ -158,7 +157,7 @@ public class Document : IDeserializationCallback
     }
     SelectedElements.EnabledCalc = true;
     SelectedNodes.EnabledCalc = true;
-    OnElementSelection((object) this, new ElementSelectionEventArgs(SelectedElements));
+    OnElementSelection(this, new ElementSelectionEventArgs(SelectedElements));
   }
 
   public void SelectElements(Rectangle selectionRectangle)
@@ -179,13 +178,13 @@ public class Document : IDeserializationCallback
     {
       foreach (BaseElement element1 in Elements)
       {
-        if (element1 is BaseLinkElement element2 && (!SelectedElements.Contains((BaseElement) element2.Connector1.ParentElement) || !SelectedElements.Contains((BaseElement) element2.Connector2.ParentElement)))
-          SelectedElements.Remove((BaseElement) element2);
+        if (element1 is BaseLinkElement element2 && (!SelectedElements.Contains(element2.Connector1.ParentElement) || !SelectedElements.Contains(element2.Connector2.ParentElement)))
+          SelectedElements.Remove(element2);
       }
     }
     SelectedElements.EnabledCalc = true;
     SelectedNodes.EnabledCalc = true;
-    OnElementSelection((object) this, new ElementSelectionEventArgs(SelectedElements));
+    OnElementSelection(this, new ElementSelectionEventArgs(SelectedElements));
   }
 
   public void SelectAllElements()
@@ -217,7 +216,7 @@ public class Document : IDeserializationCallback
             foreach (var connector in ((NodeElement) element).Connectors)
             {
               if (((IControllable) connector).GetController().HitTest(point))
-                return (BaseElement) connector;
+                return connector;
             }
           }
           if (element is IContainer)
@@ -237,7 +236,7 @@ public class Document : IDeserializationCallback
           return element;
       }
     }
-    return (BaseElement) null;
+    return null;
   }
 
   private BaseElement FindInnerElement(IContainer parent, Point hitPos)
@@ -253,7 +252,7 @@ public class Document : IDeserializationCallback
       if (element is IControllable && ((IControllable) element).GetController().HitTest(hitPos))
         return element;
     }
-    return (BaseElement) null;
+    return null;
   }
 
   public void MoveUpElement(BaseElement el)
@@ -262,7 +261,7 @@ public class Document : IDeserializationCallback
     if (i == Elements.Count - 1)
       return;
     Elements.ChangeIndex(i, i + 1);
-    OnAppearancePropertyChanged(new EventArgs());
+    OnAppearancePropertyChanged(EventArgs.Empty);
   }
 
   public void MoveDownElement(BaseElement el)
@@ -271,7 +270,7 @@ public class Document : IDeserializationCallback
     if (i == 0)
       return;
     Elements.ChangeIndex(i, i - 1);
-    OnAppearancePropertyChanged(new EventArgs());
+    OnAppearancePropertyChanged(EventArgs.Empty);
   }
 
   public void BringToFrontElement(BaseElement el)
@@ -282,7 +281,7 @@ public class Document : IDeserializationCallback
       Elements.ChangeIndex(i, y);
       i = y;
     }
-    OnAppearancePropertyChanged(new EventArgs());
+    OnAppearancePropertyChanged(EventArgs.Empty);
   }
 
   public void SendToBackElement(BaseElement el)
@@ -293,7 +292,7 @@ public class Document : IDeserializationCallback
       Elements.ChangeIndex(i, y);
       i = y;
     }
-    OnAppearancePropertyChanged(new EventArgs());
+    OnAppearancePropertyChanged(EventArgs.Empty);
   }
 
   internal void CalcWindow(bool forceCalc)
@@ -324,7 +323,7 @@ public class Document : IDeserializationCallback
     set
     {
       _smoothingMode = value;
-      OnAppearancePropertyChanged(new EventArgs());
+      OnAppearancePropertyChanged(EventArgs.Empty);
     }
   }
 
@@ -334,7 +333,7 @@ public class Document : IDeserializationCallback
     set
     {
       _pixelOffsetMode = value;
-      OnAppearancePropertyChanged(new EventArgs());
+      OnAppearancePropertyChanged(EventArgs.Empty);
     }
   }
 
@@ -344,7 +343,7 @@ public class Document : IDeserializationCallback
     set
     {
       _compositingQuality = value;
-      OnAppearancePropertyChanged(new EventArgs());
+      OnAppearancePropertyChanged(EventArgs.Empty);
     }
   }
 
@@ -354,7 +353,7 @@ public class Document : IDeserializationCallback
     set
     {
       _action = value;
-      OnPropertyChanged(new EventArgs());
+      OnPropertyChanged(EventArgs.Empty);
     }
   }
 
@@ -363,15 +362,15 @@ public class Document : IDeserializationCallback
     get => _zoom;
     set
     {
-      if ((double) value < 0.100000001490116)
+      if (value < 0.100000001490116)
         value = 0.1f;
-      var flag = (double) Math.Abs(_zoom - value) > 1.40129846432482E-45;
+      var flag = Math.Abs(_zoom - value) > 1.40129846432482E-45;
       _zoom = value;
       GridSize = new Size(Convert.ToInt32(10f * value), Convert.ToInt32(10f * value));
-      OnPropertyChanged(new EventArgs());
+      OnPropertyChanged(EventArgs.Empty);
       if (!flag || ZoomChanged == null)
         return;
-      ZoomChanged((object) this, new EventArgs());
+      ZoomChanged(this, EventArgs.Empty);
     }
   }
 
@@ -381,7 +380,7 @@ public class Document : IDeserializationCallback
     set
     {
       _elementType = value;
-      OnPropertyChanged(new EventArgs());
+      OnPropertyChanged(EventArgs.Empty);
     }
   }
 
@@ -391,7 +390,7 @@ public class Document : IDeserializationCallback
     set
     {
       _linkType = value;
-      OnPropertyChanged(new EventArgs());
+      OnPropertyChanged(EventArgs.Empty);
     }
   }
 
@@ -401,7 +400,7 @@ public class Document : IDeserializationCallback
     set
     {
       _gridSize = value;
-      OnAppearancePropertyChanged(new EventArgs());
+      OnAppearancePropertyChanged(EventArgs.Empty);
     }
   }
 
@@ -547,13 +546,13 @@ public class Document : IDeserializationCallback
     int w,
     int h)
   {
-    var pen = new Pen((Brush) new HatchBrush(HatchStyle.DarkUpwardDiagonal, Color.LightGray, Color.Transparent), 1f);
+    var pen = new Pen(new HatchBrush(HatchStyle.DarkUpwardDiagonal, Color.LightGray, Color.Transparent), 1f);
     var x2 = _location.X + w;
     var y2 = _location.Y + h;
-    if ((double) _windowSize.Width / (double) _zoom > (double) x2)
-      x2 = (int) ((double) _windowSize.Width / (double) _zoom);
-    if ((double) _windowSize.Height / (double) _zoom > (double) y2)
-      y2 = (int) ((double) _windowSize.Height / (double) _zoom);
+    if (_windowSize.Width / (double) _zoom > x2)
+      x2 = (int) (_windowSize.Width / (double) _zoom);
+    if (_windowSize.Height / (double) _zoom > y2)
+      y2 = (int) (_windowSize.Height / (double) _zoom);
     for (var index = 0; index < x2; index += gridSize.Width)
       g.DrawLine(pen, index, 0, index, y2);
     for (var index = 0; index < y2; index += gridSize.Height)
@@ -571,7 +570,7 @@ public class Document : IDeserializationCallback
   {
     if (PropertyChanged == null)
       return;
-    PropertyChanged((object) this, e);
+    PropertyChanged(this, e);
   }
 
   [field: NonSerialized]
@@ -582,7 +581,7 @@ public class Document : IDeserializationCallback
     OnPropertyChanged(e);
     if (AppearancePropertyChanged == null)
       return;
-    AppearancePropertyChanged((object) this, e);
+    AppearancePropertyChanged(this, e);
   }
 
   [field: NonSerialized]
@@ -592,7 +591,7 @@ public class Document : IDeserializationCallback
   {
     if (LinkRemoved == null)
       return;
-    LinkRemoved((object) this, e);
+    LinkRemoved(this, e);
   }
 
   [field: NonSerialized]
@@ -618,7 +617,7 @@ public class Document : IDeserializationCallback
   private void RecreateEventsHandlers()
   {
     foreach (BaseElement element in Elements)
-      element.AppearanceChanged += new EventHandler(ElementAppearanceChanged);
+      element.AppearanceChanged += ElementAppearanceChanged;
   }
 
   [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]

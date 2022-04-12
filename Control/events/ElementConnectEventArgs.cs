@@ -31,11 +31,11 @@ public class ElementConnectEventArgs : EventArgs
   {
     var str = "";
     if (_node1 != null)
-      str = str + "Node1:" + (object) _node1;
+      str = str + "Node1:" + _node1;
     if (_node2 != null)
-      str = str + "Node2:" + (object) _node2;
+      str = str + "Node2:" + _node2;
     if (_link != null)
-      str = str + "Link:" + (object) _link;
+      str = str + "Link:" + _link;
     return str;
   }
 }

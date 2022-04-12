@@ -116,7 +116,7 @@ public class EllipseNode : NodeElement, IControllable, ILabelElement
     set
     {
       _label = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -136,5 +136,5 @@ public class EllipseNode : NodeElement, IControllable, ILabelElement
     _ellipse.Draw(g);
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new EllipseController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new EllipseController(this));
 }

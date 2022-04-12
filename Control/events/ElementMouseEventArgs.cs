@@ -21,5 +21,5 @@ public class ElementMouseEventArgs : ElementEventArgs
 
   public int Y { get; set; }
 
-  public override string ToString() => base.ToString() + " X:" + (object) X + " Y:" + (object) Y;
+  public override string ToString() => base.ToString() + " X:" + X + " Y:" + Y;
 }

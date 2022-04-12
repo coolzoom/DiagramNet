@@ -47,16 +47,16 @@ public class EllipseElement : RectangleElement, IControllable
     }
     else
     {
-      color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), FillColor1Value);
-      color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), FillColor2Value);
+      color = Color.FromArgb((int) (byte.MaxValue * (OpacityValue / 100.0)), FillColor1Value);
+      color2 = Color.FromArgb((int) (byte.MaxValue * (OpacityValue / 100.0)), FillColor2Value);
     }
-    var brush = !(FillColor2Value == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(unsignedRectangle.X, unsignedRectangle.Y, unsignedRectangle.Width + 1, unsignedRectangle.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
+    var brush = !(FillColor2Value == Color.Empty) ? new LinearGradientBrush(new Rectangle(unsignedRectangle.X, unsignedRectangle.Y, unsignedRectangle.Width + 1, unsignedRectangle.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
     g.FillEllipse(brush, unsignedRectangle);
-    var pen = new Pen(BorderColorValue, (float) BorderWidthValue);
+    var pen = new Pen(BorderColorValue, BorderWidthValue);
     g.DrawEllipse(pen, unsignedRectangle);
     pen.Dispose();
     brush.Dispose();
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new EllipseController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new EllipseController(this));
 }

@@ -70,7 +70,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
       _text = value;
       if (_autoSize)
         DoAutoSize();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -82,7 +82,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
       _font = value;
       if (_autoSize)
         DoAutoSize();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -95,7 +95,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
       _format.Alignment = _alignment;
       if (_autoSize)
         DoAutoSize();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -108,7 +108,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
       _format.LineAlignment = _lineAlignment;
       if (_autoSize)
         DoAutoSize();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -121,7 +121,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
       _format.Trimming = _trimming;
       if (_autoSize)
         DoAutoSize();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -137,7 +137,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
         _format.FormatFlags |= StringFormatFlags.NoWrap;
       if (_autoSize)
         DoAutoSize();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -153,7 +153,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
         _format.FormatFlags &= ~StringFormatFlags.DirectionVertical;
       if (_autoSize)
         DoAutoSize();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -163,7 +163,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     set
     {
       _readOnly = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -173,7 +173,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     set
     {
       _foreColor1 = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -183,7 +183,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     set
     {
       _foreColor2 = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -193,7 +193,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     set
     {
       _backColor1 = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -203,7 +203,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     set
     {
       _backColor2 = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -215,7 +215,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
       _autoSize = value;
       if (_autoSize)
         DoAutoSize();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -237,7 +237,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
   {
     if (_text.Length == 0)
       return;
-    var size = Size.Round(Graphics.FromImage((Image) new Bitmap(1, 1)).MeasureString(_text, _font, SizeValue.Width, _format));
+    var size = Size.Round(Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_text, _font, SizeValue.Width, _format));
     if (SizeValue.Height >= size.Height)
       return;
     SizeValue.Height = size.Height;
@@ -254,10 +254,10 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     }
     else
     {
-      color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), _backColor1);
-      color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), _backColor2);
+      color = Color.FromArgb((int) (byte.MaxValue * (OpacityValue / 100.0)), _backColor1);
+      color2 = Color.FromArgb((int) (byte.MaxValue * (OpacityValue / 100.0)), _backColor2);
     }
-    return !(_backColor2 == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(r.X, r.Y, r.Width + 1, r.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
+    return !(_backColor2 == Color.Empty) ? new LinearGradientBrush(new Rectangle(r.X, r.Y, r.Width + 1, r.Height + 1), color, color2, LinearGradientMode.Horizontal) : new SolidBrush(color);
   }
 
   private Brush GetBrushForeColor(Rectangle r)
@@ -271,10 +271,10 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     }
     else
     {
-      color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), _foreColor1);
-      color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), _foreColor2);
+      color = Color.FromArgb((int) (byte.MaxValue * (OpacityValue / 100.0)), _foreColor1);
+      color2 = Color.FromArgb((int) (byte.MaxValue * (OpacityValue / 100.0)), _foreColor2);
     }
-    return !(_foreColor2 == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(r.X, r.Y, r.Width + 1, r.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
+    return !(_foreColor2 == Color.Empty) ? new LinearGradientBrush(new Rectangle(r.X, r.Y, r.Width + 1, r.Height + 1), color, color2, LinearGradientMode.Horizontal) : new SolidBrush(color);
   }
 
   internal override void Draw(Graphics g)
@@ -282,14 +282,14 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     var unsignedRectangle = GetUnsignedRectangle();
     g.FillRectangle(GetBrushBackColor(unsignedRectangle), unsignedRectangle);
     var brushForeColor = GetBrushForeColor(unsignedRectangle);
-    g.DrawString(_text, _font, brushForeColor, (RectangleF) unsignedRectangle, _format);
+    g.DrawString(_text, _font, brushForeColor, unsignedRectangle, _format);
     DrawBorder(g, unsignedRectangle);
     brushForeColor.Dispose();
   }
 
   private void DrawBorder(Graphics g, Rectangle r)
   {
-    var pen = new Pen(BorderColorValue, (float) BorderWidthValue);
+    var pen = new Pen(BorderColorValue, BorderWidthValue);
     g.DrawRectangle(pen, r);
     pen.Dispose();
   }
@@ -302,7 +302,7 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
       if (!(serializableMember.DeclaringType == type))
       {
         var fieldInfo = (FieldInfo) serializableMember;
-        fieldInfo.SetValue((object) this, info.GetValue(fieldInfo.Name, fieldInfo.FieldType));
+        fieldInfo.SetValue(this, info.GetValue(fieldInfo.Name, fieldInfo.FieldType));
       }
     }
     ForeColor1 = (Color) info.GetValue("foreColor1", typeof (Color));
@@ -323,29 +323,29 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
   [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
   void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
   {
-    info.AddValue("foreColor1", (object) _foreColor1);
-    info.AddValue("foreColor2", (object) _foreColor2);
-    info.AddValue("backColor1", (object) _backColor1);
-    info.AddValue("backColor2", (object) _backColor2);
-    info.AddValue("text", (object) _text);
-    info.AddValue("alignment", (object) _alignment);
-    info.AddValue("lineAlignment", (object) _lineAlignment);
-    info.AddValue("trimming", (object) _trimming);
+    info.AddValue("foreColor1", _foreColor1);
+    info.AddValue("foreColor2", _foreColor2);
+    info.AddValue("backColor1", _backColor1);
+    info.AddValue("backColor2", _backColor2);
+    info.AddValue("text", _text);
+    info.AddValue("alignment", _alignment);
+    info.AddValue("lineAlignment", _lineAlignment);
+    info.AddValue("trimming", _trimming);
     info.AddValue("wrap", _wrap);
     info.AddValue("vertical", _vertical);
     info.AddValue("readOnly", _readOnly);
     info.AddValue("autoSize", _autoSize);
     var fontConverter = new FontConverter();
-    info.AddValue("font", (object) fontConverter.ConvertToString((object) _font));
+    info.AddValue("font", fontConverter.ConvertToString(_font));
     var type = typeof (LabelElement);
     foreach (var serializableMember in FormatterServices.GetSerializableMembers(type, context))
     {
       if (!(serializableMember.DeclaringType == type))
-        info.AddValue(serializableMember.Name, ((FieldInfo) serializableMember).GetValue((object) this));
+        info.AddValue(serializableMember.Name, ((FieldInfo) serializableMember).GetValue(this));
     }
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new RectangleController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new RectangleController(this));
 
   internal void PositionBySite(BaseElement site)
   {

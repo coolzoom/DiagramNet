@@ -45,7 +45,7 @@ internal class EditLabelAction
         _labelTextBox.TextAlign = HorizontalAlignment.Right;
         break;
     }
-    _labelTextBox.KeyPress += new KeyPressEventHandler(LabelTextBoxKeyPress);
+    _labelTextBox.KeyPress += LabelTextBoxKeyPress;
     _labelTextBox.Focus();
     _center.X = textBox.Location.X + textBox.Size.Width / 2;
     _center.Y = textBox.Location.Y + textBox.Size.Height / 2;
@@ -55,7 +55,7 @@ internal class EditLabelAction
   {
     if (_siteLabelElement == null)
       return;
-    _labelTextBox.KeyPress -= new KeyPressEventHandler(LabelTextBoxKeyPress);
+    _labelTextBox.KeyPress -= LabelTextBoxKeyPress;
     var labelController = ControllerHelper.GetLabelController(_siteLabelElement);
     _labelElement.Size = MeasureTextSize();
     _labelElement.Text = _labelTextBox.Text;
@@ -65,9 +65,9 @@ internal class EditLabelAction
     else
       _labelElement.PositionBySite(_siteLabelElement);
     _labelElement.Invalidate();
-    _siteLabelElement = (BaseElement) null;
-    _labelElement = (LabelElement) null;
-    _labelTextBox = (TextBox) null;
+    _siteLabelElement = null;
+    _labelElement = null;
+    _labelTextBox = null;
   }
 
   public static void SetTextBoxLocation(BaseElement el, TextBox tb)
@@ -97,7 +97,7 @@ internal class EditLabelAction
         tb.Location = new Point(el.Location.X, el.Location.Y + el.Size.Height / 2 - size.Height / 2);
       }
     }
-    SetTextBoxBorder((Control) tb);
+    SetTextBoxBorder(tb);
   }
 
   private static void SetTextBoxBorder(Control tb)

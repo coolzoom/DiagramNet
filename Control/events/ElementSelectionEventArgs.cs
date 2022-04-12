@@ -14,5 +14,5 @@ public class ElementSelectionEventArgs : EventArgs
 
   public ElementCollection Elements => _elements;
 
-  public override string ToString() => "ElementCollection: " + (object) _elements.Count;
+  public override string ToString() => "ElementCollection: " + _elements.Count;
 }

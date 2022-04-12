@@ -25,5 +25,5 @@ public class ElementEventArgs : EventArgs
 
   public BaseElement PreviousElement => _previousElement;
 
-  public override string ToString() => "el: " + (object) _element.GetHashCode();
+  public override string ToString() => "el: " + _element.GetHashCode();
 }

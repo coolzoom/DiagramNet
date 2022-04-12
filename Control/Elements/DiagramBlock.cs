@@ -89,12 +89,12 @@ public class DiagramBlock : NodeElement, IControllable
     {
       Connects = new ConnectorElement[inputStates.Length + outputStates.Length];
       for (var index = 0; index < inputStates.Length; ++index)
-        Connects[index] = new ConnectorElement((NodeElement) this)
+        Connects[index] = new ConnectorElement(this)
         {
           State = inputStates[index]
         };
       for (var index = 0; index < outputStates.Length; ++index)
-        Connects[inputStates.Length + index] = new ConnectorElement((NodeElement) this)
+        Connects[inputStates.Length + index] = new ConnectorElement(this)
         {
           State = outputStates[index]
         };
@@ -151,18 +151,18 @@ public class DiagramBlock : NodeElement, IControllable
   public Image GetImage()
   {
     var image = new Bitmap(87, 81);
-    var g = Graphics.FromImage((Image) image);
+    var g = Graphics.FromImage(image);
     g.TranslateTransform(-47f, -50f);
     Draw(g);
     foreach (BaseElement connect in Connects)
       connect.Draw(g);
-    return (Image) image;
+    return image;
   }
 
   internal override void Draw(Graphics g)
   {
     IsInvalidated = false;
-    var imageElement = new ImageElement(_image, (BaseElement) Rectangle);
+    var imageElement = new ImageElement(_image, Rectangle);
     var labelElement = new LabelElement(Rectangle.Location.X, imageElement.Top + imageElement.Height + 2, Rectangle.Size.Width, 12)
     {
       Text = _labelText,
@@ -173,7 +173,7 @@ public class DiagramBlock : NodeElement, IControllable
     labelElement.Draw(g);
     foreach (var connect in Connects)
     {
-      var str = _connectionTextProperty.GetValue(connect.State, (object[]) null).ToString();
+      var str = _connectionTextProperty.GetValue(connect.State, null).ToString();
       int top;
       StringAlignment stringAlignment;
       if (connect.IsStart)
@@ -195,7 +195,7 @@ public class DiagramBlock : NodeElement, IControllable
     }
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new RectangleController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new RectangleController(this));
 
   public override Color BorderColor
   {
@@ -247,7 +247,7 @@ public class DiagramBlock : NodeElement, IControllable
       Rectangle.Location = value;
       base.Location = value;
       UpdateConnectorsPosition();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 

@@ -9,7 +9,6 @@ namespace DiagramNet;
 using Elements;
 using Elements.Controllers;
 using Events;
-using System.Collections;
 
 internal class MoveAction
 {
@@ -40,18 +39,18 @@ internal class MoveAction
         if (document.SelectedElements[index] is ILabelElement && ControllerHelper.GetLabelController(document.SelectedElements[index]) == null)
         {
           var label = ((ILabelElement) document.SelectedElements[index]).Label;
-          arr2[index] = ControllerHelper.GetMoveController((BaseElement) label);
+          arr2[index] = ControllerHelper.GetMoveController(label);
           if (arr2[index] != null && arr2[index].CanMove)
             arr2[index].Start(mousePoint);
           else
-            arr2[index] = (IMoveController) null;
+            arr2[index] = null;
         }
       }
       else
-        _moveCtrl[index] = (IMoveController) null;
+        _moveCtrl[index] = null;
     }
-    _moveCtrl = (IMoveController[]) DiagramUtil.ArrayHelper.Append((Array) _moveCtrl, (Array) arr2);
-    _moveCtrl = (IMoveController[]) DiagramUtil.ArrayHelper.Shrink((Array) _moveCtrl, (object) null);
+    _moveCtrl = (IMoveController[]) DiagramUtil.ArrayHelper.Append(_moveCtrl, arr2);
+    _moveCtrl = (IMoveController[]) DiagramUtil.ArrayHelper.Shrink(_moveCtrl, null);
     var flag = true;
     foreach (var moveController in _moveCtrl)
     {
@@ -150,11 +149,11 @@ internal class MoveAction
         if (link is ILabelElement)
         {
           var label = ((ILabelElement) link).Label;
-          var labelController = ControllerHelper.GetLabelController((BaseElement) link);
+          var labelController = ControllerHelper.GetLabelController(link);
           if (labelController != null)
             labelController.SetLabelPosition();
           else
-            label.PositionBySite((BaseElement) link);
+            label.PositionBySite(link);
           label.Invalidate();
         }
       }

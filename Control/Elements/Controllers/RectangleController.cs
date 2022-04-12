@@ -8,7 +8,7 @@ namespace DiagramNet.Elements.Controllers;
 
 using System.Drawing.Drawing2D;
 
-internal class RectangleController : IMoveController, IResizeController, IController
+internal class RectangleController : IMoveController, IResizeController
 {
   protected const int SelCornerSize = 3;
   protected BaseElement El;
@@ -66,7 +66,7 @@ internal class RectangleController : IMoveController, IResizeController, IContro
     var size = El.Size;
     var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(location.X - 2, location.Y - 2, size.Width + 4, size.Height + 4));
     var hatchBrush = new HatchBrush(HatchStyle.SmallCheckerBoard, Color.Gray, Color.Transparent);
-    var pen = new Pen((Brush) hatchBrush, 2f);
+    var pen = new Pen(hatchBrush, 2f);
     g.DrawRectangle(pen, unsignedRectangle);
     pen.Dispose();
     hatchBrush.Dispose();

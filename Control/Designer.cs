@@ -9,7 +9,6 @@ namespace DiagramNet;
 using Elements;
 using Elements.Controllers;
 using Events;
-using System.Collections;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -67,7 +66,7 @@ public class Designer : UserControl
     _labelTextBox.BorderStyle = BorderStyle.FixedSingle;
     _labelTextBox.Multiline = true;
     _labelTextBox.Hide();
-    Controls.Add((Control) _labelTextBox);
+    Controls.Add(_labelTextBox);
     RecreateEventsHandlers();
   }
 
@@ -96,12 +95,12 @@ public class Designer : UserControl
         var element = _document.Elements[index];
         Invalidate(element);
         if (element is ILabelElement)
-          Invalidate((BaseElement) ((ILabelElement) element).Label);
+          Invalidate(((ILabelElement) element).Label);
       }
     }
     else
       base.Invalidate();
-    AutoScrollMinSize = new Size((int) ((double) (_document.Location.X + _document.Size.Width + 10) * (double) _document.Zoom), (int) ((double) (_document.Location.Y + _document.Size.Height) * (double) _document.Zoom));
+    AutoScrollMinSize = new Size((int) ((_document.Location.X + _document.Size.Width + 10) * (double) _document.Zoom), (int) ((_document.Location.Y + _document.Size.Height) * (double) _document.Zoom));
   }
 
   private void Invalidate(BaseElement el, bool force = false)
@@ -118,7 +117,7 @@ public class Designer : UserControl
     var graphics = e.Graphics;
     graphics.PageUnit = GraphicsUnit.Pixel;
     var autoScrollPosition = AutoScrollPosition;
-    graphics.TranslateTransform((float) autoScrollPosition.X, (float) autoScrollPosition.Y);
+    graphics.TranslateTransform(autoScrollPosition.X, autoScrollPosition.Y);
     var transform = graphics.Transform;
     var container = graphics.BeginContainer();
     graphics.SmoothingMode = _document.SmoothingMode;
@@ -187,7 +186,7 @@ public class Designer : UserControl
                 if (SelectedElement is ConnectorElement)
                 {
                   StartAddLink((ConnectorElement) SelectedElement, point1);
-                  SelectedElement = (BaseElement) null;
+                  SelectedElement = null;
                 }
                 else
                   StartSelectElements(SelectedElement, point1);
@@ -253,14 +252,14 @@ public class Designer : UserControl
           {
             _mousePointerElement.Invalidate();
             Invalidate(_mousePointerElement, true);
-            _mousePointerElement = (BaseElement) null;
+            _mousePointerElement = null;
           }
         }
       }
       else
       {
         Invalidate(_mousePointerElement, true);
-        _mousePointerElement = (BaseElement) null;
+        _mousePointerElement = null;
       }
     }
     if (e.Button == MouseButtons.Left)
@@ -281,7 +280,7 @@ public class Designer : UserControl
         var point2 = Gsc2Goc(new Point(e.X, e.Y));
         _selectionArea.Size = new Size(point2.X - _selectionArea.Location.X, point2.Y - _selectionArea.Location.Y);
         _selectionArea.Invalidate();
-        Invalidate((BaseElement) _selectionArea, true);
+        Invalidate(_selectionArea, true);
       }
       if (_isAddLink)
       {
@@ -302,7 +301,7 @@ public class Designer : UserControl
     if (_moveAction == null)
       return;
     _moveAction.End();
-    _moveAction = (MoveAction) null;
+    _moveAction = null;
     OnElementMouseUp(new ElementMouseEventArgs(SelectedElement, e.X, e.Y));
     if (Changed)
       AddUndo();
@@ -318,7 +317,7 @@ public class Designer : UserControl
     {
       OnElementClick(new ElementEventArgs(SelectedElement, PreviousSelectedElement));
       _moveAction.End();
-      _moveAction = (MoveAction) null;
+      _moveAction = null;
       OnElementMouseUp(new ElementMouseEventArgs(SelectedElement, e.X, e.Y));
       if (Changed)
         AddUndo();
@@ -352,8 +351,8 @@ public class Designer : UserControl
   {
     if ((ModifierKeys & Keys.Control) != Keys.Control || SelectedElement == null || PreviousSelectedElement == null || !(SelectedElement is NodeElement) || !(PreviousSelectedElement is NodeElement))
       return;
-    var connStart = ((IEnumerable<ConnectorElement>) ((NodeElement) PreviousSelectedElement).Connectors).OrderBy<ConnectorElement, int>((Func<ConnectorElement, int>) (c => c.Links.Count)).FirstOrDefault<ConnectorElement>((Func<ConnectorElement, bool>) (c => !c.IsStart));
-    var connEnd = ((IEnumerable<ConnectorElement>) ((NodeElement) SelectedElement).Connectors).FirstOrDefault<ConnectorElement>((Func<ConnectorElement, bool>) (c => c.IsStart && c.Links.Count == 0));
+    var connStart = ((NodeElement) PreviousSelectedElement).Connectors.OrderBy<ConnectorElement, int>(c => c.Links.Count).FirstOrDefault<ConnectorElement>(c => !c.IsStart);
+    var connEnd = ((NodeElement) SelectedElement).Connectors.FirstOrDefault<ConnectorElement>(c => c.IsStart && c.Links.Count == 0);
     if (connStart == null || connEnd == null)
       return;
     Document.AddLink(connStart, connEnd);
@@ -366,7 +365,7 @@ public class Designer : UserControl
   {
     if (ElementClick == null)
       return;
-    ElementClick((object) this, e);
+    ElementClick(this, e);
   }
 
   [Category("Element")]
@@ -376,7 +375,7 @@ public class Designer : UserControl
   {
     if (ElementDoubleClick == null)
       return;
-    ElementDoubleClick((object) this, e);
+    ElementDoubleClick(this, e);
   }
 
   [Category("Element")]
@@ -386,7 +385,7 @@ public class Designer : UserControl
   {
     if (ElementMouseDown == null)
       return;
-    ElementMouseDown((object) this, e);
+    ElementMouseDown(this, e);
   }
 
   [Category("Element")]
@@ -396,7 +395,7 @@ public class Designer : UserControl
   {
     if (ElementMouseUp == null)
       return;
-    ElementMouseUp((object) this, e);
+    ElementMouseUp(this, e);
   }
 
   [Category("Element")]
@@ -406,7 +405,7 @@ public class Designer : UserControl
   {
     if (ElementMoving == null)
       return;
-    ElementMoving((object) this, e);
+    ElementMoving(this, e);
   }
 
   [Category("Element")]
@@ -416,7 +415,7 @@ public class Designer : UserControl
   {
     if (ElementMoved == null)
       return;
-    ElementMoved((object) this, e);
+    ElementMoved(this, e);
   }
 
   [Category("Element")]
@@ -426,7 +425,7 @@ public class Designer : UserControl
   {
     if (ElementResizing == null)
       return;
-    ElementResizing((object) this, e);
+    ElementResizing(this, e);
   }
 
   [Category("Element")]
@@ -436,7 +435,7 @@ public class Designer : UserControl
   {
     if (ElementResized == null)
       return;
-    ElementResized((object) this, e);
+    ElementResized(this, e);
   }
 
   [Category("Element")]
@@ -446,7 +445,7 @@ public class Designer : UserControl
   {
     if (ElementConnecting == null)
       return;
-    ElementConnecting((object) this, e);
+    ElementConnecting(this, e);
   }
 
   [Category("Element")]
@@ -456,7 +455,7 @@ public class Designer : UserControl
   {
     if (ElementConnected == null)
       return;
-    ElementConnected((object) this, e);
+    ElementConnected(this, e);
   }
 
   [Category("Element")]
@@ -466,7 +465,7 @@ public class Designer : UserControl
   {
     if (ElementSelection == null)
       return;
-    ElementSelection((object) this, e);
+    ElementSelection(this, e);
   }
 
   [Category("Element")]
@@ -476,7 +475,7 @@ public class Designer : UserControl
   {
     if (LinkRemoved == null)
       return;
-    LinkRemoved((object) this, e);
+    LinkRemoved(this, e);
   }
 
   private void DocumentPropertyChanged(object sender, EventArgs e)
@@ -523,28 +522,28 @@ public class Designer : UserControl
   public Point Gsc2Goc(Point gsp)
   {
     var zoom = _document.Zoom;
-    gsp.X = (int) ((double) (gsp.X - AutoScrollPosition.X) / (double) zoom);
-    gsp.Y = (int) ((double) (gsp.Y - AutoScrollPosition.Y) / (double) zoom);
+    gsp.X = (int) ((gsp.X - AutoScrollPosition.X) / (double) zoom);
+    gsp.Y = (int) ((gsp.Y - AutoScrollPosition.Y) / (double) zoom);
     return gsp;
   }
 
   public Rectangle Gsc2Goc(Rectangle gsr)
   {
     var zoom = _document.Zoom;
-    gsr.X = (int) ((double) (gsr.X - AutoScrollPosition.X) / (double) zoom);
-    gsr.Y = (int) ((double) (gsr.Y - AutoScrollPosition.Y) / (double) zoom);
-    gsr.Width = (int) ((double) gsr.Width / (double) zoom);
-    gsr.Height = (int) ((double) gsr.Height / (double) zoom);
+    gsr.X = (int) ((gsr.X - AutoScrollPosition.X) / (double) zoom);
+    gsr.Y = (int) ((gsr.Y - AutoScrollPosition.Y) / (double) zoom);
+    gsr.Width = (int) (gsr.Width / (double) zoom);
+    gsr.Height = (int) (gsr.Height / (double) zoom);
     return gsr;
   }
 
   public Rectangle Goc2Gsc(Rectangle gsr)
   {
     var zoom = _document.Zoom;
-    gsr.X = (int) ((double) (gsr.X + AutoScrollPosition.X) * (double) zoom);
-    gsr.Y = (int) ((double) (gsr.Y + AutoScrollPosition.Y) * (double) zoom);
-    gsr.Width = (int) ((double) gsr.Width * (double) zoom);
-    gsr.Height = (int) ((double) gsr.Height * (double) zoom);
+    gsr.X = (int) ((gsr.X + AutoScrollPosition.X) * (double) zoom);
+    gsr.Y = (int) ((gsr.Y + AutoScrollPosition.Y) * (double) zoom);
+    gsr.Width = (int) (gsr.Width * (double) zoom);
+    gsr.Height = (int) (gsr.Height * (double) zoom);
     return gsr;
   }
 
@@ -554,31 +553,31 @@ public class Designer : UserControl
   {
     var formatter = (IFormatter) new BinaryFormatter();
     var serializationStream = (Stream) new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
-    formatter.Serialize(serializationStream, (object) _document);
+    formatter.Serialize(serializationStream, _document);
     serializationStream.Close();
   }
 
   public Image GetThumbnail()
   {
     var image = GetImage(false, true);
-    var num = Math.Min(170f / (float) image.Width, 120f / (float) image.Height);
-    if ((double) num > 1.0)
+    var num = Math.Min(170f / image.Width, 120f / image.Height);
+    if (num > 1.0)
       num = 1f;
     var thumbnail = new Bitmap(180, 130);
-    var graphics = Graphics.FromImage((Image) thumbnail);
+    var graphics = Graphics.FromImage(thumbnail);
     graphics.InterpolationMode = InterpolationMode.High;
     graphics.CompositingQuality = CompositingQuality.HighQuality;
     graphics.SmoothingMode = SmoothingMode.AntiAlias;
-    var width = (int) ((double) image.Width * (double) num);
-    var height = (int) ((double) image.Height * (double) num);
+    var width = (int) (image.Width * (double) num);
+    var height = (int) (image.Height * (double) num);
     var x = (170 - width) / 2 + 5;
     var y = (120 - height) / 2 + 5;
-    graphics.FillRectangle((Brush) new SolidBrush(Color.White), new Rectangle(0, 0, 180, 130));
+    graphics.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, 180, 130));
     graphics.DrawRectangle(new Pen(Color.FromArgb(150, 150, 150)), new Rectangle(0, 0, 179, 129));
-    graphics.DrawImage((Image) image, new Rectangle(x, y, width, height));
+    graphics.DrawImage(image, new Rectangle(x, y, width, height));
     var memoryStream = new MemoryStream();
-    thumbnail.Save((Stream) memoryStream, ImageFormat.Png);
-    return (Image) thumbnail;
+    thumbnail.Save(memoryStream, ImageFormat.Png);
+    return thumbnail;
   }
 
   public void OpenBinary(string fileName)
@@ -611,8 +610,8 @@ public class Designer : UserControl
           connector.Links = new ElementCollection();
       }
     }
-    formatter.Serialize(stream, (object) arrayClone);
-    Clipboard.SetDataObject((object) new DataObject(DataFormats.GetFormat("Diagram.NET Element Collection").Name, (object) stream));
+    formatter.Serialize(stream, arrayClone);
+    Clipboard.SetDataObject(new DataObject(DataFormats.GetFormat("Diagram.NET Element Collection").Name, stream));
   }
 
   public void Paste()
@@ -661,12 +660,12 @@ public class Designer : UserControl
 
   private void RestartInitValues()
   {
-    _moveAction = (MoveAction) null;
+    _moveAction = null;
     _isMultiSelection = false;
     _isAddSelection = false;
     _isAddLink = false;
     Changed = false;
-    _connStart = (ConnectorElement) null;
+    _connStart = null;
     _selectionArea.FillColor1 = SystemColors.Control;
     _selectionArea.BorderColor = SystemColors.Control;
     _selectionArea.Visible = false;
@@ -689,7 +688,7 @@ public class Designer : UserControl
     _moveAction.Start(mousePoint, _document, onElementMovingDelegate);
     _controllers = new IController[_document.SelectedElements.Count];
     for (var index = _document.SelectedElements.Count - 1; index >= 0; --index)
-      _controllers[index] = !(_document.SelectedElements[index] is IControllable) ? (IController) null : ((IControllable) _document.SelectedElements[index]).GetController();
+      _controllers[index] = !(_document.SelectedElements[index] is IControllable) ? null : ((IControllable) _document.SelectedElements[index]).GetController();
     _resizeAction = new ResizeAction();
     _resizeAction.Select(_document);
   }
@@ -704,7 +703,7 @@ public class Designer : UserControl
     _resizeAction.Start(mousePoint, onElementResizingDelegate);
     if (_resizeAction.IsResizing)
       return;
-    _resizeAction = (ResizeAction) null;
+    _resizeAction = null;
   }
 
   private void StartAddLink(ConnectorElement connectorStart, Point mousePoint)
@@ -720,17 +719,17 @@ public class Designer : UserControl
     switch (_document.LinkType)
     {
       case LinkType.Straight:
-        _linkLine = (BaseLinkElement) new StraightLinkElement(connectorStart, _connEnd);
+        _linkLine = new StraightLinkElement(connectorStart, _connEnd);
         break;
       case LinkType.RightAngle:
-        _linkLine = (BaseLinkElement) new RightAngleLinkElement(connectorStart, _connEnd);
+        _linkLine = new RightAngleLinkElement(connectorStart, _connEnd);
         break;
     }
     _linkLine.Visible = true;
     _linkLine.BorderColor = Color.FromArgb(150, Color.Black);
     _linkLine.BorderWidth = 1;
-    Invalidate((BaseElement) _linkLine, true);
-    OnElementConnecting(new ElementConnectEventArgs(connectorStart.ParentElement, (NodeElement) null, _linkLine));
+    Invalidate(_linkLine, true);
+    OnElementConnecting(new ElementConnectEventArgs(connectorStart.ParentElement, null, _linkLine));
   }
 
   private void EndAddLink()
@@ -746,9 +745,9 @@ public class Designer : UserControl
       if (flag)
         OnElementConnected(e);
     }
-    _connStart = (ConnectorElement) null;
-    _connEnd = (ConnectorElement) null;
-    _linkLine = (BaseLinkElement) null;
+    _connStart = null;
+    _connEnd = null;
+    _linkLine = null;
   }
 
   private void StartAddElement(Point mousePoint)
@@ -768,22 +767,22 @@ public class Designer : UserControl
     switch (_document.ElementType)
     {
       case ElementType.Rectangle:
-        el = (BaseElement) new RectangleElement(selectionRectangle);
+        el = new RectangleElement(selectionRectangle);
         break;
       case ElementType.RectangleNode:
-        el = (BaseElement) new RectangleNode(selectionRectangle);
+        el = new RectangleNode(selectionRectangle);
         break;
       case ElementType.Ellipse:
-        el = (BaseElement) new EllipseElement(selectionRectangle);
+        el = new EllipseElement(selectionRectangle);
         break;
       case ElementType.EllipseNode:
-        el = (BaseElement) new EllipseNode(selectionRectangle);
+        el = new EllipseNode(selectionRectangle);
         break;
       case ElementType.CommentBox:
-        el = (BaseElement) new CommentBoxElement(selectionRectangle);
+        el = new CommentBoxElement(selectionRectangle);
         break;
       default:
-        el = (BaseElement) new RectangleNode(selectionRectangle);
+        el = new RectangleNode(selectionRectangle);
         break;
     }
     _document.AddElement(el);
@@ -795,7 +794,7 @@ public class Designer : UserControl
     if (_editLabelAction != null)
     {
       _editLabelAction.EndEdit();
-      _editLabelAction = (EditLabelAction) null;
+      _editLabelAction = null;
     }
     _isEditLabel = false;
   }
@@ -803,7 +802,7 @@ public class Designer : UserControl
   private void DeleteElement(Point mousePoint)
   {
     _document.DeleteElement(mousePoint);
-    SelectedElement = (BaseElement) null;
+    SelectedElement = null;
     _document.Action = DesignerAction.Select;
   }
 
@@ -827,15 +826,15 @@ public class Designer : UserControl
     base.Invalidate();
   }
 
-  private void AddUndo() => _undo.AddUndo((object) _document);
+  private void AddUndo() => _undo.AddUndo(_document);
 
   private void RecreateEventsHandlers()
   {
-    _document.PropertyChanged += new EventHandler(DocumentPropertyChanged);
-    _document.AppearancePropertyChanged += new EventHandler(DocumentAppearancePropertyChanged);
-    _document.ElementPropertyChanged += new EventHandler(DocumentElementPropertyChanged);
-    _document.ElementSelection += new Document.ElementSelectionEventHandler(DocumentElementSelection);
-    _document.LinkRemoved += new Document.ElementEventHandler(DocumentLinkRemoved);
+    _document.PropertyChanged += DocumentPropertyChanged;
+    _document.AppearancePropertyChanged += DocumentAppearancePropertyChanged;
+    _document.ElementPropertyChanged += DocumentElementPropertyChanged;
+    _document.ElementSelection += DocumentElementSelection;
+    _document.LinkRemoved += DocumentLinkRemoved;
   }
 
   private void MoveElement(Keys key)
@@ -911,12 +910,12 @@ public class Designer : UserControl
   {
     var area = Document.GetArea();
     var image = new Bitmap(area.Width - area.X, area.Height - area.Y);
-    var g = Graphics.FromImage((Image) image);
+    var g = Graphics.FromImage(image);
     if (whitebackground || drawGrid)
-      g.FillRectangle((Brush) new SolidBrush(Color.White), 0, 0, image.Width, image.Height);
+      g.FillRectangle(new SolidBrush(Color.White), 0, 0, image.Width, image.Height);
     if (drawGrid)
       Document.DrawGrid(g, new Rectangle(0, 0, Document.Size.Width + Document.Location.X, Document.Size.Height + Document.Location.Y));
-    g.TranslateTransform((float) (area.X * -1), (float) (area.Y * -1));
+    g.TranslateTransform(area.X * -1, area.Y * -1);
     Document.DrawElementsToGraphics(g, new Rectangle?());
     return image;
   }
@@ -936,10 +935,10 @@ public class Designer : UserControl
     var num = 1f;
     graphics.SetClip(new Rectangle(-5, -5, width + 5, height + 5));
     var area = Document.GetArea();
-    graphics.FillRectangle((Brush) new SolidBrush(Color.White), 0, 0, width, height);
+    graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, width, height);
     if (scaleToFitPaper && area.Width > 0 && area.Height > 0)
     {
-      num = Math.Min((float) width * 1f / (float) (area.Width - area.X), (float) height * 1f / (float) (area.Height - area.Y));
+      num = Math.Min(width * 1f / (area.Width - area.X), height * 1f / (area.Height - area.Y));
       if (!allowStretch)
         num = Math.Min(num, 1f);
     }
@@ -948,9 +947,9 @@ public class Designer : UserControl
     if (scaleToFitPaper && area.Width > 0 && area.Height > 0)
       graphics.ScaleTransform(num, num);
     if (pageNumber > 0)
-      graphics.TranslateTransform((float) ((area.X + width * pageNumber) * -1), (float) ((area.Y + height * pageNumber) * -1));
+      graphics.TranslateTransform((area.X + width * pageNumber) * -1, (area.Y + height * pageNumber) * -1);
     else
-      graphics.TranslateTransform((float) (area.X * -1), (float) (area.Y * -1));
+      graphics.TranslateTransform(area.X * -1, area.Y * -1);
     Document.DrawElementsToGraphics(graphics, new Rectangle?());
     return !scaleToFitPaper && (area.X + width * (pageNumber + 1) <= area.Width + area.X || area.Y + height * (pageNumber + 1) <= area.Height + area.Y);
   }

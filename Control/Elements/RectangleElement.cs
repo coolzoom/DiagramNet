@@ -57,7 +57,7 @@ public class RectangleElement : BaseElement, IControllable, ILabelElement
     set
     {
       FillColor1Value = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -67,7 +67,7 @@ public class RectangleElement : BaseElement, IControllable, ILabelElement
     set
     {
       FillColor2Value = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -77,7 +77,7 @@ public class RectangleElement : BaseElement, IControllable, ILabelElement
     set
     {
       LabelValue = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -92,15 +92,15 @@ public class RectangleElement : BaseElement, IControllable, ILabelElement
     }
     else
     {
-      color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), FillColor1Value);
-      color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), FillColor2Value);
+      color = Color.FromArgb((int) (byte.MaxValue * (OpacityValue / 100.0)), FillColor1Value);
+      color2 = Color.FromArgb((int) (byte.MaxValue * (OpacityValue / 100.0)), FillColor2Value);
     }
-    return !(FillColor2Value == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(r.X, r.Y, r.Width + 1, r.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
+    return !(FillColor2Value == Color.Empty) ? new LinearGradientBrush(new Rectangle(r.X, r.Y, r.Width + 1, r.Height + 1), color, color2, LinearGradientMode.Horizontal) : new SolidBrush(color);
   }
 
   protected virtual void DrawBorder(Graphics g, Rectangle r)
   {
-    var pen = new Pen(BorderColorValue, (float) BorderWidthValue);
+    var pen = new Pen(BorderColorValue, BorderWidthValue);
     g.DrawRectangle(pen, r);
     pen.Dispose();
   }
@@ -115,5 +115,5 @@ public class RectangleElement : BaseElement, IControllable, ILabelElement
     brush.Dispose();
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new RectangleController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new RectangleController(this));
 }

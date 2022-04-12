@@ -43,5 +43,5 @@ public class ImageElement : BaseElement, IControllable
     g.DrawImage(_image, Left, Top, Width, Height);
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new RectangleController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new RectangleController(this));
 }

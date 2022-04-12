@@ -14,13 +14,13 @@ internal class LineController : IController
 
   public LineController(LineElement element) => El = element;
 
-  public BaseElement OwnerElement => (BaseElement) El;
+  public BaseElement OwnerElement => El;
 
   public bool HitTest(Point p)
   {
     var graphicsPath = new GraphicsPath();
     var matrix = new Matrix();
-    var pen = new Pen(El.BorderColor, (float) (El.BorderWidth + 4))
+    var pen = new Pen(El.BorderColor, El.BorderWidth + 4)
     {
       StartCap = El.StartCap,
       EndCap = El.EndCap

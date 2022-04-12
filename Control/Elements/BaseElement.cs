@@ -34,7 +34,7 @@ public abstract class BaseElement
     set
     {
       LocationValue = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -44,7 +44,7 @@ public abstract class BaseElement
     set
     {
       SizeValue = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -54,7 +54,7 @@ public abstract class BaseElement
     set
     {
       VisibleValue = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -64,7 +64,7 @@ public abstract class BaseElement
     set
     {
       BorderColorValue = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -74,7 +74,7 @@ public abstract class BaseElement
     set
     {
       BorderWidthValue = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -83,8 +83,8 @@ public abstract class BaseElement
     get => OpacityValue;
     set
     {
-      OpacityValue = value >= 0 || value <= 100 ? value : throw new Exception("'" + (object) value + "' is not a valid value for 'Opacity'. 'Opacity' should be between 0 and 100.");
-      OnAppearanceChanged(new EventArgs());
+      OpacityValue = value >= 0 || value <= 100 ? value : throw new Exception("'" + value + "' is not a valid value for 'Opacity'. 'Opacity' should be between 0 and 100.");
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -123,7 +123,7 @@ public abstract class BaseElement
   {
     if (AppearanceChanged == null)
       return;
-    AppearanceChanged((object) this, e);
+    AppearanceChanged(this, e);
   }
 
   public BaseElement Clone() => (BaseElement) MemberwiseClone();

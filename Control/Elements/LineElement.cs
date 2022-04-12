@@ -44,7 +44,7 @@ public class LineElement : BaseElement, IControllable
     {
       _point1 = value;
       _needCalcLine = true;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -59,7 +59,7 @@ public class LineElement : BaseElement, IControllable
     {
       _point2 = value;
       _needCalcLine = true;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -69,7 +69,7 @@ public class LineElement : BaseElement, IControllable
     set
     {
       _startCap = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -79,14 +79,14 @@ public class LineElement : BaseElement, IControllable
     set
     {
       _endCap = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
   internal override void Draw(Graphics g)
   {
     IsInvalidated = false;
-    var pen = new Pen(OpacityValue == 100 ? BorderColorValue : Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), BorderColorValue), (float) BorderWidthValue)
+    var pen = new Pen(OpacityValue == 100 ? BorderColorValue : Color.FromArgb((int) (byte.MaxValue * (OpacityValue / 100.0)), BorderColorValue), BorderWidthValue)
     {
       StartCap = _startCap,
       EndCap = _endCap
@@ -122,5 +122,5 @@ public class LineElement : BaseElement, IControllable
     _needCalcLine = false;
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new LineController(this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new LineController(this));
 }

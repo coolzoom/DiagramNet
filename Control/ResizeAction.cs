@@ -33,7 +33,7 @@ internal class ResizeAction
       ShowResizeCorner(true);
     }
     else
-      _resizeCtrl = (IResizeController) null;
+      _resizeCtrl = null;
   }
 
   public void Start(

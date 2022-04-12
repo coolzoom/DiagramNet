@@ -35,7 +35,7 @@ public class CommentBoxElement : RectangleElement, IControllable
     : base(top, left, width, height)
   {
     FillColor1Value = Color.LemonChiffon;
-    FillColor2Value = Color.FromArgb((int) byte.MaxValue, (int) byte.MaxValue, 128);
+    FillColor2Value = Color.FromArgb(byte.MaxValue, byte.MaxValue, 128);
     LabelValue.Opacity = 100;
   }
 
@@ -52,10 +52,10 @@ public class CommentBoxElement : RectangleElement, IControllable
       new(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y)
     };
     g.FillPolygon(GetBrush(unsignedRectangle), points, FillMode.Alternate);
-    g.DrawPolygon(new Pen(BorderColorValue, (float) BorderWidthValue), points);
-    g.DrawLine(new Pen(BorderColorValue, (float) BorderWidthValue), new Point(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y + FoldSize.Height), new Point(unsignedRectangle.X + unsignedRectangle.Width, unsignedRectangle.Y + FoldSize.Height));
-    g.DrawLine(new Pen(BorderColorValue, (float) BorderWidthValue), new Point(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y), new Point(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y + FoldSize.Height));
+    g.DrawPolygon(new Pen(BorderColorValue, BorderWidthValue), points);
+    g.DrawLine(new Pen(BorderColorValue, BorderWidthValue), new Point(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y + FoldSize.Height), new Point(unsignedRectangle.X + unsignedRectangle.Width, unsignedRectangle.Y + FoldSize.Height));
+    g.DrawLine(new Pen(BorderColorValue, BorderWidthValue), new Point(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y), new Point(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y + FoldSize.Height));
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = (RectangleController) new CommentBoxController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new CommentBoxController(this));
 }

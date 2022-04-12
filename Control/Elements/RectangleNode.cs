@@ -116,7 +116,7 @@ public class RectangleNode : NodeElement, IControllable, ILabelElement
     set
     {
       LabelElement = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -136,5 +136,5 @@ public class RectangleNode : NodeElement, IControllable, ILabelElement
     Rectangle.Draw(g);
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new RectangleController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new RectangleController(this));
 }

@@ -21,7 +21,7 @@ public class StraightLinkElement : BaseLinkElement, IControllable, ILabelElement
   internal StraightLinkElement(ConnectorElement conn1, ConnectorElement conn2)
     : base(conn1, conn2)
   {
-    _label.PositionBySite((BaseElement) Line1);
+    _label.PositionBySite(Line1);
   }
 
   [Browsable(false)]
@@ -106,7 +106,7 @@ public class StraightLinkElement : BaseLinkElement, IControllable, ILabelElement
     NeedCalcLinkValue = false;
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new LineController(Line1));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new LineController(Line1));
 
   public virtual LabelElement Label
   {
@@ -114,7 +114,7 @@ public class StraightLinkElement : BaseLinkElement, IControllable, ILabelElement
     set
     {
       _label = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 }

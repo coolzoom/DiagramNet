@@ -38,7 +38,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
     }
     StartCapValue = LineCap.Round;
     EndCapValue = LineCap.Round;
-    _label.PositionBySite((BaseElement) LineElements[1]);
+    _label.PositionBySite(LineElements[1]);
   }
 
   [Browsable(false)]
@@ -55,7 +55,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
       BorderColorValue = value;
       foreach (BaseElement lineElement in LineElements)
         lineElement.BorderColor = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -67,7 +67,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
       BorderWidthValue = value;
       foreach (BaseElement lineElement in LineElements)
         lineElement.BorderWidth = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -93,7 +93,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
         lineElement.Point2 = new Point(point2_1.X + point2.X, point2_1.Y + point2.Y);
       }
       NeedCalcLinkValue = true;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -114,7 +114,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
       OpacityValue = value;
       foreach (BaseElement lineElement in LineElements)
         lineElement.Opacity = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -125,7 +125,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
     {
       StartCapValue = value;
       LineElements[0].StartCap = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -136,7 +136,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
     {
       EndCapValue = value;
       LineElements[LineElements.Length - 1].EndCap = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -301,7 +301,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
     _needCalcLinkSize = false;
   }
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new RightAngleLinkController(this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new RightAngleLinkController(this));
 
   public virtual LabelElement Label
   {
@@ -309,7 +309,7 @@ public class RightAngleLinkElement : BaseLinkElement, IControllable, ILabelEleme
     set
     {
       _label = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 }

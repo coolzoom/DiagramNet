@@ -46,7 +46,7 @@ internal class UndoManager
   {
     if (!CanUndo)
       throw new ApplicationException("Can't Undo.");
-    var obj = DeserializeObject((Stream) List[CurrPos]);
+    var obj = DeserializeObject(List[CurrPos]);
     --CurrPos;
     return obj;
   }
@@ -56,14 +56,14 @@ internal class UndoManager
     if (!CanRedo)
       throw new ApplicationException("Can't Undo.");
     ++CurrPos;
-    return DeserializeObject((Stream) List[CurrPos]);
+    return DeserializeObject(List[CurrPos]);
   }
 
   private MemoryStream SerializeObject(object o)
   {
     var formatter = (IFormatter) new BinaryFormatter();
     var serializationStream = new MemoryStream();
-    formatter.Serialize((Stream) serializationStream, o);
+    formatter.Serialize(serializationStream, o);
     serializationStream.Position = 0L;
     return serializationStream;
   }
@@ -82,7 +82,7 @@ internal class UndoManager
     {
       if (List[index] != null)
         List[index].Close();
-      List[index] = (MemoryStream) null;
+      List[index] = null;
     }
   }
 

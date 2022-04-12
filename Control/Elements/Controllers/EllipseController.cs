@@ -28,7 +28,7 @@ internal class EllipseController : RectangleController
   {
     var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(El.Location.X - 3, El.Location.Y - 3, El.Size.Width + 6, El.Size.Height + 6));
     var hatchBrush = new HatchBrush(HatchStyle.SmallCheckerBoard, Color.LightGray, Color.Transparent);
-    var pen = new Pen((Brush) hatchBrush, 3f);
+    var pen = new Pen(hatchBrush, 3f);
     g.DrawEllipse(pen, unsignedRectangle);
     pen.Dispose();
     hatchBrush.Dispose();

@@ -7,7 +7,6 @@
 namespace DiagramNet.Elements;
 
 using Controllers;
-using System.Collections;
 
 [Serializable]
 public class ConnectorElement : RectangleElement, IControllable
@@ -35,9 +34,9 @@ public class ConnectorElement : RectangleElement, IControllable
 
   public NodeElement ParentElement => _parentElement;
 
-  internal void AddLink(BaseLinkElement lnk) => Links.Add((BaseElement) lnk);
+  internal void AddLink(BaseLinkElement lnk) => Links.Add(lnk);
 
-  public void RemoveLink(BaseLinkElement lnk) => Links.Remove((BaseElement) lnk);
+  public void RemoveLink(BaseLinkElement lnk) => Links.Remove(lnk);
 
   public ElementCollection Links
   {
@@ -47,7 +46,7 @@ public class ConnectorElement : RectangleElement, IControllable
 
   internal CardinalDirection GetDirection() => DiagramUtil.GetDirection(new Rectangle(_parentElement.Location, _parentElement.Size), new Point(LocationValue.X - _parentElement.Location.X + SizeValue.Width / 2, LocationValue.Y - _parentElement.Location.Y + SizeValue.Height / 2));
 
-  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new ConnectorController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (_controller = new ConnectorController(this));
 
   public override Point Location
   {

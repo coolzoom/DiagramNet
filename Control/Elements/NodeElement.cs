@@ -6,7 +6,6 @@
 
 namespace DiagramNet.Elements;
 
-using System.Collections;
 using System.ComponentModel;
 
 [Serializable]
@@ -38,7 +37,7 @@ public abstract class NodeElement : BaseElement
       if (Overrided)
         return;
       UpdateConnectorsPosition();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -49,7 +48,7 @@ public abstract class NodeElement : BaseElement
     {
       SizeValue = value;
       UpdateConnectorsPosition();
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
@@ -61,11 +60,11 @@ public abstract class NodeElement : BaseElement
       VisibleValue = value;
       foreach (BaseElement connect in Connects)
         connect.Visible = value;
-      OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(EventArgs.Empty);
     }
   }
 
-  public virtual bool IsConnected => ((IEnumerable<ConnectorElement>) Connects).Any<ConnectorElement>((Func<ConnectorElement, bool>) (c => c.Links.Count > 0));
+  public virtual bool IsConnected => Connects.Any<ConnectorElement>(c => c.Links.Count > 0);
 
   protected void InitConnectors()
   {
@@ -126,7 +125,7 @@ public abstract class NodeElement : BaseElement
     foreach (var connect in Connects)
     {
       foreach (BaseLinkElement link in connect.Links)
-        linkedNodes.Add(link.Connector1 == connect ? (BaseElement) link.Connector2.ParentElement : (BaseElement) link.Connector1.ParentElement);
+        linkedNodes.Add(link.Connector1 == connect ? link.Connector2.ParentElement : (BaseElement) link.Connector1.ParentElement);
     }
     return linkedNodes;
   }
