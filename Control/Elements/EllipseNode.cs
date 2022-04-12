@@ -6,13 +6,13 @@
 
 namespace DiagramNet.Elements;
 
-using DiagramNet.Elements.Controllers;
+using Controllers;
 
 [Serializable]
 public class EllipseNode : NodeElement, IControllable, ILabelElement
 {
   private readonly EllipseElement _ellipse;
-  private LabelElement _label = new LabelElement();
+  private LabelElement _label = new();
   [NonSerialized]
   private EllipseController _controller;
 
@@ -34,8 +34,8 @@ public class EllipseNode : NodeElement, IControllable, ILabelElement
   public EllipseNode(int top, int left, int width, int height)
     : base(top, left, width, height)
   {
-    this._ellipse = new EllipseElement(top, left, width, height);
-    this.SyncContructors();
+    _ellipse = new EllipseElement(top, left, width, height);
+    SyncContructors();
   }
 
   public override Color BorderColor
@@ -43,21 +43,21 @@ public class EllipseNode : NodeElement, IControllable, ILabelElement
     get => base.BorderColor;
     set
     {
-      this._ellipse.BorderColor = value;
+      _ellipse.BorderColor = value;
       base.BorderColor = value;
     }
   }
 
   public Color FillColor1
   {
-    get => this._ellipse.FillColor1;
-    set => this._ellipse.FillColor1 = value;
+    get => _ellipse.FillColor1;
+    set => _ellipse.FillColor1 = value;
   }
 
   public Color FillColor2
   {
-    get => this._ellipse.FillColor2;
-    set => this._ellipse.FillColor2 = value;
+    get => _ellipse.FillColor2;
+    set => _ellipse.FillColor2 = value;
   }
 
   public override int Opacity
@@ -65,7 +65,7 @@ public class EllipseNode : NodeElement, IControllable, ILabelElement
     get => base.Opacity;
     set
     {
-      this._ellipse.Opacity = value;
+      _ellipse.Opacity = value;
       base.Opacity = value;
     }
   }
@@ -75,7 +75,7 @@ public class EllipseNode : NodeElement, IControllable, ILabelElement
     get => base.Visible;
     set
     {
-      this._ellipse.Visible = value;
+      _ellipse.Visible = value;
       base.Visible = value;
     }
   }
@@ -85,7 +85,7 @@ public class EllipseNode : NodeElement, IControllable, ILabelElement
     get => base.Location;
     set
     {
-      this._ellipse.Location = value;
+      _ellipse.Location = value;
       base.Location = value;
     }
   }
@@ -95,7 +95,7 @@ public class EllipseNode : NodeElement, IControllable, ILabelElement
     get => base.Size;
     set
     {
-      this._ellipse.Size = value;
+      _ellipse.Size = value;
       base.Size = value;
     }
   }
@@ -105,36 +105,36 @@ public class EllipseNode : NodeElement, IControllable, ILabelElement
     get => base.BorderWidth;
     set
     {
-      this._ellipse.BorderWidth = value;
+      _ellipse.BorderWidth = value;
       base.BorderWidth = value;
     }
   }
 
   public virtual LabelElement Label
   {
-    get => this._label;
+    get => _label;
     set
     {
-      this._label = value;
-      this.OnAppearanceChanged(new EventArgs());
+      _label = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   private void SyncContructors()
   {
-    this.LocationValue = this._ellipse.Location;
-    this.SizeValue = this._ellipse.Size;
-    this.BorderColorValue = this._ellipse.BorderColor;
-    this.BorderWidthValue = this._ellipse.BorderWidth;
-    this.OpacityValue = this._ellipse.Opacity;
-    this.VisibleValue = this._ellipse.Visible;
+    LocationValue = _ellipse.Location;
+    SizeValue = _ellipse.Size;
+    BorderColorValue = _ellipse.BorderColor;
+    BorderWidthValue = _ellipse.BorderWidth;
+    OpacityValue = _ellipse.Opacity;
+    VisibleValue = _ellipse.Visible;
   }
 
   internal override void Draw(Graphics g)
   {
-    this.IsInvalidated = false;
-    this._ellipse.Draw(g);
+    IsInvalidated = false;
+    _ellipse.Draw(g);
   }
 
-  IController IControllable.GetController() => (IController) this._controller ?? (IController) (this._controller = new EllipseController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new EllipseController((BaseElement) this));
 }

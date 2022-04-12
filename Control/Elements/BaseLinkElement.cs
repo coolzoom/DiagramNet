@@ -20,51 +20,51 @@ public abstract class BaseLinkElement : BaseElement
 
   internal BaseLinkElement(ConnectorElement conn1, ConnectorElement conn2)
   {
-    this.BorderWidthValue = 1;
-    this.BorderColorValue = Color.Black;
-    this.Connector1Value = conn1;
-    this.Connector2Value = conn2;
-    this.Connector1Value.AddLink(this);
-    this.Connector2Value.AddLink(this);
+    BorderWidthValue = 1;
+    BorderColorValue = Color.Black;
+    Connector1Value = conn1;
+    Connector2Value = conn2;
+    Connector1Value.AddLink(this);
+    Connector2Value.AddLink(this);
   }
 
   [Browsable(false)]
   public ConnectorElement Connector1
   {
-    get => this.Connector1Value;
+    get => Connector1Value;
     set
     {
       if (value == null)
         return;
-      this.Connector1Value.RemoveLink(this);
-      this.Connector1Value = value;
-      this.NeedCalcLinkValue = true;
-      this.Connector1Value.AddLink(this);
-      this.OnConnectorChanged(new EventArgs());
+      Connector1Value.RemoveLink(this);
+      Connector1Value = value;
+      NeedCalcLinkValue = true;
+      Connector1Value.AddLink(this);
+      OnConnectorChanged(new EventArgs());
     }
   }
 
   [Browsable(false)]
   public ConnectorElement Connector2
   {
-    get => this.Connector2Value;
+    get => Connector2Value;
     set
     {
       if (value == null)
         return;
-      this.Connector2Value.RemoveLink(this);
-      this.Connector2Value = value;
-      this.NeedCalcLinkValue = true;
-      this.Connector2Value.AddLink(this);
-      this.OnConnectorChanged(new EventArgs());
+      Connector2Value.RemoveLink(this);
+      Connector2Value = value;
+      NeedCalcLinkValue = true;
+      Connector2Value.AddLink(this);
+      OnConnectorChanged(new EventArgs());
     }
   }
 
   [Browsable(false)]
   internal bool NeedCalcLink
   {
-    get => this.NeedCalcLinkValue;
-    set => this.NeedCalcLinkValue = value;
+    get => NeedCalcLinkValue;
+    set => NeedCalcLinkValue = value;
   }
 
   public abstract override Point Location { get; }
@@ -81,14 +81,14 @@ public abstract class BaseLinkElement : BaseElement
 
   public virtual LineCap StartCap
   {
-    get => this.StartCapValue;
-    set => this.StartCapValue = value;
+    get => StartCapValue;
+    set => StartCapValue = value;
   }
 
   public virtual LineCap EndCap
   {
-    get => this.EndCapValue;
-    set => this.EndCapValue = value;
+    get => EndCapValue;
+    set => EndCapValue = value;
   }
 
   internal abstract void CalcLink();
@@ -98,8 +98,8 @@ public abstract class BaseLinkElement : BaseElement
 
   protected virtual void OnConnectorChanged(EventArgs e)
   {
-    if (this.ConnectorChanged == null)
+    if (ConnectorChanged == null)
       return;
-    this.ConnectorChanged((object) this, e);
+    ConnectorChanged((object) this, e);
   }
 }

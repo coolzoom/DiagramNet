@@ -6,8 +6,8 @@
 
 namespace DiagramNet.Elements;
 
-using DiagramNet.Elements.Controllers;
-using DiagramNet.Events;
+using Controllers;
+using Events;
 using System.Reflection;
 
 [Serializable]
@@ -39,15 +39,15 @@ public class DiagramBlock : NodeElement, IControllable
     PropertyInfo connectionTextProperty,
     bool autoRefresh,
     bool useNextPosition = false)
-    : base(useNextPosition ? DiagramBlock._nextPosition : 0, useNextPosition ? DiagramBlock._nextPosition : 0, 80, 80)
+    : base(useNextPosition ? _nextPosition : 0, useNextPosition ? _nextPosition : 0, 80, 80)
   {
-    this.Overrided = true;
-    this.Rectangle = new RectangleElement(DiagramBlock._nextPosition, DiagramBlock._nextPosition, 80, 80);
-    this.FillColor1 = Color.White;
-    this.FillColor2 = Color.White;
+    Overrided = true;
+    Rectangle = new RectangleElement(_nextPosition, _nextPosition, 80, 80);
+    FillColor1 = Color.White;
+    FillColor2 = Color.White;
     if (!autoRefresh)
       return;
-    this.Refresh(image, labelText, blockState, inputStates, outputStates, connectionTextProperty);
+    Refresh(image, labelText, blockState, inputStates, outputStates, connectionTextProperty);
   }
 
   public DiagramBlock(
@@ -57,17 +57,17 @@ public class DiagramBlock : NodeElement, IControllable
     object[] inputStates,
     object[] outputStates,
     PropertyInfo connectionTextProperty)
-    : base(DiagramBlock._nextPosition, DiagramBlock._nextPosition, 80, 80)
+    : base(_nextPosition, _nextPosition, 80, 80)
   {
-    this.Overrided = true;
-    this.Rectangle = new RectangleElement(DiagramBlock._nextPosition, DiagramBlock._nextPosition, 80, 80);
-    this.FillColor1 = Color.White;
-    this.FillColor2 = Color.White;
-    this.Refresh(image, labelText, blockState, inputStates, outputStates, connectionTextProperty);
-    DiagramBlock._nextPosition += 20;
-    if (DiagramBlock._nextPosition <= 200)
+    Overrided = true;
+    Rectangle = new RectangleElement(_nextPosition, _nextPosition, 80, 80);
+    FillColor1 = Color.White;
+    FillColor2 = Color.White;
+    Refresh(image, labelText, blockState, inputStates, outputStates, connectionTextProperty);
+    _nextPosition += 20;
+    if (_nextPosition <= 200)
       return;
-    DiagramBlock._nextPosition = 50;
+    _nextPosition = 50;
   }
 
   public void Refresh(
@@ -78,23 +78,23 @@ public class DiagramBlock : NodeElement, IControllable
     object[] outputStates,
     PropertyInfo connectionTextProperty)
   {
-    this._image = image;
-    this._labelText = labelText;
-    this._connectionTextProperty = connectionTextProperty;
-    this.State = blockState;
-    this.SyncContructors();
-    this._inputStates = inputStates;
-    this._outputStates = outputStates;
-    if (this.Connects == null || this.Connects.Length != inputStates.Length + outputStates.Length)
+    _image = image;
+    _labelText = labelText;
+    _connectionTextProperty = connectionTextProperty;
+    State = blockState;
+    SyncContructors();
+    _inputStates = inputStates;
+    _outputStates = outputStates;
+    if (Connects == null || Connects.Length != inputStates.Length + outputStates.Length)
     {
-      this.Connects = new ConnectorElement[inputStates.Length + outputStates.Length];
+      Connects = new ConnectorElement[inputStates.Length + outputStates.Length];
       for (var index = 0; index < inputStates.Length; ++index)
-        this.Connects[index] = new ConnectorElement((NodeElement) this)
+        Connects[index] = new ConnectorElement((NodeElement) this)
         {
           State = inputStates[index]
         };
       for (var index = 0; index < outputStates.Length; ++index)
-        this.Connects[inputStates.Length + index] = new ConnectorElement((NodeElement) this)
+        Connects[inputStates.Length + index] = new ConnectorElement((NodeElement) this)
         {
           State = outputStates[index]
         };
@@ -102,50 +102,50 @@ public class DiagramBlock : NodeElement, IControllable
     else
     {
       for (var index = 0; index < inputStates.Length; ++index)
-        this.Connects[index].State = inputStates[index];
+        Connects[index].State = inputStates[index];
       for (var index = 0; index < outputStates.Length; ++index)
-        this.Connects[inputStates.Length + index].State = outputStates[index];
+        Connects[inputStates.Length + index].State = outputStates[index];
     }
-    this.UpdateConnectorsPosition();
-    this.SyncContructors();
+    UpdateConnectorsPosition();
+    SyncContructors();
   }
 
   protected new void UpdateConnectorsPosition()
   {
-    for (var index = 0; index < this._inputStates.Length; ++index)
+    for (var index = 0; index < _inputStates.Length; ++index)
     {
       var num = 0;
-      if (this._inputStates.Length > 1 && this._inputStates.Length < 5)
+      if (_inputStates.Length > 1 && _inputStates.Length < 5)
         num = 20;
-      var point = new Point(this.LocationValue.X, this.LocationValue.Y + ((this.SizeValue.Height - num) / (this._inputStates.Length + 1) * (index + 1) - 1 - 2 - num / 4));
-      var connect = this.Connects[index];
+      var point = new Point(LocationValue.X, LocationValue.Y + ((SizeValue.Height - num) / (_inputStates.Length + 1) * (index + 1) - 1 - 2 - num / 4));
+      var connect = Connects[index];
       connect.Location = new Point(point.X - 3, point.Y);
       connect.Size = new Size(6, 6);
       connect.IsStart = true;
-      connect.State = this._inputStates[index];
+      connect.State = _inputStates[index];
     }
-    for (var index = 0; index < this._outputStates.Length; ++index)
+    for (var index = 0; index < _outputStates.Length; ++index)
     {
       var num = 0;
-      if (this._outputStates.Length > 1 && this._outputStates.Length < 5)
+      if (_outputStates.Length > 1 && _outputStates.Length < 5)
         num = 20;
-      var point = new Point(this.LocationValue.X + this.SizeValue.Width, this.LocationValue.Y + ((this.SizeValue.Height - num) / (this._outputStates.Length + 1) * (index + 1) - 1 - 2 - num / 4));
-      var connect = this.Connects[this._inputStates.Length + index];
+      var point = new Point(LocationValue.X + SizeValue.Width, LocationValue.Y + ((SizeValue.Height - num) / (_outputStates.Length + 1) * (index + 1) - 1 - 2 - num / 4));
+      var connect = Connects[_inputStates.Length + index];
       connect.Location = new Point(point.X - 3, point.Y);
       connect.Size = new Size(6, 6);
       connect.IsStart = false;
-      connect.State = this._outputStates[index];
+      connect.State = _outputStates[index];
     }
   }
 
   private void SyncContructors()
   {
-    this.LocationValue = this.Rectangle.Location;
-    this.SizeValue = this.Rectangle.Size;
-    this.BorderColorValue = this.Rectangle.BorderColor;
-    this.BorderWidthValue = this.Rectangle.BorderWidth;
-    this.OpacityValue = this.Rectangle.Opacity;
-    this.VisibleValue = this.Rectangle.Visible;
+    LocationValue = Rectangle.Location;
+    SizeValue = Rectangle.Size;
+    BorderColorValue = Rectangle.BorderColor;
+    BorderWidthValue = Rectangle.BorderWidth;
+    OpacityValue = Rectangle.Opacity;
+    VisibleValue = Rectangle.Visible;
   }
 
   public Image GetImage()
@@ -153,27 +153,27 @@ public class DiagramBlock : NodeElement, IControllable
     var image = new Bitmap(87, 81);
     var g = Graphics.FromImage((Image) image);
     g.TranslateTransform(-47f, -50f);
-    this.Draw(g);
-    foreach (BaseElement connect in this.Connects)
+    Draw(g);
+    foreach (BaseElement connect in Connects)
       connect.Draw(g);
     return (Image) image;
   }
 
   internal override void Draw(Graphics g)
   {
-    this.IsInvalidated = false;
-    var imageElement = new ImageElement(this._image, (BaseElement) this.Rectangle);
-    var labelElement = new LabelElement(this.Rectangle.Location.X, imageElement.Top + imageElement.Height + 2, this.Rectangle.Size.Width, 12)
+    IsInvalidated = false;
+    var imageElement = new ImageElement(_image, (BaseElement) Rectangle);
+    var labelElement = new LabelElement(Rectangle.Location.X, imageElement.Top + imageElement.Height + 2, Rectangle.Size.Width, 12)
     {
-      Text = this._labelText,
+      Text = _labelText,
       Font = new Font(FontFamily.GenericSansSerif, 8f)
     };
-    this.Rectangle.Draw(g);
+    Rectangle.Draw(g);
     imageElement.Draw(g);
     labelElement.Draw(g);
-    foreach (var connect in this.Connects)
+    foreach (var connect in Connects)
     {
-      var str = this._connectionTextProperty.GetValue(connect.State, (object[]) null).ToString();
+      var str = _connectionTextProperty.GetValue(connect.State, (object[]) null).ToString();
       int top;
       StringAlignment stringAlignment;
       if (connect.IsStart)
@@ -195,28 +195,28 @@ public class DiagramBlock : NodeElement, IControllable
     }
   }
 
-  IController IControllable.GetController() => (IController) this._controller ?? (IController) (this._controller = new RectangleController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new RectangleController((BaseElement) this));
 
   public override Color BorderColor
   {
     get => base.BorderColor;
     set
     {
-      this.Rectangle.BorderColor = value;
+      Rectangle.BorderColor = value;
       base.BorderColor = value;
     }
   }
 
   public Color FillColor1
   {
-    get => this.Rectangle.FillColor1;
-    set => this.Rectangle.FillColor1 = value;
+    get => Rectangle.FillColor1;
+    set => Rectangle.FillColor1 = value;
   }
 
   public Color FillColor2
   {
-    get => this.Rectangle.FillColor2;
-    set => this.Rectangle.FillColor2 = value;
+    get => Rectangle.FillColor2;
+    set => Rectangle.FillColor2 = value;
   }
 
   public override int Opacity
@@ -224,7 +224,7 @@ public class DiagramBlock : NodeElement, IControllable
     get => base.Opacity;
     set
     {
-      this.Rectangle.Opacity = value;
+      Rectangle.Opacity = value;
       base.Opacity = value;
     }
   }
@@ -234,7 +234,7 @@ public class DiagramBlock : NodeElement, IControllable
     get => base.Visible;
     set
     {
-      this.Rectangle.Visible = value;
+      Rectangle.Visible = value;
       base.Visible = value;
     }
   }
@@ -244,10 +244,10 @@ public class DiagramBlock : NodeElement, IControllable
     get => base.Location;
     set
     {
-      this.Rectangle.Location = value;
+      Rectangle.Location = value;
       base.Location = value;
-      this.UpdateConnectorsPosition();
-      this.OnAppearanceChanged(new EventArgs());
+      UpdateConnectorsPosition();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
@@ -256,7 +256,7 @@ public class DiagramBlock : NodeElement, IControllable
     get => base.Size;
     set
     {
-      this.Rectangle.Size = value;
+      Rectangle.Size = value;
       base.Size = value;
     }
   }
@@ -266,7 +266,7 @@ public class DiagramBlock : NodeElement, IControllable
     get => base.BorderWidth;
     set
     {
-      this.Rectangle.BorderWidth = value;
+      Rectangle.BorderWidth = value;
       base.BorderWidth = value;
     }
   }

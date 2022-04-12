@@ -6,48 +6,48 @@
 
 namespace DiagramNet.Elements;
 
-using DiagramNet.Elements.Controllers;
+using Controllers;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 
 [Serializable]
 public class StraightLinkElement : BaseLinkElement, IControllable, ILabelElement
 {
-  protected LineElement Line1 = new LineElement(0, 0, 0, 0);
-  private LabelElement _label = new LabelElement();
+  protected LineElement Line1 = new(0, 0, 0, 0);
+  private LabelElement _label = new();
   [NonSerialized]
   private LineController _controller;
 
   internal StraightLinkElement(ConnectorElement conn1, ConnectorElement conn2)
     : base(conn1, conn2)
   {
-    this._label.PositionBySite((BaseElement) this.Line1);
+    _label.PositionBySite((BaseElement) Line1);
   }
 
   [Browsable(false)]
-  public override Point Point1 => this.Line1.Point1;
+  public override Point Point1 => Line1.Point1;
 
   [Browsable(false)]
-  public override Point Point2 => this.Line1.Point2;
+  public override Point Point2 => Line1.Point2;
 
   public override Color BorderColor
   {
-    get => this.Line1.BorderColor;
-    set => this.Line1.BorderColor = value;
+    get => Line1.BorderColor;
+    set => Line1.BorderColor = value;
   }
 
   public override int BorderWidth
   {
-    get => this.Line1.BorderWidth;
-    set => this.Line1.BorderWidth = value;
+    get => Line1.BorderWidth;
+    set => Line1.BorderWidth = value;
   }
 
   public override Point Location
   {
     get
     {
-      this.CalcLink();
-      return this.Line1.Location;
+      CalcLink();
+      return Line1.Location;
     }
   }
 
@@ -55,66 +55,66 @@ public class StraightLinkElement : BaseLinkElement, IControllable, ILabelElement
   {
     get
     {
-      this.CalcLink();
-      return this.Line1.Size;
+      CalcLink();
+      return Line1.Size;
     }
   }
 
   public override int Opacity
   {
-    get => this.Line1.Opacity;
-    set => this.Line1.Opacity = value;
+    get => Line1.Opacity;
+    set => Line1.Opacity = value;
   }
 
   public override LineCap StartCap
   {
-    get => this.Line1.StartCap;
-    set => this.Line1.StartCap = value;
+    get => Line1.StartCap;
+    set => Line1.StartCap = value;
   }
 
   public override LineCap EndCap
   {
-    get => this.Line1.EndCap;
-    set => this.Line1.EndCap = value;
+    get => Line1.EndCap;
+    set => Line1.EndCap = value;
   }
 
   public override LineElement[] Lines => new LineElement[1]
   {
-    this.Line1
+    Line1
   };
 
   internal override void Draw(Graphics g)
   {
-    this.IsInvalidated = false;
-    this.Line1.Draw(g);
+    IsInvalidated = false;
+    Line1.Draw(g);
   }
 
   internal override void CalcLink()
   {
-    if (!this.NeedCalcLinkValue)
+    if (!NeedCalcLinkValue)
       return;
-    if (this.Line1 != null)
+    if (Line1 != null)
     {
-      var location1 = this.Connector1Value.Location;
-      var location2 = this.Connector2Value.Location;
-      var size1 = this.Connector1Value.Size;
-      var size2 = this.Connector2Value.Size;
-      this.Line1.Point1 = new Point(location1.X + size1.Width / 2, location1.Y + size1.Height / 2);
-      this.Line1.Point2 = new Point(location2.X + size2.Width / 2, location2.Y + size2.Height / 2);
-      this.Line1.CalcLine();
+      var location1 = Connector1Value.Location;
+      var location2 = Connector2Value.Location;
+      var size1 = Connector1Value.Size;
+      var size2 = Connector2Value.Size;
+      Line1.Point1 = new Point(location1.X + size1.Width / 2, location1.Y + size1.Height / 2);
+      Line1.Point2 = new Point(location2.X + size2.Width / 2, location2.Y + size2.Height / 2);
+      Line1.CalcLine();
     }
-    this.NeedCalcLinkValue = false;
+    NeedCalcLinkValue = false;
   }
 
-  IController IControllable.GetController() => (IController) this._controller ?? (IController) (this._controller = new LineController(this.Line1));
+  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new LineController(Line1));
 
   public virtual LabelElement Label
   {
-    get => this._label;
+    get => _label;
     set
     {
-      this._label = value;
-      this.OnAppearanceChanged(new EventArgs());
+      _label = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 }

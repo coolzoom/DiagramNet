@@ -6,7 +6,7 @@
 
 namespace DiagramNet.Elements;
 
-using DiagramNet.Elements.Controllers;
+using Controllers;
 using System.Drawing.Drawing2D;
 
 [Serializable]
@@ -36,27 +36,27 @@ public class EllipseElement : RectangleElement, IControllable
 
   internal override void Draw(Graphics g)
   {
-    this.IsInvalidated = false;
-    var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.LocationValue.X, this.LocationValue.Y, this.SizeValue.Width, this.SizeValue.Height));
+    IsInvalidated = false;
+    var unsignedRectangle = GetUnsignedRectangle(new Rectangle(LocationValue.X, LocationValue.Y, SizeValue.Width, SizeValue.Height));
     Color color;
     Color color2;
-    if (this.OpacityValue == 100)
+    if (OpacityValue == 100)
     {
-      color = this.FillColor1Value;
-      color2 = this.FillColor2Value;
+      color = FillColor1Value;
+      color2 = FillColor2Value;
     }
     else
     {
-      color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this.FillColor1Value);
-      color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this.FillColor2Value);
+      color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), FillColor1Value);
+      color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), FillColor2Value);
     }
-    var brush = !(this.FillColor2Value == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(unsignedRectangle.X, unsignedRectangle.Y, unsignedRectangle.Width + 1, unsignedRectangle.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
+    var brush = !(FillColor2Value == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(unsignedRectangle.X, unsignedRectangle.Y, unsignedRectangle.Width + 1, unsignedRectangle.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
     g.FillEllipse(brush, unsignedRectangle);
-    var pen = new Pen(this.BorderColorValue, (float) this.BorderWidthValue);
+    var pen = new Pen(BorderColorValue, (float) BorderWidthValue);
     g.DrawEllipse(pen, unsignedRectangle);
     pen.Dispose();
     brush.Dispose();
   }
 
-  IController IControllable.GetController() => (IController) this._controller ?? (IController) (this._controller = new EllipseController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new EllipseController((BaseElement) this));
 }

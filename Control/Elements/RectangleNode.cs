@@ -6,13 +6,13 @@
 
 namespace DiagramNet.Elements;
 
-using DiagramNet.Elements.Controllers;
+using Controllers;
 
 [Serializable]
 public class RectangleNode : NodeElement, IControllable, ILabelElement
 {
   protected RectangleElement Rectangle;
-  protected LabelElement LabelElement = new LabelElement();
+  protected LabelElement LabelElement = new();
   [NonSerialized]
   private RectangleController _controller;
 
@@ -21,7 +21,7 @@ public class RectangleNode : NodeElement, IControllable, ILabelElement
   {
   }
 
-  public RectangleNode(System.Drawing.Rectangle rec)
+  public RectangleNode(Rectangle rec)
     : this(rec.Location, rec.Size)
   {
   }
@@ -34,8 +34,8 @@ public class RectangleNode : NodeElement, IControllable, ILabelElement
   public RectangleNode(int top, int left, int width, int height)
     : base(top, left, width, height)
   {
-    this.Rectangle = new RectangleElement(top, left, width, height);
-    this.SyncContructors();
+    Rectangle = new RectangleElement(top, left, width, height);
+    SyncContructors();
   }
 
   public override Color BorderColor
@@ -43,21 +43,21 @@ public class RectangleNode : NodeElement, IControllable, ILabelElement
     get => base.BorderColor;
     set
     {
-      this.Rectangle.BorderColor = value;
+      Rectangle.BorderColor = value;
       base.BorderColor = value;
     }
   }
 
   public Color FillColor1
   {
-    get => this.Rectangle.FillColor1;
-    set => this.Rectangle.FillColor1 = value;
+    get => Rectangle.FillColor1;
+    set => Rectangle.FillColor1 = value;
   }
 
   public Color FillColor2
   {
-    get => this.Rectangle.FillColor2;
-    set => this.Rectangle.FillColor2 = value;
+    get => Rectangle.FillColor2;
+    set => Rectangle.FillColor2 = value;
   }
 
   public override int Opacity
@@ -65,7 +65,7 @@ public class RectangleNode : NodeElement, IControllable, ILabelElement
     get => base.Opacity;
     set
     {
-      this.Rectangle.Opacity = value;
+      Rectangle.Opacity = value;
       base.Opacity = value;
     }
   }
@@ -75,7 +75,7 @@ public class RectangleNode : NodeElement, IControllable, ILabelElement
     get => base.Visible;
     set
     {
-      this.Rectangle.Visible = value;
+      Rectangle.Visible = value;
       base.Visible = value;
     }
   }
@@ -85,7 +85,7 @@ public class RectangleNode : NodeElement, IControllable, ILabelElement
     get => base.Location;
     set
     {
-      this.Rectangle.Location = value;
+      Rectangle.Location = value;
       base.Location = value;
     }
   }
@@ -95,7 +95,7 @@ public class RectangleNode : NodeElement, IControllable, ILabelElement
     get => base.Size;
     set
     {
-      this.Rectangle.Size = value;
+      Rectangle.Size = value;
       base.Size = value;
     }
   }
@@ -105,36 +105,36 @@ public class RectangleNode : NodeElement, IControllable, ILabelElement
     get => base.BorderWidth;
     set
     {
-      this.Rectangle.BorderWidth = value;
+      Rectangle.BorderWidth = value;
       base.BorderWidth = value;
     }
   }
 
   public virtual LabelElement Label
   {
-    get => this.LabelElement;
+    get => LabelElement;
     set
     {
-      this.LabelElement = value;
-      this.OnAppearanceChanged(new EventArgs());
+      LabelElement = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   private void SyncContructors()
   {
-    this.LocationValue = this.Rectangle.Location;
-    this.SizeValue = this.Rectangle.Size;
-    this.BorderColorValue = this.Rectangle.BorderColor;
-    this.BorderWidthValue = this.Rectangle.BorderWidth;
-    this.OpacityValue = this.Rectangle.Opacity;
-    this.VisibleValue = this.Rectangle.Visible;
+    LocationValue = Rectangle.Location;
+    SizeValue = Rectangle.Size;
+    BorderColorValue = Rectangle.BorderColor;
+    BorderWidthValue = Rectangle.BorderWidth;
+    OpacityValue = Rectangle.Opacity;
+    VisibleValue = Rectangle.Visible;
   }
 
   internal override void Draw(Graphics g)
   {
-    this.IsInvalidated = false;
-    this.Rectangle.Draw(g);
+    IsInvalidated = false;
+    Rectangle.Draw(g);
   }
 
-  IController IControllable.GetController() => (IController) this._controller ?? (IController) (this._controller = new RectangleController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new RectangleController((BaseElement) this));
 }

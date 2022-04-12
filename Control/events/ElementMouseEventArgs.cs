@@ -6,20 +6,20 @@
 
 namespace DiagramNet.Events;
 
-using DiagramNet.Elements;
+using Elements;
 
 public class ElementMouseEventArgs : ElementEventArgs
 {
   public ElementMouseEventArgs(BaseElement el, int x, int y)
     : base(el)
   {
-    this.X = x;
-    this.Y = y;
+    X = x;
+    Y = y;
   }
 
   public int X { get; set; }
 
   public int Y { get; set; }
 
-  public override string ToString() => base.ToString() + " X:" + (object) this.X + " Y:" + (object) this.Y;
+  public override string ToString() => base.ToString() + " X:" + (object) X + " Y:" + (object) Y;
 }

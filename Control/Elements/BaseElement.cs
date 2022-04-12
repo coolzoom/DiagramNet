@@ -24,81 +24,81 @@ public abstract class BaseElement
 
   protected BaseElement(int top, int left, int width, int height)
   {
-    this.LocationValue = new Point(top, left);
-    this.SizeValue = new Size(width, height);
+    LocationValue = new Point(top, left);
+    SizeValue = new Size(width, height);
   }
 
   public virtual Point Location
   {
-    get => this.LocationValue;
+    get => LocationValue;
     set
     {
-      this.LocationValue = value;
-      this.OnAppearanceChanged(new EventArgs());
+      LocationValue = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public virtual Size Size
   {
-    get => this.SizeValue;
+    get => SizeValue;
     set
     {
-      this.SizeValue = value;
-      this.OnAppearanceChanged(new EventArgs());
+      SizeValue = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public virtual bool Visible
   {
-    get => this.VisibleValue;
+    get => VisibleValue;
     set
     {
-      this.VisibleValue = value;
-      this.OnAppearanceChanged(new EventArgs());
+      VisibleValue = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public virtual Color BorderColor
   {
-    get => this.BorderColorValue;
+    get => BorderColorValue;
     set
     {
-      this.BorderColorValue = value;
-      this.OnAppearanceChanged(new EventArgs());
+      BorderColorValue = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public virtual int BorderWidth
   {
-    get => this.BorderWidthValue;
+    get => BorderWidthValue;
     set
     {
-      this.BorderWidthValue = value;
-      this.OnAppearanceChanged(new EventArgs());
+      BorderWidthValue = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public virtual int Opacity
   {
-    get => this.OpacityValue;
+    get => OpacityValue;
     set
     {
-      this.OpacityValue = value >= 0 || value <= 100 ? value : throw new Exception("'" + (object) value + "' is not a valid value for 'Opacity'. 'Opacity' should be between 0 and 100.");
-      this.OnAppearanceChanged(new EventArgs());
+      OpacityValue = value >= 0 || value <= 100 ? value : throw new Exception("'" + (object) value + "' is not a valid value for 'Opacity'. 'Opacity' should be between 0 and 100.");
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
-  internal virtual void Draw(Graphics g) => this.IsInvalidated = false;
+  internal virtual void Draw(Graphics g) => IsInvalidated = false;
 
   public virtual void Invalidate()
   {
-    this.InvalidateRec = this.IsInvalidated ? Rectangle.Union(this.InvalidateRec, this.GetUnsignedRectangle()) : this.GetUnsignedRectangle();
-    this.IsInvalidated = true;
+    InvalidateRec = IsInvalidated ? Rectangle.Union(InvalidateRec, GetUnsignedRectangle()) : GetUnsignedRectangle();
+    IsInvalidated = true;
   }
 
-  public virtual Rectangle GetRectangle() => new Rectangle(this.Location, this.Size);
+  public virtual Rectangle GetRectangle() => new(Location, Size);
 
-  public virtual Rectangle GetUnsignedRectangle() => BaseElement.GetUnsignedRectangle(this.GetRectangle());
+  public virtual Rectangle GetUnsignedRectangle() => GetUnsignedRectangle(GetRectangle());
 
   internal static Rectangle GetUnsignedRectangle(Rectangle rec)
   {
@@ -121,10 +121,10 @@ public abstract class BaseElement
 
   protected virtual void OnAppearanceChanged(EventArgs e)
   {
-    if (this.AppearanceChanged == null)
+    if (AppearanceChanged == null)
       return;
-    this.AppearanceChanged((object) this, e);
+    AppearanceChanged((object) this, e);
   }
 
-  public BaseElement Clone() => (BaseElement) this.MemberwiseClone();
+  public BaseElement Clone() => (BaseElement) MemberwiseClone();
 }

@@ -12,7 +12,7 @@ internal class RectangleController : IMoveController, IResizeController, IContro
 {
   protected const int SelCornerSize = 3;
   protected BaseElement El;
-  protected Point DragOffset = new Point(0);
+  protected Point DragOffset = new(0);
   protected bool IsDragging;
   protected bool CanMove1 = true;
   protected RectangleElement[] SelectionCorner = new RectangleElement[9];
@@ -21,10 +21,10 @@ internal class RectangleController : IMoveController, IResizeController, IContro
 
   public RectangleController(BaseElement element)
   {
-    this.El = element;
-    for (var index1 = 0; index1 < this.SelectionCorner.Length; ++index1)
+    El = element;
+    for (var index1 = 0; index1 < SelectionCorner.Length; ++index1)
     {
-      var selectionCorner = this.SelectionCorner;
+      var selectionCorner = SelectionCorner;
       var index2 = index1;
       var rectangleElement1 = new RectangleElement(0, 0, 6, 6);
       rectangleElement1.BorderColor = Color.Black;
@@ -35,14 +35,14 @@ internal class RectangleController : IMoveController, IResizeController, IContro
     }
   }
 
-  public BaseElement OwnerElement => this.El;
+  public BaseElement OwnerElement => El;
 
   public virtual bool HitTest(Point p)
   {
     var graphicsPath = new GraphicsPath();
     var matrix = new Matrix();
-    var location = this.El.Location;
-    var size = this.El.Size;
+    var location = El.Location;
+    var size = El.Size;
     graphicsPath.AddRectangle(new Rectangle(location.X, location.Y, size.Width, size.Height));
     graphicsPath.Transform(matrix);
     return graphicsPath.IsVisible(p);
@@ -52,8 +52,8 @@ internal class RectangleController : IMoveController, IResizeController, IContro
   {
     var graphicsPath = new GraphicsPath();
     var matrix = new Matrix();
-    var location = this.El.Location;
-    var size = this.El.Size;
+    var location = El.Location;
+    var size = El.Size;
     graphicsPath.AddRectangle(new Rectangle(location.X, location.Y, size.Width, size.Height));
     graphicsPath.Transform(matrix);
     var rect = Rectangle.Round(graphicsPath.GetBounds());
@@ -62,8 +62,8 @@ internal class RectangleController : IMoveController, IResizeController, IContro
 
   public virtual void DrawSelection(Graphics g)
   {
-    var location = this.El.Location;
-    var size = this.El.Size;
+    var location = El.Location;
+    var size = El.Size;
     var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(location.X - 2, location.Y - 2, size.Width + 4, size.Height + 4));
     var hatchBrush = new HatchBrush(HatchStyle.SmallCheckerBoard, Color.Gray, Color.Transparent);
     var pen = new Pen((Brush) hatchBrush, 2f);
@@ -74,65 +74,65 @@ internal class RectangleController : IMoveController, IResizeController, IContro
 
   void IMoveController.Start(Point posStart)
   {
-    var location = this.El.Location;
-    this.DragOffset.X = location.X - posStart.X;
-    this.DragOffset.Y = location.Y - posStart.Y;
-    this.IsDragging = true;
+    var location = El.Location;
+    DragOffset.X = location.X - posStart.X;
+    DragOffset.Y = location.Y - posStart.Y;
+    IsDragging = true;
   }
 
   bool IMoveController.WillMove(Point posCurrent)
   {
-    if (!this.IsDragging)
+    if (!IsDragging)
       return false;
     var point = posCurrent;
-    point.Offset(this.DragOffset.X, this.DragOffset.Y);
+    point.Offset(DragOffset.X, DragOffset.Y);
     if (point.X < 0)
       point.X = 0;
     if (point.Y < 0)
       point.Y = 0;
-    return this.El.Location.X != point.X || this.El.Location.Y != point.Y;
+    return El.Location.X != point.X || El.Location.Y != point.Y;
   }
 
   void IMoveController.Move(Point posCurrent)
   {
-    if (!this.IsDragging)
+    if (!IsDragging)
       return;
     var point = posCurrent;
-    point.Offset(this.DragOffset.X, this.DragOffset.Y);
+    point.Offset(DragOffset.X, DragOffset.Y);
     if (point.X < 0)
       point.X = 0;
     if (point.Y < 0)
       point.Y = 0;
-    this.El.Location = point;
+    El.Location = point;
   }
 
-  void IMoveController.End() => this.IsDragging = false;
+  void IMoveController.End() => IsDragging = false;
 
-  bool IMoveController.IsMoving => this.IsDragging;
+  bool IMoveController.IsMoving => IsDragging;
 
-  bool IMoveController.CanMove => this.CanMove1;
+  bool IMoveController.CanMove => CanMove1;
 
-  public RectangleElement[] Corners => this.SelectionCorner;
+  public RectangleElement[] Corners => SelectionCorner;
 
   void IResizeController.UpdateCornersPos()
   {
-    var rectangle = new Rectangle(this.El.Location, this.El.Size);
-    this.SelectionCorner[7].Location = new Point(rectangle.Location.X - 3, rectangle.Location.Y - 3);
-    this.SelectionCorner[8].Location = new Point(rectangle.Location.X + rectangle.Size.Width - 3, rectangle.Location.Y - 3);
-    this.SelectionCorner[6].Location = new Point(rectangle.Location.X + rectangle.Size.Width / 2 - 3, rectangle.Location.Y - 3);
-    this.SelectionCorner[1].Location = new Point(rectangle.Location.X - 3, rectangle.Location.Y + rectangle.Size.Height - 3);
-    this.SelectionCorner[2].Location = new Point(rectangle.Location.X + rectangle.Size.Width - 3, rectangle.Location.Y + rectangle.Size.Height - 3);
-    this.SelectionCorner[0].Location = new Point(rectangle.Location.X + rectangle.Size.Width / 2 - 3, rectangle.Location.Y + rectangle.Size.Height - 3);
-    this.SelectionCorner[4].Location = new Point(rectangle.Location.X - 3, rectangle.Location.Y + rectangle.Size.Height / 2 - 3);
-    this.SelectionCorner[3].Location = new Point(rectangle.Location.X + rectangle.Size.Width / 2 - 3, rectangle.Location.Y + rectangle.Size.Height / 2 - 3);
-    this.SelectionCorner[5].Location = new Point(rectangle.Location.X + rectangle.Size.Width - 3, rectangle.Location.Y + rectangle.Size.Height / 2 - 3);
+    var rectangle = new Rectangle(El.Location, El.Size);
+    SelectionCorner[7].Location = new Point(rectangle.Location.X - 3, rectangle.Location.Y - 3);
+    SelectionCorner[8].Location = new Point(rectangle.Location.X + rectangle.Size.Width - 3, rectangle.Location.Y - 3);
+    SelectionCorner[6].Location = new Point(rectangle.Location.X + rectangle.Size.Width / 2 - 3, rectangle.Location.Y - 3);
+    SelectionCorner[1].Location = new Point(rectangle.Location.X - 3, rectangle.Location.Y + rectangle.Size.Height - 3);
+    SelectionCorner[2].Location = new Point(rectangle.Location.X + rectangle.Size.Width - 3, rectangle.Location.Y + rectangle.Size.Height - 3);
+    SelectionCorner[0].Location = new Point(rectangle.Location.X + rectangle.Size.Width / 2 - 3, rectangle.Location.Y + rectangle.Size.Height - 3);
+    SelectionCorner[4].Location = new Point(rectangle.Location.X - 3, rectangle.Location.Y + rectangle.Size.Height / 2 - 3);
+    SelectionCorner[3].Location = new Point(rectangle.Location.X + rectangle.Size.Width / 2 - 3, rectangle.Location.Y + rectangle.Size.Height / 2 - 3);
+    SelectionCorner[5].Location = new Point(rectangle.Location.X + rectangle.Size.Width - 3, rectangle.Location.Y + rectangle.Size.Height / 2 - 3);
   }
 
   CornerPosition IResizeController.HitTestCorner(Point p)
   {
-    for (var index = 0; index < this.SelectionCorner.Length; ++index)
+    for (var index = 0; index < SelectionCorner.Length; ++index)
     {
-      if (((IControllable) this.SelectionCorner[index]).GetController().HitTest(p))
+      if (((IControllable) SelectionCorner[index]).GetController().HitTest(p))
         return (CornerPosition) index;
     }
     return CornerPosition.Nothing;
@@ -140,42 +140,42 @@ internal class RectangleController : IMoveController, IResizeController, IContro
 
   void IResizeController.Start(Point posStart, CornerPosition corner)
   {
-    this.SelCorner = corner;
-    this.DragOffset.X = this.SelectionCorner[(int) this.SelCorner].Location.X - posStart.X;
-    this.DragOffset.Y = this.SelectionCorner[(int) this.SelCorner].Location.Y - posStart.Y;
+    SelCorner = corner;
+    DragOffset.X = SelectionCorner[(int) SelCorner].Location.X - posStart.X;
+    DragOffset.Y = SelectionCorner[(int) SelCorner].Location.Y - posStart.Y;
   }
 
   void IResizeController.Resize(Point posCurrent)
   {
-    var rectangleElement = this.SelectionCorner[(int) this.SelCorner];
+    var rectangleElement = SelectionCorner[(int) SelCorner];
     var point1 = posCurrent;
-    point1.Offset(this.DragOffset.X, this.DragOffset.Y);
+    point1.Offset(DragOffset.X, DragOffset.Y);
     if (point1.X < 0)
       point1.X = 0;
     if (point1.Y < 0)
       point1.Y = 0;
-    switch (this.SelCorner)
+    switch (SelCorner)
     {
       case CornerPosition.BottomCenter:
         rectangleElement.Location = new Point(rectangleElement.Location.X, point1.Y);
-        this.El.Size = new Size(this.El.Size.Width, new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2).Y - this.El.Location.Y);
+        El.Size = new Size(El.Size.Width, new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2).Y - El.Location.Y);
         break;
       case CornerPosition.BottomLeft:
         rectangleElement.Location = point1;
         var point2 = new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2);
-        this.El.Size = new Size(this.El.Size.Width - (point2.X - this.El.Location.X), point2.Y - this.El.Location.Y);
-        this.El.Location = new Point(point2.X, this.El.Location.Y);
+        El.Size = new Size(El.Size.Width - (point2.X - El.Location.X), point2.Y - El.Location.Y);
+        El.Location = new Point(point2.X, El.Location.Y);
         break;
       case CornerPosition.BottomRight:
         rectangleElement.Location = point1;
         var point3 = new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2);
-        var el = this.El;
+        var el = El;
         var x1 = point3.X;
-        var location = this.El.Location;
+        var location = El.Location;
         var x2 = location.X;
         var width = x1 - x2;
         var y1 = point3.Y;
-        location = this.El.Location;
+        location = El.Location;
         var y2 = location.Y;
         var height = y1 - y2;
         var size = new Size(width, height);
@@ -184,47 +184,47 @@ internal class RectangleController : IMoveController, IResizeController, IContro
       case CornerPosition.MiddleLeft:
         rectangleElement.Location = new Point(point1.X, rectangleElement.Location.Y);
         var point4 = new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2);
-        this.El.Size = new Size(this.El.Size.Width + (this.El.Location.X - point4.X), this.El.Size.Height);
-        this.El.Location = new Point(point4.X, this.El.Location.Y);
+        El.Size = new Size(El.Size.Width + (El.Location.X - point4.X), El.Size.Height);
+        El.Location = new Point(point4.X, El.Location.Y);
         break;
       case CornerPosition.MiddleRight:
         rectangleElement.Location = new Point(point1.X, rectangleElement.Location.Y);
-        this.El.Size = new Size(new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2).X - this.El.Location.X, this.El.Size.Height);
+        El.Size = new Size(new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2).X - El.Location.X, El.Size.Height);
         break;
       case CornerPosition.TopCenter:
         rectangleElement.Location = new Point(rectangleElement.Location.X, point1.Y);
         var point5 = new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2);
-        this.El.Size = new Size(this.El.Size.Width, this.El.Size.Height + (this.El.Location.Y - point5.Y));
-        this.El.Location = new Point(this.El.Location.X, point5.Y);
+        El.Size = new Size(El.Size.Width, El.Size.Height + (El.Location.Y - point5.Y));
+        El.Location = new Point(El.Location.X, point5.Y);
         break;
       case CornerPosition.TopLeft:
         rectangleElement.Location = point1;
         var point6 = new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2);
-        this.El.Size = new Size(this.El.Size.Width + (this.El.Location.X - point6.X), this.El.Size.Height + (this.El.Location.Y - point6.Y));
-        this.El.Location = point6;
+        El.Size = new Size(El.Size.Width + (El.Location.X - point6.X), El.Size.Height + (El.Location.Y - point6.Y));
+        El.Location = point6;
         break;
       case CornerPosition.TopRight:
         rectangleElement.Location = point1;
         var point7 = new Point(rectangleElement.Location.X + rectangleElement.Size.Width / 2, rectangleElement.Location.Y + rectangleElement.Size.Height / 2);
-        this.El.Size = new Size(point7.X - this.El.Location.X, this.El.Size.Height - (point7.Y - this.El.Location.Y));
-        this.El.Location = new Point(this.El.Location.X, point7.Y);
+        El.Size = new Size(point7.X - El.Location.X, El.Size.Height - (point7.Y - El.Location.Y));
+        El.Location = new Point(El.Location.X, point7.Y);
         break;
     }
   }
 
   void IResizeController.End(Point posEnd)
   {
-    if (this.El.Size.Height < 0 || this.El.Size.Width < 0)
+    if (El.Size.Height < 0 || El.Size.Width < 0)
     {
-      var unsignedRectangle = this.El.GetUnsignedRectangle();
-      this.El.Location = unsignedRectangle.Location;
-      this.El.Size = unsignedRectangle.Size;
+      var unsignedRectangle = El.GetUnsignedRectangle();
+      El.Location = unsignedRectangle.Location;
+      El.Size = unsignedRectangle.Size;
     }
-    this.SelCorner = CornerPosition.Nothing;
-    this.DragOffset = Point.Empty;
+    SelCorner = CornerPosition.Nothing;
+    DragOffset = Point.Empty;
   }
 
-  bool IResizeController.IsResizing => this.SelCorner != CornerPosition.Nothing;
+  bool IResizeController.IsResizing => SelCorner != CornerPosition.Nothing;
 
-  bool IResizeController.CanResize => this.CanResize1;
+  bool IResizeController.CanResize => CanResize1;
 }

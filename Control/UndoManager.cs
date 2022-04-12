@@ -18,45 +18,45 @@ internal class UndoManager
 
   public UndoManager(int capacity)
   {
-    this.Enabled = true;
-    this.List = new MemoryStream[capacity];
-    this.Capacity = capacity;
+    Enabled = true;
+    List = new MemoryStream[capacity];
+    Capacity = capacity;
   }
 
-  public bool CanUndo => this.CurrPos != -1;
+  public bool CanUndo => CurrPos != -1;
 
-  public bool CanRedo => this.CurrPos != this.LastPos;
+  public bool CanRedo => CurrPos != LastPos;
 
   public bool Enabled { get; set; }
 
   public void AddUndo(object o)
   {
-    if (!this.Enabled)
+    if (!Enabled)
       return;
-    ++this.CurrPos;
-    if (this.CurrPos >= this.Capacity)
-      --this.CurrPos;
-    this.ClearList(this.CurrPos);
-    this.PushList();
-    this.List[this.CurrPos] = this.SerializeObject(o);
-    this.LastPos = this.CurrPos;
+    ++CurrPos;
+    if (CurrPos >= Capacity)
+      --CurrPos;
+    ClearList(CurrPos);
+    PushList();
+    List[CurrPos] = SerializeObject(o);
+    LastPos = CurrPos;
   }
 
   public object Undo()
   {
-    if (!this.CanUndo)
+    if (!CanUndo)
       throw new ApplicationException("Can't Undo.");
-    var obj = this.DeserializeObject((Stream) this.List[this.CurrPos]);
-    --this.CurrPos;
+    var obj = DeserializeObject((Stream) List[CurrPos]);
+    --CurrPos;
     return obj;
   }
 
   public object Redo()
   {
-    if (!this.CanRedo)
+    if (!CanRedo)
       throw new ApplicationException("Can't Undo.");
-    ++this.CurrPos;
-    return this.DeserializeObject((Stream) this.List[this.CurrPos]);
+    ++CurrPos;
+    return DeserializeObject((Stream) List[CurrPos]);
   }
 
   private MemoryStream SerializeObject(object o)
@@ -76,22 +76,22 @@ internal class UndoManager
 
   private void ClearList(int p = 0)
   {
-    if (this.CurrPos >= this.Capacity - 1)
+    if (CurrPos >= Capacity - 1)
       return;
-    for (var index = p; index < this.Capacity; ++index)
+    for (var index = p; index < Capacity; ++index)
     {
-      if (this.List[index] != null)
-        this.List[index].Close();
-      this.List[index] = (MemoryStream) null;
+      if (List[index] != null)
+        List[index].Close();
+      List[index] = (MemoryStream) null;
     }
   }
 
   private void PushList()
   {
-    if (this.CurrPos < this.Capacity - 1 || this.List[this.CurrPos] == null)
+    if (CurrPos < Capacity - 1 || List[CurrPos] == null)
       return;
-    this.List[0].Close();
-    for (var index = 1; index <= this.CurrPos; ++index)
-      this.List[index - 1] = this.List[index];
+    List[0].Close();
+    for (var index = 1; index <= CurrPos; ++index)
+      List[index - 1] = List[index];
   }
 }

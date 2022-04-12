@@ -12,20 +12,20 @@ internal class LineController : IController
 {
   protected LineElement El;
 
-  public LineController(LineElement element) => this.El = element;
+  public LineController(LineElement element) => El = element;
 
-  public BaseElement OwnerElement => (BaseElement) this.El;
+  public BaseElement OwnerElement => (BaseElement) El;
 
   public bool HitTest(Point p)
   {
     var graphicsPath = new GraphicsPath();
     var matrix = new Matrix();
-    var pen = new Pen(this.El.BorderColor, (float) (this.El.BorderWidth + 4))
+    var pen = new Pen(El.BorderColor, (float) (El.BorderWidth + 4))
     {
-      StartCap = this.El.StartCap,
-      EndCap = this.El.EndCap
+      StartCap = El.StartCap,
+      EndCap = El.EndCap
     };
-    graphicsPath.AddLine(this.El.Point1, this.El.Point2);
+    graphicsPath.AddLine(El.Point1, El.Point2);
     graphicsPath.Transform(matrix);
     return graphicsPath.IsOutlineVisible(p, pen);
   }
@@ -34,7 +34,7 @@ internal class LineController : IController
   {
     var graphicsPath = new GraphicsPath();
     var matrix = new Matrix();
-    graphicsPath.AddRectangle(new Rectangle(this.El.Location.X, this.El.Location.Y, this.El.Size.Width, this.El.Size.Height));
+    graphicsPath.AddRectangle(new Rectangle(El.Location.X, El.Location.Y, El.Size.Width, El.Size.Height));
     graphicsPath.Transform(matrix);
     var rect = Rectangle.Round(graphicsPath.GetBounds());
     return r.Contains(rect);

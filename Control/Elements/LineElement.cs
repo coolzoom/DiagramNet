@@ -6,7 +6,7 @@
 
 namespace DiagramNet.Elements;
 
-using DiagramNet.Elements.Controllers;
+using Controllers;
 using System.Drawing.Drawing2D;
 
 [Serializable]
@@ -27,24 +27,24 @@ public class LineElement : BaseElement, IControllable
 
   internal LineElement(Point p1, Point p2)
   {
-    this._point1 = p1;
-    this._point2 = p2;
-    this.BorderWidthValue = 1;
-    this.BorderColorValue = Color.Black;
+    _point1 = p1;
+    _point2 = p2;
+    BorderWidthValue = 1;
+    BorderColorValue = Color.Black;
   }
 
   public virtual Point Point1
   {
     get
     {
-      this.CalcLine();
-      return this._point1;
+      CalcLine();
+      return _point1;
     }
     set
     {
-      this._point1 = value;
-      this._needCalcLine = true;
-      this.OnAppearanceChanged(new EventArgs());
+      _point1 = value;
+      _needCalcLine = true;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
@@ -52,75 +52,75 @@ public class LineElement : BaseElement, IControllable
   {
     get
     {
-      this.CalcLine();
-      return this._point2;
+      CalcLine();
+      return _point2;
     }
     set
     {
-      this._point2 = value;
-      this._needCalcLine = true;
-      this.OnAppearanceChanged(new EventArgs());
+      _point2 = value;
+      _needCalcLine = true;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public virtual LineCap StartCap
   {
-    get => this._startCap;
+    get => _startCap;
     set
     {
-      this._startCap = value;
-      this.OnAppearanceChanged(new EventArgs());
+      _startCap = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public virtual LineCap EndCap
   {
-    get => this._endCap;
+    get => _endCap;
     set
     {
-      this._endCap = value;
-      this.OnAppearanceChanged(new EventArgs());
+      _endCap = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   internal override void Draw(Graphics g)
   {
-    this.IsInvalidated = false;
-    var pen = new Pen(this.OpacityValue == 100 ? this.BorderColorValue : Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this.BorderColorValue), (float) this.BorderWidthValue)
+    IsInvalidated = false;
+    var pen = new Pen(OpacityValue == 100 ? BorderColorValue : Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), BorderColorValue), (float) BorderWidthValue)
     {
-      StartCap = this._startCap,
-      EndCap = this._endCap
+      StartCap = _startCap,
+      EndCap = _endCap
     };
-    g.DrawLine(pen, this._point1, this._point2);
+    g.DrawLine(pen, _point1, _point2);
     pen.Dispose();
   }
 
   internal void CalcLine()
   {
-    if (!this._needCalcLine)
+    if (!_needCalcLine)
       return;
-    if (this._point1.X < this._point2.X)
+    if (_point1.X < _point2.X)
     {
-      this.LocationValue.X = this._point1.X;
-      this.SizeValue.Width = this._point2.X - this._point1.X;
+      LocationValue.X = _point1.X;
+      SizeValue.Width = _point2.X - _point1.X;
     }
     else
     {
-      this.LocationValue.X = this._point2.X;
-      this.SizeValue.Width = this._point1.X - this._point2.X;
+      LocationValue.X = _point2.X;
+      SizeValue.Width = _point1.X - _point2.X;
     }
-    if (this._point1.Y < this._point2.Y)
+    if (_point1.Y < _point2.Y)
     {
-      this.LocationValue.Y = this._point1.Y;
-      this.SizeValue.Height = this._point2.Y - this._point1.Y;
+      LocationValue.Y = _point1.Y;
+      SizeValue.Height = _point2.Y - _point1.Y;
     }
     else
     {
-      this.LocationValue.Y = this._point2.Y;
-      this.SizeValue.Height = this._point1.Y - this._point2.Y;
+      LocationValue.Y = _point2.Y;
+      SizeValue.Height = _point1.Y - _point2.Y;
     }
-    this._needCalcLine = false;
+    _needCalcLine = false;
   }
 
-  IController IControllable.GetController() => (IController) this._controller ?? (IController) (this._controller = new LineController(this));
+  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new LineController(this));
 }

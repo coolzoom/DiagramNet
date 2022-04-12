@@ -6,7 +6,7 @@
 
 namespace DiagramNet.Elements;
 
-using DiagramNet.Elements.Controllers;
+using Controllers;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Reflection;
@@ -26,9 +26,9 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
   private string _text = "";
   private bool _autoSize;
   [NonSerialized]
-  private Font _font = new Font(FontFamily.GenericSansSerif, 8f);
+  private Font _font = new(FontFamily.GenericSansSerif, 8f);
   [NonSerialized]
-  private readonly StringFormat _format = new StringFormat(StringFormatFlags.NoWrap);
+  private readonly StringFormat _format = new(StringFormatFlags.NoWrap);
   private StringAlignment _alignment;
   private StringAlignment _lineAlignment;
   private StringTrimming _trimming;
@@ -54,168 +54,168 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
   public LabelElement(int top, int left, int width, int height)
     : base(top, left, width, height)
   {
-    this.Alignment = StringAlignment.Center;
-    this.LineAlignment = StringAlignment.Center;
-    this.Trimming = StringTrimming.Character;
-    this.Vertical = false;
-    this.Wrap = true;
-    this.BorderColorValue = Color.Transparent;
+    Alignment = StringAlignment.Center;
+    LineAlignment = StringAlignment.Center;
+    Trimming = StringTrimming.Character;
+    Vertical = false;
+    Wrap = true;
+    BorderColorValue = Color.Transparent;
   }
 
   public string Text
   {
-    get => this._text;
+    get => _text;
     set
     {
-      this._text = value;
-      if (this._autoSize)
-        this.DoAutoSize();
-      this.OnAppearanceChanged(new EventArgs());
+      _text = value;
+      if (_autoSize)
+        DoAutoSize();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public Font Font
   {
-    get => this._font;
+    get => _font;
     set
     {
-      this._font = value;
-      if (this._autoSize)
-        this.DoAutoSize();
-      this.OnAppearanceChanged(new EventArgs());
+      _font = value;
+      if (_autoSize)
+        DoAutoSize();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public StringAlignment Alignment
   {
-    get => this._alignment;
+    get => _alignment;
     set
     {
-      this._alignment = value;
-      this._format.Alignment = this._alignment;
-      if (this._autoSize)
-        this.DoAutoSize();
-      this.OnAppearanceChanged(new EventArgs());
+      _alignment = value;
+      _format.Alignment = _alignment;
+      if (_autoSize)
+        DoAutoSize();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public StringAlignment LineAlignment
   {
-    get => this._lineAlignment;
+    get => _lineAlignment;
     set
     {
-      this._lineAlignment = value;
-      this._format.LineAlignment = this._lineAlignment;
-      if (this._autoSize)
-        this.DoAutoSize();
-      this.OnAppearanceChanged(new EventArgs());
+      _lineAlignment = value;
+      _format.LineAlignment = _lineAlignment;
+      if (_autoSize)
+        DoAutoSize();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public StringTrimming Trimming
   {
-    get => this._trimming;
+    get => _trimming;
     set
     {
-      this._trimming = value;
-      this._format.Trimming = this._trimming;
-      if (this._autoSize)
-        this.DoAutoSize();
-      this.OnAppearanceChanged(new EventArgs());
+      _trimming = value;
+      _format.Trimming = _trimming;
+      if (_autoSize)
+        DoAutoSize();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public bool Wrap
   {
-    get => this._wrap;
+    get => _wrap;
     set
     {
-      this._wrap = value;
-      if (this._wrap)
-        this._format.FormatFlags &= ~StringFormatFlags.NoWrap;
+      _wrap = value;
+      if (_wrap)
+        _format.FormatFlags &= ~StringFormatFlags.NoWrap;
       else
-        this._format.FormatFlags |= StringFormatFlags.NoWrap;
-      if (this._autoSize)
-        this.DoAutoSize();
-      this.OnAppearanceChanged(new EventArgs());
+        _format.FormatFlags |= StringFormatFlags.NoWrap;
+      if (_autoSize)
+        DoAutoSize();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public bool Vertical
   {
-    get => this._vertical;
+    get => _vertical;
     set
     {
-      this._vertical = value;
-      if (this._vertical)
-        this._format.FormatFlags |= StringFormatFlags.DirectionVertical;
+      _vertical = value;
+      if (_vertical)
+        _format.FormatFlags |= StringFormatFlags.DirectionVertical;
       else
-        this._format.FormatFlags &= ~StringFormatFlags.DirectionVertical;
-      if (this._autoSize)
-        this.DoAutoSize();
-      this.OnAppearanceChanged(new EventArgs());
+        _format.FormatFlags &= ~StringFormatFlags.DirectionVertical;
+      if (_autoSize)
+        DoAutoSize();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public bool ReadOnly
   {
-    get => this._readOnly;
+    get => _readOnly;
     set
     {
-      this._readOnly = value;
-      this.OnAppearanceChanged(new EventArgs());
+      _readOnly = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public Color ForeColor1
   {
-    get => this._foreColor1;
+    get => _foreColor1;
     set
     {
-      this._foreColor1 = value;
-      this.OnAppearanceChanged(new EventArgs());
+      _foreColor1 = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public Color ForeColor2
   {
-    get => this._foreColor2;
+    get => _foreColor2;
     set
     {
-      this._foreColor2 = value;
-      this.OnAppearanceChanged(new EventArgs());
+      _foreColor2 = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public Color BackColor1
   {
-    get => this._backColor1;
+    get => _backColor1;
     set
     {
-      this._backColor1 = value;
-      this.OnAppearanceChanged(new EventArgs());
+      _backColor1 = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public Color BackColor2
   {
-    get => this._backColor2;
+    get => _backColor2;
     set
     {
-      this._backColor2 = value;
-      this.OnAppearanceChanged(new EventArgs());
+      _backColor2 = value;
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public bool AutoSize
   {
-    get => this._autoSize;
+    get => _autoSize;
     set
     {
-      this._autoSize = value;
-      if (this._autoSize)
-        this.DoAutoSize();
-      this.OnAppearanceChanged(new EventArgs());
+      _autoSize = value;
+      if (_autoSize)
+        DoAutoSize();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
@@ -224,72 +224,72 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     get => base.Size;
     set
     {
-      this.SizeValue = value;
-      if (this._autoSize)
-        this.DoAutoSize();
-      base.Size = this.SizeValue;
+      SizeValue = value;
+      if (_autoSize)
+        DoAutoSize();
+      base.Size = SizeValue;
     }
   }
 
-  internal StringFormat Format => this._format;
+  internal StringFormat Format => _format;
 
   public void DoAutoSize()
   {
-    if (this._text.Length == 0)
+    if (_text.Length == 0)
       return;
-    var size = Size.Round(Graphics.FromImage((Image) new Bitmap(1, 1)).MeasureString(this._text, this._font, this.SizeValue.Width, this._format));
-    if (this.SizeValue.Height >= size.Height)
+    var size = Size.Round(Graphics.FromImage((Image) new Bitmap(1, 1)).MeasureString(_text, _font, SizeValue.Width, _format));
+    if (SizeValue.Height >= size.Height)
       return;
-    this.SizeValue.Height = size.Height;
+    SizeValue.Height = size.Height;
   }
 
   private Brush GetBrushBackColor(Rectangle r)
   {
     Color color;
     Color color2;
-    if (this.OpacityValue == 100)
+    if (OpacityValue == 100)
     {
-      color = this._backColor1;
-      color2 = this._backColor2;
+      color = _backColor1;
+      color2 = _backColor2;
     }
     else
     {
-      color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this._backColor1);
-      color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this._backColor2);
+      color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), _backColor1);
+      color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), _backColor2);
     }
-    return !(this._backColor2 == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(r.X, r.Y, r.Width + 1, r.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
+    return !(_backColor2 == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(r.X, r.Y, r.Width + 1, r.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
   }
 
   private Brush GetBrushForeColor(Rectangle r)
   {
     Color color;
     Color color2;
-    if (this.OpacityValue == 100)
+    if (OpacityValue == 100)
     {
-      color = this._foreColor1;
-      color2 = this._foreColor2;
+      color = _foreColor1;
+      color2 = _foreColor2;
     }
     else
     {
-      color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this._foreColor1);
-      color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) this.OpacityValue / 100.0)), this._foreColor2);
+      color = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), _foreColor1);
+      color2 = Color.FromArgb((int) ((double) byte.MaxValue * ((double) OpacityValue / 100.0)), _foreColor2);
     }
-    return !(this._foreColor2 == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(r.X, r.Y, r.Width + 1, r.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
+    return !(_foreColor2 == Color.Empty) ? (Brush) new LinearGradientBrush(new Rectangle(r.X, r.Y, r.Width + 1, r.Height + 1), color, color2, LinearGradientMode.Horizontal) : (Brush) new SolidBrush(color);
   }
 
   internal override void Draw(Graphics g)
   {
-    var unsignedRectangle = this.GetUnsignedRectangle();
-    g.FillRectangle(this.GetBrushBackColor(unsignedRectangle), unsignedRectangle);
-    var brushForeColor = this.GetBrushForeColor(unsignedRectangle);
-    g.DrawString(this._text, this._font, brushForeColor, (RectangleF) unsignedRectangle, this._format);
-    this.DrawBorder(g, unsignedRectangle);
+    var unsignedRectangle = GetUnsignedRectangle();
+    g.FillRectangle(GetBrushBackColor(unsignedRectangle), unsignedRectangle);
+    var brushForeColor = GetBrushForeColor(unsignedRectangle);
+    g.DrawString(_text, _font, brushForeColor, (RectangleF) unsignedRectangle, _format);
+    DrawBorder(g, unsignedRectangle);
     brushForeColor.Dispose();
   }
 
   private void DrawBorder(Graphics g, Rectangle r)
   {
-    var pen = new Pen(this.BorderColorValue, (float) this.BorderWidthValue);
+    var pen = new Pen(BorderColorValue, (float) BorderWidthValue);
     g.DrawRectangle(pen, r);
     pen.Dispose();
   }
@@ -305,38 +305,38 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
         fieldInfo.SetValue((object) this, info.GetValue(fieldInfo.Name, fieldInfo.FieldType));
       }
     }
-    this.ForeColor1 = (Color) info.GetValue("foreColor1", typeof (Color));
-    this.ForeColor2 = (Color) info.GetValue("foreColor2", typeof (Color));
-    this.BackColor1 = (Color) info.GetValue("backColor1", typeof (Color));
-    this.BackColor2 = (Color) info.GetValue("backColor2", typeof (Color));
-    this.Text = info.GetString("text");
-    this.Alignment = (StringAlignment) info.GetValue("alignment", typeof (StringAlignment));
-    this.LineAlignment = (StringAlignment) info.GetValue("lineAlignment", typeof (StringAlignment));
-    this.Trimming = (StringTrimming) info.GetValue("trimming", typeof (StringTrimming));
-    this.Wrap = info.GetBoolean("wrap");
-    this.Vertical = info.GetBoolean("vertical");
-    this.ReadOnly = info.GetBoolean("readOnly");
-    this.AutoSize = info.GetBoolean("autoSize");
-    this.Font = (Font) new FontConverter().ConvertFromString(info.GetString("font"));
+    ForeColor1 = (Color) info.GetValue("foreColor1", typeof (Color));
+    ForeColor2 = (Color) info.GetValue("foreColor2", typeof (Color));
+    BackColor1 = (Color) info.GetValue("backColor1", typeof (Color));
+    BackColor2 = (Color) info.GetValue("backColor2", typeof (Color));
+    Text = info.GetString("text");
+    Alignment = (StringAlignment) info.GetValue("alignment", typeof (StringAlignment));
+    LineAlignment = (StringAlignment) info.GetValue("lineAlignment", typeof (StringAlignment));
+    Trimming = (StringTrimming) info.GetValue("trimming", typeof (StringTrimming));
+    Wrap = info.GetBoolean("wrap");
+    Vertical = info.GetBoolean("vertical");
+    ReadOnly = info.GetBoolean("readOnly");
+    AutoSize = info.GetBoolean("autoSize");
+    Font = (Font) new FontConverter().ConvertFromString(info.GetString("font"));
   }
 
   [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
   void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
   {
-    info.AddValue("foreColor1", (object) this._foreColor1);
-    info.AddValue("foreColor2", (object) this._foreColor2);
-    info.AddValue("backColor1", (object) this._backColor1);
-    info.AddValue("backColor2", (object) this._backColor2);
-    info.AddValue("text", (object) this._text);
-    info.AddValue("alignment", (object) this._alignment);
-    info.AddValue("lineAlignment", (object) this._lineAlignment);
-    info.AddValue("trimming", (object) this._trimming);
-    info.AddValue("wrap", this._wrap);
-    info.AddValue("vertical", this._vertical);
-    info.AddValue("readOnly", this._readOnly);
-    info.AddValue("autoSize", this._autoSize);
+    info.AddValue("foreColor1", (object) _foreColor1);
+    info.AddValue("foreColor2", (object) _foreColor2);
+    info.AddValue("backColor1", (object) _backColor1);
+    info.AddValue("backColor2", (object) _backColor2);
+    info.AddValue("text", (object) _text);
+    info.AddValue("alignment", (object) _alignment);
+    info.AddValue("lineAlignment", (object) _lineAlignment);
+    info.AddValue("trimming", (object) _trimming);
+    info.AddValue("wrap", _wrap);
+    info.AddValue("vertical", _vertical);
+    info.AddValue("readOnly", _readOnly);
+    info.AddValue("autoSize", _autoSize);
     var fontConverter = new FontConverter();
-    info.AddValue("font", (object) fontConverter.ConvertToString((object) this._font));
+    info.AddValue("font", (object) fontConverter.ConvertToString((object) _font));
     var type = typeof (LabelElement);
     foreach (var serializableMember in FormatterServices.GetSerializableMembers(type, context))
     {
@@ -345,16 +345,16 @@ public sealed class LabelElement : BaseElement, ISerializable, IControllable
     }
   }
 
-  IController IControllable.GetController() => (IController) this._controller ?? (IController) (this._controller = new RectangleController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new RectangleController((BaseElement) this));
 
   internal void PositionBySite(BaseElement site)
   {
     var empty = Point.Empty;
     var location = site.Location;
     var size1 = site.Size;
-    var size2 = this.Size;
+    var size2 = Size;
     empty.X = location.X + size1.Width / 2 - size2.Width / 2;
     empty.Y = location.Y + size1.Height / 2 - size2.Height / 2;
-    this.Location = empty;
+    Location = empty;
   }
 }

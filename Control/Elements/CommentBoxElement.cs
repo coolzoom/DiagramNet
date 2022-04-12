@@ -6,7 +6,7 @@
 
 namespace DiagramNet.Elements;
 
-using DiagramNet.Elements.Controllers;
+using Controllers;
 using System.Drawing.Drawing2D;
 
 [Serializable]
@@ -14,7 +14,7 @@ public class CommentBoxElement : RectangleElement, IControllable
 {
   [NonSerialized]
   private RectangleController _controller;
-  protected Size FoldSize = new Size(10, 15);
+  protected Size FoldSize = new(10, 15);
 
   public CommentBoxElement()
     : this(0, 0, 100, 100)
@@ -34,28 +34,28 @@ public class CommentBoxElement : RectangleElement, IControllable
   public CommentBoxElement(int top, int left, int width, int height)
     : base(top, left, width, height)
   {
-    this.FillColor1Value = Color.LemonChiffon;
-    this.FillColor2Value = Color.FromArgb((int) byte.MaxValue, (int) byte.MaxValue, 128);
-    this.LabelValue.Opacity = 100;
+    FillColor1Value = Color.LemonChiffon;
+    FillColor2Value = Color.FromArgb((int) byte.MaxValue, (int) byte.MaxValue, 128);
+    LabelValue.Opacity = 100;
   }
 
   internal override void Draw(Graphics g)
   {
-    this.IsInvalidated = false;
-    var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.LocationValue, this.SizeValue));
+    IsInvalidated = false;
+    var unsignedRectangle = GetUnsignedRectangle(new Rectangle(LocationValue, SizeValue));
     var points = new Point[5]
     {
-      new Point(unsignedRectangle.X, unsignedRectangle.Y),
-      new Point(unsignedRectangle.X, unsignedRectangle.Y + unsignedRectangle.Height),
-      new Point(unsignedRectangle.X + unsignedRectangle.Width, unsignedRectangle.Y + unsignedRectangle.Height),
-      new Point(unsignedRectangle.X + unsignedRectangle.Width, unsignedRectangle.Y + this.FoldSize.Height),
-      new Point(unsignedRectangle.X + unsignedRectangle.Width - this.FoldSize.Width, unsignedRectangle.Y)
+      new(unsignedRectangle.X, unsignedRectangle.Y),
+      new(unsignedRectangle.X, unsignedRectangle.Y + unsignedRectangle.Height),
+      new(unsignedRectangle.X + unsignedRectangle.Width, unsignedRectangle.Y + unsignedRectangle.Height),
+      new(unsignedRectangle.X + unsignedRectangle.Width, unsignedRectangle.Y + FoldSize.Height),
+      new(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y)
     };
-    g.FillPolygon(this.GetBrush(unsignedRectangle), points, FillMode.Alternate);
-    g.DrawPolygon(new Pen(this.BorderColorValue, (float) this.BorderWidthValue), points);
-    g.DrawLine(new Pen(this.BorderColorValue, (float) this.BorderWidthValue), new Point(unsignedRectangle.X + unsignedRectangle.Width - this.FoldSize.Width, unsignedRectangle.Y + this.FoldSize.Height), new Point(unsignedRectangle.X + unsignedRectangle.Width, unsignedRectangle.Y + this.FoldSize.Height));
-    g.DrawLine(new Pen(this.BorderColorValue, (float) this.BorderWidthValue), new Point(unsignedRectangle.X + unsignedRectangle.Width - this.FoldSize.Width, unsignedRectangle.Y), new Point(unsignedRectangle.X + unsignedRectangle.Width - this.FoldSize.Width, unsignedRectangle.Y + this.FoldSize.Height));
+    g.FillPolygon(GetBrush(unsignedRectangle), points, FillMode.Alternate);
+    g.DrawPolygon(new Pen(BorderColorValue, (float) BorderWidthValue), points);
+    g.DrawLine(new Pen(BorderColorValue, (float) BorderWidthValue), new Point(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y + FoldSize.Height), new Point(unsignedRectangle.X + unsignedRectangle.Width, unsignedRectangle.Y + FoldSize.Height));
+    g.DrawLine(new Pen(BorderColorValue, (float) BorderWidthValue), new Point(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y), new Point(unsignedRectangle.X + unsignedRectangle.Width - FoldSize.Width, unsignedRectangle.Y + FoldSize.Height));
   }
 
-  IController IControllable.GetController() => (IController) this._controller ?? (IController) (this._controller = (RectangleController) new CommentBoxController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = (RectangleController) new CommentBoxController((BaseElement) this));
 }

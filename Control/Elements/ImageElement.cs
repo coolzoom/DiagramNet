@@ -6,7 +6,7 @@
 
 namespace DiagramNet.Elements;
 
-using DiagramNet.Elements.Controllers;
+using Controllers;
 
 [Serializable]
 public class ImageElement : BaseElement, IControllable
@@ -21,27 +21,27 @@ public class ImageElement : BaseElement, IControllable
 
   public ImageElement(Image image, int top, int left, int width, int height)
   {
-    this._image = image;
-    this.Top = top;
-    this.Left = left;
-    this.Width = width;
-    this.Height = height;
+    _image = image;
+    Top = top;
+    Left = left;
+    Width = width;
+    Height = height;
   }
 
   public ImageElement(Image image, BaseElement rectangle)
   {
-    this._image = image;
-    this.Left = rectangle.Location.X + rectangle.Size.Width / 2 - image.Width / 2;
-    this.Top = rectangle.Location.Y + rectangle.Size.Height / 2 - image.Height / 2;
-    this.Width = image.Width;
-    this.Height = image.Height;
+    _image = image;
+    Left = rectangle.Location.X + rectangle.Size.Width / 2 - image.Width / 2;
+    Top = rectangle.Location.Y + rectangle.Size.Height / 2 - image.Height / 2;
+    Width = image.Width;
+    Height = image.Height;
   }
 
   internal override void Draw(Graphics g)
   {
-    this.IsInvalidated = false;
-    g.DrawImage(this._image, this.Left, this.Top, this.Width, this.Height);
+    IsInvalidated = false;
+    g.DrawImage(_image, Left, Top, Width, Height);
   }
 
-  IController IControllable.GetController() => (IController) this._controller ?? (IController) (this._controller = new RectangleController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new RectangleController((BaseElement) this));
 }

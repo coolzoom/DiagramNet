@@ -6,24 +6,24 @@
 
 namespace DiagramNet.Events;
 
-using DiagramNet.Elements;
+using Elements;
 
 public class ElementEventArgs : EventArgs
 {
   private readonly BaseElement _element;
   private readonly BaseElement _previousElement;
 
-  public ElementEventArgs(BaseElement el) => this._element = el;
+  public ElementEventArgs(BaseElement el) => _element = el;
 
   public ElementEventArgs(BaseElement el, BaseElement previousEl)
   {
-    this._element = el;
-    this._previousElement = previousEl;
+    _element = el;
+    _previousElement = previousEl;
   }
 
-  public BaseElement Element => this._element;
+  public BaseElement Element => _element;
 
-  public BaseElement PreviousElement => this._previousElement;
+  public BaseElement PreviousElement => _previousElement;
 
-  public override string ToString() => "el: " + (object) this._element.GetHashCode();
+  public override string ToString() => "el: " + (object) _element.GetHashCode();
 }

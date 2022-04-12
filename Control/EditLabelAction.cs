@@ -6,8 +6,8 @@
 
 namespace DiagramNet;
 
-using DiagramNet.Elements;
-using DiagramNet.Elements.Controllers;
+using Elements;
+using Elements.Controllers;
 
 internal class EditLabelAction
 {
@@ -22,52 +22,52 @@ internal class EditLabelAction
   {
     if (!(el is ILabelElement) || ((ILabelElement) el).Label.ReadOnly)
       return;
-    this._siteLabelElement = el;
-    this._labelElement = ((ILabelElement) this._siteLabelElement).Label;
-    this._labelTextBox = textBox;
-    this._direction = !(this._siteLabelElement is BaseLinkElement) ? LabelEditDirection.UpDown : LabelEditDirection.Both;
-    EditLabelAction.SetTextBoxLocation(this._siteLabelElement, this._labelTextBox);
-    this._labelTextBox.AutoSize = true;
-    this._labelTextBox.Show();
-    this._labelTextBox.Text = this._labelElement.Text;
-    this._labelTextBox.Font = this._labelElement.Font;
-    this._labelTextBox.WordWrap = this._labelElement.Wrap;
-    this._labelElement.Invalidate();
-    switch (this._labelElement.Alignment)
+    _siteLabelElement = el;
+    _labelElement = ((ILabelElement) _siteLabelElement).Label;
+    _labelTextBox = textBox;
+    _direction = !(_siteLabelElement is BaseLinkElement) ? LabelEditDirection.UpDown : LabelEditDirection.Both;
+    SetTextBoxLocation(_siteLabelElement, _labelTextBox);
+    _labelTextBox.AutoSize = true;
+    _labelTextBox.Show();
+    _labelTextBox.Text = _labelElement.Text;
+    _labelTextBox.Font = _labelElement.Font;
+    _labelTextBox.WordWrap = _labelElement.Wrap;
+    _labelElement.Invalidate();
+    switch (_labelElement.Alignment)
     {
       case StringAlignment.Near:
-        this._labelTextBox.TextAlign = HorizontalAlignment.Left;
+        _labelTextBox.TextAlign = HorizontalAlignment.Left;
         break;
       case StringAlignment.Center:
-        this._labelTextBox.TextAlign = HorizontalAlignment.Center;
+        _labelTextBox.TextAlign = HorizontalAlignment.Center;
         break;
       case StringAlignment.Far:
-        this._labelTextBox.TextAlign = HorizontalAlignment.Right;
+        _labelTextBox.TextAlign = HorizontalAlignment.Right;
         break;
     }
-    this._labelTextBox.KeyPress += new KeyPressEventHandler(this.LabelTextBoxKeyPress);
-    this._labelTextBox.Focus();
-    this._center.X = textBox.Location.X + textBox.Size.Width / 2;
-    this._center.Y = textBox.Location.Y + textBox.Size.Height / 2;
+    _labelTextBox.KeyPress += new KeyPressEventHandler(LabelTextBoxKeyPress);
+    _labelTextBox.Focus();
+    _center.X = textBox.Location.X + textBox.Size.Width / 2;
+    _center.Y = textBox.Location.Y + textBox.Size.Height / 2;
   }
 
   public void EndEdit()
   {
-    if (this._siteLabelElement == null)
+    if (_siteLabelElement == null)
       return;
-    this._labelTextBox.KeyPress -= new KeyPressEventHandler(this.LabelTextBoxKeyPress);
-    var labelController = ControllerHelper.GetLabelController(this._siteLabelElement);
-    this._labelElement.Size = this.MeasureTextSize();
-    this._labelElement.Text = this._labelTextBox.Text;
-    this._labelTextBox.Hide();
+    _labelTextBox.KeyPress -= new KeyPressEventHandler(LabelTextBoxKeyPress);
+    var labelController = ControllerHelper.GetLabelController(_siteLabelElement);
+    _labelElement.Size = MeasureTextSize();
+    _labelElement.Text = _labelTextBox.Text;
+    _labelTextBox.Hide();
     if (labelController != null)
       labelController.SetLabelPosition();
     else
-      this._labelElement.PositionBySite(this._siteLabelElement);
-    this._labelElement.Invalidate();
-    this._siteLabelElement = (BaseElement) null;
-    this._labelElement = (LabelElement) null;
-    this._labelTextBox = (TextBox) null;
+      _labelElement.PositionBySite(_siteLabelElement);
+    _labelElement.Invalidate();
+    _siteLabelElement = (BaseElement) null;
+    _labelElement = (LabelElement) null;
+    _labelTextBox = (TextBox) null;
   }
 
   public static void SetTextBoxLocation(BaseElement el, TextBox tb)
@@ -97,7 +97,7 @@ internal class EditLabelAction
         tb.Location = new Point(el.Location.X, el.Location.Y + el.Size.Height / 2 - size.Height / 2);
       }
     }
-    EditLabelAction.SetTextBoxBorder((Control) tb);
+    SetTextBoxBorder((Control) tb);
   }
 
   private static void SetTextBoxBorder(Control tb)
@@ -110,27 +110,27 @@ internal class EditLabelAction
 
   private Size MeasureTextSize()
   {
-    var text = this._labelTextBox.Text;
+    var text = _labelTextBox.Text;
     var size = Size.Empty;
-    if (this._direction == LabelEditDirection.UpDown)
-      size = DiagramUtil.MeasureString(text, this._labelElement.Font, this._labelTextBox.Size.Width, this._labelElement.Format);
-    else if (this._direction == LabelEditDirection.Both)
-      size = DiagramUtil.MeasureString(text, this._labelElement.Font);
+    if (_direction == LabelEditDirection.UpDown)
+      size = DiagramUtil.MeasureString(text, _labelElement.Font, _labelTextBox.Size.Width, _labelElement.Format);
+    else if (_direction == LabelEditDirection.Both)
+      size = DiagramUtil.MeasureString(text, _labelElement.Font);
     size.Height += 30;
     return size;
   }
 
   private void LabelTextBoxKeyPress(object sender, KeyPressEventArgs e)
   {
-    if (this._labelTextBox.Text.Length == 0)
+    if (_labelTextBox.Text.Length == 0)
       return;
-    var size1 = this._labelTextBox.Size;
-    var size2 = this.MeasureTextSize();
-    if (this._direction == LabelEditDirection.UpDown)
+    var size1 = _labelTextBox.Size;
+    var size2 = MeasureTextSize();
+    if (_direction == LabelEditDirection.UpDown)
       size1.Height = size2.Height;
-    else if (this._direction == LabelEditDirection.Both)
+    else if (_direction == LabelEditDirection.Both)
       size1 = size2;
-    this._labelTextBox.Size = size1;
-    this._labelTextBox.Location = new Point(this._center.X - size1.Width / 2, this._center.Y - size1.Height / 2);
+    _labelTextBox.Size = size1;
+    _labelTextBox.Location = new Point(_center.X - size1.Width / 2, _center.Y - size1.Height / 2);
   }
 }

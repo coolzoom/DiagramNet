@@ -6,7 +6,7 @@
 
 namespace DiagramNet;
 
-using DiagramNet.Elements;
+using Elements;
 using System.Collections;
 
 internal class DiagramUtil
@@ -32,7 +32,7 @@ internal class DiagramUtil
 
   public static CardinalDirection GetDirection(Rectangle rec, Point point)
   {
-    var angle = DiagramUtil.PointToAngle(DiagramUtil.DisplayToCartesianCoord(point, rec));
+    var angle = PointToAngle(DisplayToCartesianCoord(point, rec));
     if (angle >= 0.0 && angle < 45.0 || angle >= 315.0)
       return CardinalDirection.East;
     if (angle >= 45.0 && angle < 135.0)
@@ -181,7 +181,7 @@ internal class DiagramUtil
 
   public static BaseElement[] GetInnerElements(BaseElement el)
   {
-    var destinationArray = new BaseElement[DiagramUtil.GetInnerElementsCount(el)];
+    var destinationArray = new BaseElement[GetInnerElementsCount(el)];
     var destinationIndex = 0;
     if (el is ILabelElement)
     {

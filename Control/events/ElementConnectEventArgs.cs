@@ -6,7 +6,7 @@
 
 namespace DiagramNet.Events;
 
-using DiagramNet.Elements;
+using Elements;
 
 public class ElementConnectEventArgs : EventArgs
 {
@@ -16,26 +16,26 @@ public class ElementConnectEventArgs : EventArgs
 
   public ElementConnectEventArgs(NodeElement node1, NodeElement node2, BaseLinkElement link)
   {
-    this._node1 = node1;
-    this._node2 = node2;
-    this._link = link;
+    _node1 = node1;
+    _node2 = node2;
+    _link = link;
   }
 
-  public NodeElement Node1 => this._node1;
+  public NodeElement Node1 => _node1;
 
-  public NodeElement Node2 => this._node2;
+  public NodeElement Node2 => _node2;
 
-  public BaseLinkElement Link => this._link;
+  public BaseLinkElement Link => _link;
 
   public override string ToString()
   {
     var str = "";
-    if (this._node1 != null)
-      str = str + "Node1:" + (object) this._node1;
-    if (this._node2 != null)
-      str = str + "Node2:" + (object) this._node2;
-    if (this._link != null)
-      str = str + "Link:" + (object) this._link;
+    if (_node1 != null)
+      str = str + "Node1:" + (object) _node1;
+    if (_node2 != null)
+      str = str + "Node2:" + (object) _node2;
+    if (_link != null)
+      str = str + "Link:" + (object) _link;
     return str;
   }
 }

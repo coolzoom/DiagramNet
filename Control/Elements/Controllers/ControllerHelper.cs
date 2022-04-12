@@ -23,11 +23,11 @@ internal class ControllerHelper
     return (IMoveController) null;
   }
 
-  public static IResizeController GetResizeController(BaseElement el) => el is IControllable ? ControllerHelper.GetResizeController(((IControllable) el).GetController()) : (IResizeController) null;
+  public static IResizeController GetResizeController(BaseElement el) => el is IControllable ? GetResizeController(((IControllable) el).GetController()) : (IResizeController) null;
 
   public static IResizeController GetResizeController(IController ctrl) => ctrl as IResizeController;
 
-  public static ILabelController GetLabelController(BaseElement el) => el is IControllable && el is ILabelElement ? ControllerHelper.GetLabelController(((IControllable) el).GetController()) : (ILabelController) null;
+  public static ILabelController GetLabelController(BaseElement el) => el is IControllable && el is ILabelElement ? GetLabelController(((IControllable) el).GetController()) : (ILabelController) null;
 
   public static ILabelController GetLabelController(IController ctrl) => ctrl as ILabelController;
 }

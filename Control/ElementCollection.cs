@@ -6,40 +6,40 @@
 
 namespace DiagramNet;
 
-using DiagramNet.Elements;
+using Elements;
 using System.Collections.ObjectModel;
 
 [Serializable]
 public class ElementCollection : Collection<BaseElement>
 {
   public const int MaxIntSize = 100;
-  private Point _location = new Point(100, 100);
-  private Size _size = new Size(0, 0);
+  private Point _location = new(100, 100);
+  private Size _size = new(0, 0);
   private bool _enabledCalc = true;
   private bool _needCalc = true;
 
   public new virtual void Add(BaseElement element)
   {
-    this._needCalc = true;
+    _needCalc = true;
     base.Add(element);
   }
 
   public new void Insert(int index, BaseElement element)
   {
-    this._needCalc = true;
+    _needCalc = true;
     base.Insert(index, element);
   }
 
   public new void Remove(BaseElement element)
   {
     base.Remove(element);
-    this._needCalc = true;
+    _needCalc = true;
   }
 
   public new void Clear()
   {
     base.Clear();
-    this._needCalc = true;
+    _needCalc = true;
   }
 
   public void ChangeIndex(int i, int y)
@@ -49,29 +49,29 @@ public class ElementCollection : Collection<BaseElement>
 
   public BaseElement[] GetArray()
   {
-    var array = new BaseElement[this.Count];
-    for (var index = 0; index <= this.Count - 1; ++index)
+    var array = new BaseElement[Count];
+    for (var index = 0; index <= Count - 1; ++index)
       array[index] = (BaseElement) this[index];
     return array;
   }
 
   public BaseElement[] GetArrayClone()
   {
-    var arrayClone = new BaseElement[this.Count];
-    for (var index = 0; index <= this.Count - 1; ++index)
+    var arrayClone = new BaseElement[Count];
+    for (var index = 0; index <= Count - 1; ++index)
       arrayClone[index] = ((BaseElement) this[index]).Clone();
     return arrayClone;
   }
 
   internal bool EnabledCalc
   {
-    get => this._enabledCalc;
+    get => _enabledCalc;
     set
     {
-      this._enabledCalc = value;
-      if (!this._enabledCalc)
+      _enabledCalc = value;
+      if (!_enabledCalc)
         return;
-      this._needCalc = true;
+      _needCalc = true;
     }
   }
 
@@ -79,8 +79,8 @@ public class ElementCollection : Collection<BaseElement>
   {
     get
     {
-      this.CalcWindow();
-      return this._location;
+      CalcWindow();
+      return _location;
     }
   }
 
@@ -88,57 +88,57 @@ public class ElementCollection : Collection<BaseElement>
   {
     get
     {
-      this.CalcWindow();
-      return this._size;
+      CalcWindow();
+      return _size;
     }
   }
 
   internal void CalcWindow(bool forceCalc)
   {
     if (forceCalc)
-      this._needCalc = true;
-    this.CalcWindow();
+      _needCalc = true;
+    CalcWindow();
   }
 
   internal void CalcWindow()
   {
-    if (!this._enabledCalc || !this._needCalc)
+    if (!_enabledCalc || !_needCalc)
       return;
-    this._location.X = 100;
-    this._location.Y = 100;
-    this._size.Width = 0;
-    this._size.Height = 0;
+    _location.X = 100;
+    _location.Y = 100;
+    _size.Width = 0;
+    _size.Height = 0;
     foreach (BaseElement element in this)
-      this.CalcWindowLocation(element);
+      CalcWindowLocation(element);
     foreach (BaseElement element in this)
-      this.CalcWindowSize(element);
-    this._needCalc = false;
+      CalcWindowSize(element);
+    _needCalc = false;
   }
 
   internal void CalcWindowLocation(BaseElement element)
   {
-    if (!this._enabledCalc)
+    if (!_enabledCalc)
       return;
     var location = element.Location;
-    if (location.X < this._location.X)
-      this._location.X = location.X;
-    if (location.Y >= this._location.Y)
+    if (location.X < _location.X)
+      _location.X = location.X;
+    if (location.Y >= _location.Y)
       return;
-    this._location.Y = location.Y;
+    _location.Y = location.Y;
   }
 
   internal void CalcWindowSize(BaseElement element)
   {
-    if (!this._enabledCalc)
+    if (!_enabledCalc)
       return;
     var location = element.Location;
     var size = element.Size;
-    var num1 = location.X + size.Width - this._location.X;
-    if (num1 > this._size.Width)
-      this._size.Width = num1;
-    var num2 = location.Y + size.Height - this._location.Y;
-    if (num2 <= this._size.Height)
+    var num1 = location.X + size.Width - _location.X;
+    if (num1 > _size.Width)
+      _size.Width = num1;
+    var num2 = location.Y + size.Height - _location.Y;
+    if (num2 <= _size.Height)
       return;
-    this._size.Height = num2;
+    _size.Height = num2;
   }
 }

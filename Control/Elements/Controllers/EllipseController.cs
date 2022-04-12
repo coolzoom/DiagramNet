@@ -19,14 +19,14 @@ internal class EllipseController : RectangleController
   {
     var graphicsPath = new GraphicsPath();
     var matrix = new Matrix();
-    graphicsPath.AddEllipse(new Rectangle(this.El.Location.X, this.El.Location.Y, this.El.Size.Width, this.El.Size.Height));
+    graphicsPath.AddEllipse(new Rectangle(El.Location.X, El.Location.Y, El.Size.Width, El.Size.Height));
     graphicsPath.Transform(matrix);
     return graphicsPath.IsVisible(p);
   }
 
   public override void DrawSelection(Graphics g)
   {
-    var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(this.El.Location.X - 3, this.El.Location.Y - 3, this.El.Size.Width + 6, this.El.Size.Height + 6));
+    var unsignedRectangle = BaseElement.GetUnsignedRectangle(new Rectangle(El.Location.X - 3, El.Location.Y - 3, El.Size.Width + 6, El.Size.Height + 6));
     var hatchBrush = new HatchBrush(HatchStyle.SmallCheckerBoard, Color.LightGray, Color.Transparent);
     var pen = new Pen((Brush) hatchBrush, 3f);
     g.DrawEllipse(pen, unsignedRectangle);

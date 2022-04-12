@@ -6,7 +6,7 @@
 
 namespace DiagramNet.Elements;
 
-using DiagramNet.Elements.Controllers;
+using Controllers;
 using System.Collections;
 
 [Serializable]
@@ -18,7 +18,7 @@ public class ConnectorElement : RectangleElement, IControllable
   public string ShortName;
   [NonSerialized]
   private ConnectorController _controller;
-  private ElementCollection _links = new ElementCollection();
+  private ElementCollection _links = new();
 
   public ConnectorElement()
   {
@@ -27,27 +27,27 @@ public class ConnectorElement : RectangleElement, IControllable
   public ConnectorElement(NodeElement parent)
     : base(new Rectangle(0, 0, 0, 0))
   {
-    this._parentElement = parent;
-    this.BorderColorValue = Color.Black;
-    this.FillColor1Value = Color.LightGray;
-    this.FillColor2Value = Color.Empty;
+    _parentElement = parent;
+    BorderColorValue = Color.Black;
+    FillColor1Value = Color.LightGray;
+    FillColor2Value = Color.Empty;
   }
 
-  public NodeElement ParentElement => this._parentElement;
+  public NodeElement ParentElement => _parentElement;
 
-  internal void AddLink(BaseLinkElement lnk) => this.Links.Add((BaseElement) lnk);
+  internal void AddLink(BaseLinkElement lnk) => Links.Add((BaseElement) lnk);
 
-  public void RemoveLink(BaseLinkElement lnk) => this.Links.Remove((BaseElement) lnk);
+  public void RemoveLink(BaseLinkElement lnk) => Links.Remove((BaseElement) lnk);
 
   public ElementCollection Links
   {
-    get => this._links;
-    set => this._links = value;
+    get => _links;
+    set => _links = value;
   }
 
-  internal CardinalDirection GetDirection() => DiagramUtil.GetDirection(new Rectangle(this._parentElement.Location, this._parentElement.Size), new Point(this.LocationValue.X - this._parentElement.Location.X + this.SizeValue.Width / 2, this.LocationValue.Y - this._parentElement.Location.Y + this.SizeValue.Height / 2));
+  internal CardinalDirection GetDirection() => DiagramUtil.GetDirection(new Rectangle(_parentElement.Location, _parentElement.Size), new Point(LocationValue.X - _parentElement.Location.X + SizeValue.Width / 2, LocationValue.Y - _parentElement.Location.Y + SizeValue.Height / 2));
 
-  IController IControllable.GetController() => (IController) this._controller ?? (IController) (this._controller = new ConnectorController((BaseElement) this));
+  IController IControllable.GetController() => (IController) _controller ?? (IController) (_controller = new ConnectorController((BaseElement) this));
 
   public override Point Location
   {
@@ -56,7 +56,7 @@ public class ConnectorElement : RectangleElement, IControllable
     {
       if (value == base.Location)
         return;
-      foreach (BaseLinkElement link in this.Links)
+      foreach (BaseLinkElement link in Links)
         link.NeedCalcLink = true;
       base.Location = value;
     }
@@ -69,7 +69,7 @@ public class ConnectorElement : RectangleElement, IControllable
     {
       if (value == base.Size)
         return;
-      foreach (BaseLinkElement link in this.Links)
+      foreach (BaseLinkElement link in Links)
         link.NeedCalcLink = true;
       base.Size = value;
     }

@@ -19,7 +19,7 @@ public abstract class NodeElement : BaseElement
   protected NodeElement(int top, int left, int width, int height)
     : base(top, left, width, height)
   {
-    this.InitConnectors();
+    InitConnectors();
   }
 
   protected NodeElement()
@@ -27,71 +27,71 @@ public abstract class NodeElement : BaseElement
   }
 
   [Browsable(false)]
-  public virtual ConnectorElement[] Connectors => this.Connects;
+  public virtual ConnectorElement[] Connectors => Connects;
 
   public override Point Location
   {
-    get => this.LocationValue;
+    get => LocationValue;
     set
     {
-      this.LocationValue = value;
-      if (this.Overrided)
+      LocationValue = value;
+      if (Overrided)
         return;
-      this.UpdateConnectorsPosition();
-      this.OnAppearanceChanged(new EventArgs());
+      UpdateConnectorsPosition();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public override Size Size
   {
-    get => this.SizeValue;
+    get => SizeValue;
     set
     {
-      this.SizeValue = value;
-      this.UpdateConnectorsPosition();
-      this.OnAppearanceChanged(new EventArgs());
+      SizeValue = value;
+      UpdateConnectorsPosition();
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
   public override bool Visible
   {
-    get => this.VisibleValue;
+    get => VisibleValue;
     set
     {
-      this.VisibleValue = value;
-      foreach (BaseElement connect in this.Connects)
+      VisibleValue = value;
+      foreach (BaseElement connect in Connects)
         connect.Visible = value;
-      this.OnAppearanceChanged(new EventArgs());
+      OnAppearanceChanged(new EventArgs());
     }
   }
 
-  public virtual bool IsConnected => ((IEnumerable<ConnectorElement>) this.Connects).Any<ConnectorElement>((Func<ConnectorElement, bool>) (c => c.Links.Count > 0));
+  public virtual bool IsConnected => ((IEnumerable<ConnectorElement>) Connects).Any<ConnectorElement>((Func<ConnectorElement, bool>) (c => c.Links.Count > 0));
 
   protected void InitConnectors()
   {
-    this.Connects[0] = new ConnectorElement(this);
-    this.Connects[1] = new ConnectorElement(this);
-    this.Connects[2] = new ConnectorElement(this);
-    this.Connects[3] = new ConnectorElement(this);
-    this.UpdateConnectorsPosition();
+    Connects[0] = new ConnectorElement(this);
+    Connects[1] = new ConnectorElement(this);
+    Connects[2] = new ConnectorElement(this);
+    Connects[3] = new ConnectorElement(this);
+    UpdateConnectorsPosition();
   }
 
   protected void UpdateConnectorsPosition()
   {
-    var point = new Point(this.LocationValue.X + this.SizeValue.Width / 2, this.LocationValue.Y);
-    var connect1 = this.Connects[0];
+    var point = new Point(LocationValue.X + SizeValue.Width / 2, LocationValue.Y);
+    var connect1 = Connects[0];
     connect1.Location = new Point(point.X - 3, point.Y - 3);
     connect1.Size = new Size(6, 6);
-    point = new Point(this.LocationValue.X + this.SizeValue.Width / 2, this.LocationValue.Y + this.SizeValue.Height);
-    var connect2 = this.Connects[1];
+    point = new Point(LocationValue.X + SizeValue.Width / 2, LocationValue.Y + SizeValue.Height);
+    var connect2 = Connects[1];
     connect2.Location = new Point(point.X - 3, point.Y - 3);
     connect2.Size = new Size(6, 6);
-    point = new Point(this.LocationValue.X, this.LocationValue.Y + this.SizeValue.Height / 2);
-    var connect3 = this.Connects[2];
+    point = new Point(LocationValue.X, LocationValue.Y + SizeValue.Height / 2);
+    var connect3 = Connects[2];
     connect3.Location = new Point(point.X - 3, point.Y - 3);
     connect3.Size = new Size(6, 6);
-    point = new Point(this.LocationValue.X + this.SizeValue.Width, this.LocationValue.Y + this.SizeValue.Height / 2);
-    var connect4 = this.Connects[3];
+    point = new Point(LocationValue.X + SizeValue.Width, LocationValue.Y + SizeValue.Height / 2);
+    var connect4 = Connects[3];
     connect4.Location = new Point(point.X - 3, point.Y - 3);
     connect4.Size = new Size(6, 6);
   }
@@ -99,31 +99,31 @@ public abstract class NodeElement : BaseElement
   public override void Invalidate()
   {
     base.Invalidate();
-    for (var index1 = this.Connects.Length - 1; index1 >= 0; --index1)
+    for (var index1 = Connects.Length - 1; index1 >= 0; --index1)
     {
-      for (var index2 = this.Connects[index1].Links.Count - 1; index2 >= 0; --index2)
-        this.Connects[index1].Links[index2].Invalidate();
+      for (var index2 = Connects[index1].Links.Count - 1; index2 >= 0; --index2)
+        Connects[index1].Links[index2].Invalidate();
     }
   }
 
   internal virtual void Draw(Graphics g, bool drawConnector)
   {
-    this.Draw(g);
+    Draw(g);
     if (!drawConnector)
       return;
-    this.DrawConnectors(g);
+    DrawConnectors(g);
   }
 
   protected void DrawConnectors(Graphics g)
   {
-    foreach (BaseElement connect in this.Connects)
+    foreach (BaseElement connect in Connects)
       connect.Draw(g);
   }
 
   public virtual ElementCollection GetLinkedNodes()
   {
     var linkedNodes = new ElementCollection();
-    foreach (var connect in this.Connects)
+    foreach (var connect in Connects)
     {
       foreach (BaseLinkElement link in connect.Links)
         linkedNodes.Add(link.Connector1 == connect ? (BaseElement) link.Connector2.ParentElement : (BaseElement) link.Connector1.ParentElement);
