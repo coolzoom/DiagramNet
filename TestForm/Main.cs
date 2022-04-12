@@ -798,6 +798,7 @@ public class Form1 : System.Windows.Forms.Form
     this.ClientSize = new System.Drawing.Size(696, 385);
     this.Controls.Add(this.panel1);
     this.Controls.Add(this.toolBar1);
+    this.Controls.Add(this.mainMenu1);
     this.MainMenuStrip = this.mainMenu1;
     this.Name = "Form1";
     this.Text = "Diagram.NET Test Form";
