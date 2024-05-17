@@ -123,707 +123,771 @@ public class Form1 : System.Windows.Forms.Form
     base.Dispose(disposing);
   }
 
-  #region Windows Form Designer generated code
-  /// <summary>
-  /// Required method for Designer support - do not modify
-  /// the contents of this method with the code editor.
-  /// </summary>
-  private void InitializeComponent()
-  {
-    System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-    this.toolBar1 = new System.Windows.Forms.ToolStrip();
-    this.btnOpen = new System.Windows.Forms.ToolStripButton();
-    this.btnSave = new System.Windows.Forms.ToolStripButton();
-    this.sep1 = new System.Windows.Forms.ToolStripSeparator();
-    this.btnCut = new System.Windows.Forms.ToolStripButton();
-    this.btnCopy = new System.Windows.Forms.ToolStripButton();
-    this.btnPaste = new System.Windows.Forms.ToolStripButton();
-    this.btnDelete = new System.Windows.Forms.ToolStripButton();
-    this.sep4 = new System.Windows.Forms.ToolStripSeparator();
-    this.btnSize = new System.Windows.Forms.ToolStripButton();
-    this.btnAdd = new System.Windows.Forms.ToolStripDropDownButton();
-    this.contextMenu1 = new System.Windows.Forms.ContextMenuStrip();
-    this.mnuTbRectangle = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuTbEllipse = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuTbRectangleNode = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuTbEllipseNode = new System.Windows.Forms.ToolStripMenuItem();
-    this.TbCommentBox = new System.Windows.Forms.ToolStripMenuItem();
-    this.btnConnect = new System.Windows.Forms.ToolStripDropDownButton();
-    this.contextMenu2 = new System.Windows.Forms.ContextMenuStrip();
-    this.mnuTbStraightLink = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuTbRightAngleLink = new System.Windows.Forms.ToolStripMenuItem();
-    this.sep2 = new System.Windows.Forms.ToolStripSeparator();
-    this.btnUndo = new System.Windows.Forms.ToolStripButton();
-    this.btnRedo = new System.Windows.Forms.ToolStripButton();
-    this.sep3 = new System.Windows.Forms.ToolStripSeparator();
-    this.btnZoom = new System.Windows.Forms.ToolStripDropDownButton();
-    this.contextMenu_Zoom = new System.Windows.Forms.ContextMenuStrip();
-    this.mnuZoom_10 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuZoom_25 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuZoom_50 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuZoom_75 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuZoom_100 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuZoom_150 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuZoom_200 = new System.Windows.Forms.ToolStripMenuItem();
-    this.sep5 = new System.Windows.Forms.ToolStripSeparator();
-    this.btnFront = new System.Windows.Forms.ToolStripButton();
-    this.btnBack = new System.Windows.Forms.ToolStripButton();
-    this.btnMoveUp = new System.Windows.Forms.ToolStripButton();
-    this.btnMoveDown = new System.Windows.Forms.ToolStripButton();
-    this.imageList1 = new System.Windows.Forms.ImageList();
-    this.mainMenu1 = new System.Windows.Forms.MenuStrip();
-    this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuOpen = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuSave = new System.Windows.Forms.ToolStripMenuItem();
-    this.menuSaveas = new System.Windows.Forms.ToolStripMenuItem();
-    this.menuItem26 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuEdit = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuUndo = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuRedo = new System.Windows.Forms.ToolStripMenuItem();
-    this.menuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuCut = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuCopy = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuPaste = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuDelete = new System.Windows.Forms.ToolStripMenuItem();
-    this.menuItem11 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuSize = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuAdd = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuRectangle = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuEllipse = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuRectangleNode = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuEllipseNode = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuConnect = new System.Windows.Forms.ToolStripMenuItem();
-    this.menuItem20 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuOrder = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuBringToFront = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuSendToBack = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuMoveUp = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuMoveDown = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuHelp = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuShowDebugLog = new System.Windows.Forms.ToolStripMenuItem();
-    this.menuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-    this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
-    this.panel1 = new System.Windows.Forms.Panel();
-    this.designer1 = new DiagramNet.Designer(this.components);
-    this.splitter2 = new System.Windows.Forms.Splitter();
-    this.txtLog = new System.Windows.Forms.TextBox();
-    this.splitter1 = new System.Windows.Forms.Splitter();
-    this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-    this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-    this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-    this.TbCommentBoxNode = new System.Windows.Forms.ToolStripMenuItem();
-    this.TbDiagramBlockNode = new System.Windows.Forms.ToolStripMenuItem();
-    this.panel1.SuspendLayout();
-    this.SuspendLayout();
-    // 
-    // toolBar1
-    // 
-    this.toolBar1.AllowDrop = true;
-    // TODO   this.toolBar1.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
-    this.toolBar1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-      this.btnOpen,
-      this.btnSave,
-      this.sep1,
-      this.btnCut,
-      this.btnCopy,
-      this.btnPaste,
-      this.btnDelete,
-      this.sep4,
-      this.btnSize,
-      this.btnAdd,
-      this.btnConnect,
-      this.sep2,
-      this.btnUndo,
-      this.btnRedo,
-      this.sep3,
-      this.btnZoom,
-      this.sep5,
-      this.btnFront,
-      this.btnBack,
-      this.btnMoveUp,
-      this.btnMoveDown});
-    // TODO   this.toolBar1.Divider = false;
-    // TODO   this.toolBar1.DropDownArrows = true;
-    this.toolBar1.ImageList = this.imageList1;
-    this.toolBar1.Location = new System.Drawing.Point(0, 0);
-    this.toolBar1.Name = "toolBar1";
-    // TODO   this.toolBar1.ShowToolTips = true;
-    this.toolBar1.Size = new System.Drawing.Size(696, 26);
-    this.toolBar1.TabIndex = 1;
-    // TODO   this.toolBar1.Wrappable = false;
-    this.toolBar1.ItemClicked += this.toolBar1_ButtonClick;
-    // 
-    // btnOpen
-    // 
-    this.btnOpen.ImageIndex = 6;
-    this.btnOpen.Name = "btnOpen";
-    this.btnOpen.Tag = "Open";
-    this.btnOpen.ToolTipText = "Open";
-    // 
-    // btnSave
-    // 
-    this.btnSave.ImageIndex = 5;
-    this.btnSave.Name = "btnSave";
-    this.btnSave.Tag = "Save";
-    this.btnSave.ToolTipText = "Save";
-    // 
-    // sep1
-    // 
-    this.sep1.Name = "sep1";
-    //this.sep1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-    // 
-    // btnCut
-    // 
-    this.btnCut.ImageIndex = 13;
-    this.btnCut.Name = "btnCut";
-    this.btnCut.Tag = "Cut";
-    this.btnCut.ToolTipText = "Cut";
-    // 
-    // btnCopy
-    // 
-    this.btnCopy.ImageIndex = 14;
-    this.btnCopy.Name = "btnCopy";
-    this.btnCopy.Tag = "Copy";
-    this.btnCopy.ToolTipText = "Copy";
-    // 
-    // btnPaste
-    // 
-    this.btnPaste.ImageIndex = 15;
-    this.btnPaste.Name = "btnPaste";
-    this.btnPaste.Tag = "Paste";
-    this.btnPaste.ToolTipText = "Paste";
-    // 
-    // btnDelete
-    // 
-    this.btnDelete.ImageIndex = 2;
-    this.btnDelete.Name = "btnDelete";
-    // TODO   this.btnDelete.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-    this.btnDelete.Tag = "Delete";
-    this.btnDelete.ToolTipText = "Delete";
-    // 
-    // sep4
-    // 
-    this.sep4.Name = "sep4";
-    //this.sep4.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-    // 
-    // btnSize
-    // 
-    this.btnSize.ImageIndex = 0;
-    this.btnSize.Name = "btnSize";
-    // TODO   this.btnSize.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-    this.btnSize.Tag = "Size";
-    this.btnSize.ToolTipText = "Size";
-    // 
-    // btnAdd
-    // 
-    this.btnAdd.DropDown = this.contextMenu1;
-    this.btnAdd.ImageIndex = 1;
-    this.btnAdd.Name = "btnAdd";
-    // TODO   this.btnAdd.Style = System.Windows.Forms.ToolBarButtonStyle.DropDownButton;
-    this.btnAdd.Tag = "Add";
-    this.btnAdd.ToolTipText = "Add";
-    // 
-    // contextMenu1
-    // 
-    this.contextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
-      this.mnuTbRectangle,
-      this.mnuTbEllipse,
-      this.mnuTbRectangleNode,
-      this.mnuTbEllipseNode,
-      this.TbCommentBox,
-      this.TbCommentBoxNode,
-      this.TbDiagramBlockNode
-    });
-    // 
-    // mnuTbRectangle
-    // 
-    this.mnuTbRectangle.Text = "&Rectangle";
-    this.mnuTbRectangle.Click += new System.EventHandler(this.mnuTbRectangle_Click);
-    // 
-    // mnuTbEllipse
-    // 
-    this.mnuTbEllipse.Text = "&Ellipse";
-    this.mnuTbEllipse.Click += new System.EventHandler(this.mnuTbEllipse_Click);
-    // 
-    // mnuTbRectangleNode
-    // 
-    this.mnuTbRectangleNode.Text = "&Node Rectangle";
-    this.mnuTbRectangleNode.Click += new System.EventHandler(this.mnuTbRectangleNode_Click);
-    // 
-    // mnuTbEllipseNode
-    // 
-    this.mnuTbEllipseNode.Text = "N&ode Ellipse";
-    this.mnuTbEllipseNode.Click += new System.EventHandler(this.mnuTbEllipseNode_Click);
-    // 
-    // TbCommentBox
-    // 
-    this.TbCommentBox.Text = "Comment Box";
-    this.TbCommentBox.Click += new System.EventHandler(this.TbCommentBox_Click);
-    // 
-    // btnConnect
-    // 
-    this.btnConnect.DropDown = this.contextMenu2;
-    this.btnConnect.ImageIndex = 3;
-    this.btnConnect.Name = "btnConnect";
-    // TODO   this.btnConnect.Style = System.Windows.Forms.ToolBarButtonStyle.DropDownButton;
-    this.btnConnect.Tag = "Connect";
-    this.btnConnect.ToolTipText = "Connect";
-    // 
-    // contextMenu2
-    // 
-    this.contextMenu2.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
-      this.mnuTbStraightLink,
-      this.mnuTbRightAngleLink});
-    // 
-    // mnuTbStraightLink
-    // 
-    this.mnuTbStraightLink.Text = "Straight Link";
-    this.mnuTbStraightLink.Click += new System.EventHandler(this.mnuTbStraightLink_Click);
-    // 
-    // mnuTbRightAngleLink
-    // 
-    this.mnuTbRightAngleLink.Text = "Right Angle Link";
-    this.mnuTbRightAngleLink.Click += new System.EventHandler(this.mnuTbRightAngleLink_Click);
-    // 
-    // sep2
-    // 
-    this.sep2.Name = "sep2";
-    //this.sep2.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-    // 
-    // btnUndo
-    // 
-    this.btnUndo.ImageIndex = 7;
-    this.btnUndo.Name = "btnUndo";
-    this.btnUndo.Tag = "Undo";
-    this.btnUndo.ToolTipText = "Undo";
-    // 
-    // btnRedo
-    // 
-    this.btnRedo.ImageIndex = 8;
-    this.btnRedo.Name = "btnRedo";
-    this.btnRedo.Tag = "Redo";
-    this.btnRedo.ToolTipText = "Redo";
-    // 
-    // sep3
-    // 
-    this.sep3.Name = "sep3";
-    //this.sep3.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-    // 
-    // btnZoom
-    // 
-    this.btnZoom.DropDown = this.contextMenu_Zoom;
-    this.btnZoom.ImageIndex = 16;
-    this.btnZoom.Name = "btnZoom";
-    // TODO   this.btnZoom.Style = System.Windows.Forms.ToolBarButtonStyle.DropDownButton;
-    this.btnZoom.Tag = "Zoom";
-    // 
-    // contextMenu_Zoom
-    // 
-    this.contextMenu_Zoom.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
-      this.mnuZoom_10,
-      this.mnuZoom_25,
-      this.mnuZoom_50,
-      this.mnuZoom_75,
-      this.mnuZoom_100,
-      this.mnuZoom_150,
-      this.mnuZoom_200});
-    // 
-    // mnuZoom_10
-    // 
-    this.mnuZoom_10.Text = "10%";
-    this.mnuZoom_10.Click += new System.EventHandler(this.mnuZoom_10_Click);
-    // 
-    // mnuZoom_25
-    // 
-    this.mnuZoom_25.Text = "25%";
-    this.mnuZoom_25.Click += new System.EventHandler(this.mnuZoom_25_Click);
-    // 
-    // mnuZoom_50
-    // 
-    this.mnuZoom_50.Text = "50%";
-    this.mnuZoom_50.Click += new System.EventHandler(this.mnuZoom_50_Click);
-    // 
-    // mnuZoom_75
-    // 
-    this.mnuZoom_75.Text = "75%";
-    this.mnuZoom_75.Click += new System.EventHandler(this.mnuZoom_75_Click);
-    // 
-    // mnuZoom_100
-    // 
-    this.mnuZoom_100.Text = "100%";
-    this.mnuZoom_100.Click += new System.EventHandler(this.mnuZoom_100_Click);
-    // 
-    // mnuZoom_150
-    // 
-    this.mnuZoom_150.Text = "150%";
-    this.mnuZoom_150.Click += new System.EventHandler(this.mnuZoom_150_Click);
-    // 
-    // mnuZoom_200
-    // 
-    this.mnuZoom_200.Text = "200%";
-    this.mnuZoom_200.Click += new System.EventHandler(this.mnuZoom_200_Click);
-    // 
-    // sep5
-    // 
-    this.sep5.Name = "sep5";
-    //this.sep5.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-    // 
-    // btnFront
-    // 
-    this.btnFront.ImageIndex = 9;
-    this.btnFront.Name = "btnFront";
-    this.btnFront.Tag = "Front";
-    this.btnFront.ToolTipText = "Bring to Front";
-    // 
-    // btnBack
-    // 
-    this.btnBack.ImageIndex = 10;
-    this.btnBack.Name = "btnBack";
-    this.btnBack.Tag = "Back";
-    this.btnBack.ToolTipText = "Send to Back";
-    // 
-    // btnMoveUp
-    // 
-    this.btnMoveUp.ImageIndex = 11;
-    this.btnMoveUp.Name = "btnMoveUp";
-    this.btnMoveUp.Tag = "MoveUp";
-    this.btnMoveUp.ToolTipText = "Move Up";
-    // 
-    // btnMoveDown
-    // 
-    this.btnMoveDown.ImageIndex = 12;
-    this.btnMoveDown.Name = "btnMoveDown";
-    this.btnMoveDown.Tag = "MoveDown";
-    this.btnMoveDown.ToolTipText = "Move Down";
-    // 
-    // imageList1
-    // 
-    this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-    this.imageList1.TransparentColor = System.Drawing.Color.Silver;
-    this.imageList1.Images.SetKeyName(0, "");
-    this.imageList1.Images.SetKeyName(1, "");
-    this.imageList1.Images.SetKeyName(2, "");
-    this.imageList1.Images.SetKeyName(3, "");
-    this.imageList1.Images.SetKeyName(4, "");
-    this.imageList1.Images.SetKeyName(5, "");
-    this.imageList1.Images.SetKeyName(6, "");
-    this.imageList1.Images.SetKeyName(7, "");
-    this.imageList1.Images.SetKeyName(8, "");
-    this.imageList1.Images.SetKeyName(9, "");
-    this.imageList1.Images.SetKeyName(10, "");
-    this.imageList1.Images.SetKeyName(11, "");
-    this.imageList1.Images.SetKeyName(12, "");
-    this.imageList1.Images.SetKeyName(13, "");
-    this.imageList1.Images.SetKeyName(14, "");
-    this.imageList1.Images.SetKeyName(15, "");
-    this.imageList1.Images.SetKeyName(16, "");
-    // 
-    // mainMenu1
-    // 
-    this.mainMenu1.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
-      this.mnuFile,
-      this.mnuEdit,
-      this.mnuHelp});
-    // 
-    // mnuFile
-    // 
-    this.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
-      this.mnuOpen,
-      this.mnuSave,
-      this.menuSaveas,
-      this.menuItem26,
-      this.mnuExit});
-    this.mnuFile.Text = "&File";
-    // 
-    // mnuOpen
-    // 
-    this.mnuOpen.Text = "&Open";
-    this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
-    // 
-    // mnuSave
-    // 
-    this.mnuSave.Text = "&Save";
-    this.mnuSave.Click += new System.EventHandler(this.mnuSave_Click);
-    // 
-    // menuSaveas
-    // 
-    this.menuSaveas.Text = "Save &as ";
-    this.menuSaveas.Click += new System.EventHandler(this.menuSaveas_Click);
-    // 
-    // menuItem26
-    // 
-    this.menuItem26.Text = "-";
-    // 
-    // mnuExit
-    // 
-    this.mnuExit.Text = "&Exit";
-    this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
-    // 
-    // mnuEdit
-    // 
-    this.mnuEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
-      this.mnuUndo,
-      this.mnuRedo,
-      this.menuItem3,
-      this.mnuCut,
-      this.mnuCopy,
-      this.mnuPaste,
-      this.mnuDelete,
-      this.menuItem11,
-      this.mnuSize,
-      this.mnuAdd,
-      this.mnuConnect,
-      this.menuItem20,
-      this.mnuOrder});
-    this.mnuEdit.Text = "&Edit";
-    // 
-    // mnuUndo
-    // 
-    this.mnuUndo.Text = "&Undo";
-    this.mnuUndo.Click += new System.EventHandler(this.mnuUndo_Click);
-    // 
-    // mnuRedo
-    // 
-    this.mnuRedo.Text = "&Redo";
-    this.mnuRedo.Click += new System.EventHandler(this.mnuRedo_Click);
-    // 
-    // menuItem3
-    // 
-    this.menuItem3.Text = "-";
-    // 
-    // mnuCut
-    // 
-    this.mnuCut.Text = "Cu&t";
-    this.mnuCut.Click += new System.EventHandler(this.mnuCut_Click);
-    // 
-    // mnuCopy
-    // 
-    this.mnuCopy.Text = "Cop&y";
-    this.mnuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
-    // 
-    // mnuPaste
-    // 
-    this.mnuPaste.Text = "Paste";
-    this.mnuPaste.Click += new System.EventHandler(this.mnuPaste_Click);
-    // 
-    // mnuDelete
-    // 
-    this.mnuDelete.Text = "&Delete";
-    this.mnuDelete.Click += new System.EventHandler(this.mnuDelete_Click);
-    // 
-    // menuItem11
-    // 
-    this.menuItem11.Text = "-";
-    // 
-    // mnuSize
-    // 
-    this.mnuSize.Text = "&Size";
-    this.mnuSize.Click += new System.EventHandler(this.mnuSize_Click);
-    // 
-    // mnuAdd
-    // 
-    this.mnuAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
-      this.mnuRectangle,
-      this.mnuEllipse,
-      this.mnuRectangleNode,
-      this.mnuEllipseNode});
-    this.mnuAdd.Text = "&Add";
-    // 
-    // mnuRectangle
-    // 
-    this.mnuRectangle.Text = "&Rectangle";
-    this.mnuRectangle.Click += new System.EventHandler(this.mnuRectangle_Click);
-    // 
-    // mnuEllipse
-    // 
-    this.mnuEllipse.Text = "&Ellipse";
-    this.mnuEllipse.Click += new System.EventHandler(this.mnuEllipse_Click);
-    // 
-    // mnuRectangleNode
-    // 
-    this.mnuRectangleNode.Text = "&Node Rectangle";
-    this.mnuRectangleNode.Click += new System.EventHandler(this.mnuRectangleNode_Click);
-    // 
-    // mnuEllipseNode
-    // 
-    this.mnuEllipseNode.Text = "N&ode Ellipse";
-    this.mnuEllipseNode.Click += new System.EventHandler(this.mnuEllipseNode_Click);
-    // 
-    // mnuConnect
-    // 
-    this.mnuConnect.Text = "&Connect";
-    this.mnuConnect.Click += new System.EventHandler(this.mnuConnect_Click);
-    // 
-    // menuItem20
-    // 
-    this.menuItem20.Text = "-";
-    // 
-    // mnuOrder
-    // 
-    this.mnuOrder.DropDownItems.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
-      this.mnuBringToFront,
-      this.mnuSendToBack,
-      this.mnuMoveUp,
-      this.mnuMoveDown});
-    this.mnuOrder.Text = "&Order";
-    // 
-    // mnuBringToFront
-    // 
-    this.mnuBringToFront.Text = "&Bring to Front";
-    this.mnuBringToFront.Click += new System.EventHandler(this.mnuBringToFront_Click);
-    // 
-    // mnuSendToBack
-    // 
-    this.mnuSendToBack.Text = "Send to &Back";
-    this.mnuSendToBack.Click += new System.EventHandler(this.mnuSendToBack_Click);
-    // 
-    // mnuMoveUp
-    // 
-    this.mnuMoveUp.Text = "Move &Up";
-    this.mnuMoveUp.Click += new System.EventHandler(this.mnuMoveUp_Click);
-    // 
-    // mnuMoveDown
-    // 
-    this.mnuMoveDown.Text = "Move &Down";
-    this.mnuMoveDown.Click += new System.EventHandler(this.mnuMoveDown_Click);
-    // 
-    // mnuHelp
-    // 
-    this.mnuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
-      this.mnuShowDebugLog,
-      this.menuItem1,
-      this.mnuAbout});
-    this.mnuHelp.Text = "&Help";
-    // 
-    // mnuShowDebugLog
-    // 
-    this.mnuShowDebugLog.Text = "&Show Debug Log...";
-    this.mnuShowDebugLog.Click += new System.EventHandler(this.mnuShowDebugLog_Click);
-    // 
-    // menuItem1
-    // 
-    this.menuItem1.Text = "-";
-    // 
-    // mnuAbout
-    // 
-    this.mnuAbout.Text = "&About...";
-    this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
-    // 
-    // panel1
-    // 
-    this.panel1.Controls.Add(this.designer1);
-    this.panel1.Controls.Add(this.splitter2);
-    this.panel1.Controls.Add(this.txtLog);
-    this.panel1.Controls.Add(this.splitter1);
-    this.panel1.Controls.Add(this.propertyGrid1);
-    this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-    this.panel1.Location = new System.Drawing.Point(0, 26);
-    this.panel1.Name = "panel1";
-    this.panel1.Size = new System.Drawing.Size(696, 359);
-    this.panel1.TabIndex = 2;
-    // 
-    // designer1
-    // 
-    this.designer1.AutoScroll = true;
-    this.designer1.AutoScrollMinSize = new System.Drawing.Size(100, 100);
-    this.designer1.BackColor = System.Drawing.SystemColors.Window;
-    this.designer1.Dock = System.Windows.Forms.DockStyle.Fill;
-    this.designer1.Location = new System.Drawing.Point(0, 0);
-    this.designer1.Name = "designer1";
-    this.designer1.Size = new System.Drawing.Size(423, 243);
-    this.designer1.TabIndex = 6;
-    this.designer1.ElementClick += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementClick);
-    this.designer1.ElementMouseDown += new DiagramNet.Designer.ElementMouseEventHandler(this.designer1_ElementMouseDown);
-    this.designer1.ElementMouseUp += new DiagramNet.Designer.ElementMouseEventHandler(this.designer1_ElementMouseUp);
-    this.designer1.ElementMoving += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementMoving);
-    this.designer1.ElementMoved += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementMoved);
-    this.designer1.ElementResizing += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementResizing);
-    this.designer1.ElementResized += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementResized);
-    this.designer1.ElementConnecting += new DiagramNet.Designer.ElementConnectEventHandler(this.designer1_ElementConnecting);
-    this.designer1.ElementConnected += new DiagramNet.Designer.ElementConnectEventHandler(this.designer1_ElementConnected);
-    this.designer1.ElementSelection += new DiagramNet.Designer.ElementSelectionEventHandler(this.designer1_ElementSelection);
-    this.designer1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.designer1_MouseUp);
-    // 
-    // splitter2
-    // 
-    this.splitter2.Dock = System.Windows.Forms.DockStyle.Bottom;
-    this.splitter2.Location = new System.Drawing.Point(0, 243);
-    this.splitter2.Name = "splitter2";
-    this.splitter2.Size = new System.Drawing.Size(423, 4);
-    this.splitter2.TabIndex = 5;
-    this.splitter2.TabStop = false;
-    // 
-    // txtLog
-    // 
-    this.txtLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-    this.txtLog.Dock = System.Windows.Forms.DockStyle.Bottom;
-    this.txtLog.Location = new System.Drawing.Point(0, 247);
-    this.txtLog.Multiline = true;
-    this.txtLog.Name = "txtLog";
-    this.txtLog.ReadOnly = true;
-    this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-    this.txtLog.Size = new System.Drawing.Size(423, 112);
-    this.txtLog.TabIndex = 4;
-    this.txtLog.Text = "Log:";
-    this.txtLog.Visible = false;
-    // 
-    // splitter1
-    // 
-    this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
-    this.splitter1.Location = new System.Drawing.Point(423, 0);
-    this.splitter1.Name = "splitter1";
-    this.splitter1.Size = new System.Drawing.Size(4, 359);
-    this.splitter1.TabIndex = 1;
-    this.splitter1.TabStop = false;
-    // 
-    // propertyGrid1
-    // 
-    this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Right;
-    this.propertyGrid1.LineColor = System.Drawing.SystemColors.ScrollBar;
-    this.propertyGrid1.Location = new System.Drawing.Point(427, 0);
-    this.propertyGrid1.Name = "propertyGrid1";
-    this.propertyGrid1.Size = new System.Drawing.Size(269, 359);
-    this.propertyGrid1.TabIndex = 0;
-    // 
-    // openFileDialog1
-    // 
-    this.openFileDialog1.DefaultExt = "*.dgn";
-    this.openFileDialog1.RestoreDirectory = true;
-    // 
-    // TbCommentBoxNode
-    // 
-    this.TbCommentBoxNode.Text = "Comment Box Node";
-    this.TbCommentBoxNode.Click += new System.EventHandler(this.TbCommentBoxNode_Click);
-    // 
-    // TbDiagramBlockNode
-    // 
-    this.TbDiagramBlockNode.Text = "Diagram Block Node";
-    this.TbDiagramBlockNode.Click += new System.EventHandler(this.TbDiagramBlockNode_Click);
-    // 
-    // Form1
-    // 
-    this.AutoScaleBaseSize = new System.Drawing.Size(6, 14);
-    this.ClientSize = new System.Drawing.Size(696, 385);
-    this.Controls.Add(this.panel1);
-    this.Controls.Add(this.toolBar1);
-    this.Controls.Add(this.mainMenu1);
-    this.MainMenuStrip = this.mainMenu1;
-    this.Name = "Form1";
-    this.Text = "Diagram.NET Test Form";
-    this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-    this.Load += new System.EventHandler(this.Form1_Load);
-    this.panel1.ResumeLayout(false);
-    this.panel1.PerformLayout();
-    this.ResumeLayout(false);
-    this.PerformLayout();
-  }
-  #endregion
+    #region Windows Form Designer generated code
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
+        components = new System.ComponentModel.Container();
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+        toolBar1 = new ToolStrip();
+        btnOpen = new ToolStripButton();
+        btnSave = new ToolStripButton();
+        sep1 = new ToolStripSeparator();
+        btnCut = new ToolStripButton();
+        btnCopy = new ToolStripButton();
+        btnPaste = new ToolStripButton();
+        btnDelete = new ToolStripButton();
+        sep4 = new ToolStripSeparator();
+        btnSize = new ToolStripButton();
+        btnAdd = new ToolStripDropDownButton();
+        contextMenu1 = new ContextMenuStrip(components);
+        mnuTbRectangle = new ToolStripMenuItem();
+        mnuTbEllipse = new ToolStripMenuItem();
+        mnuTbRectangleNode = new ToolStripMenuItem();
+        mnuTbEllipseNode = new ToolStripMenuItem();
+        TbCommentBox = new ToolStripMenuItem();
+        TbCommentBoxNode = new ToolStripMenuItem();
+        TbDiagramBlockNode = new ToolStripMenuItem();
+        btnConnect = new ToolStripDropDownButton();
+        contextMenu2 = new ContextMenuStrip(components);
+        mnuTbStraightLink = new ToolStripMenuItem();
+        mnuTbRightAngleLink = new ToolStripMenuItem();
+        sep2 = new ToolStripSeparator();
+        btnUndo = new ToolStripButton();
+        btnRedo = new ToolStripButton();
+        sep3 = new ToolStripSeparator();
+        btnZoom = new ToolStripDropDownButton();
+        contextMenu_Zoom = new ContextMenuStrip(components);
+        mnuZoom_10 = new ToolStripMenuItem();
+        mnuZoom_25 = new ToolStripMenuItem();
+        mnuZoom_50 = new ToolStripMenuItem();
+        mnuZoom_75 = new ToolStripMenuItem();
+        mnuZoom_100 = new ToolStripMenuItem();
+        mnuZoom_150 = new ToolStripMenuItem();
+        mnuZoom_200 = new ToolStripMenuItem();
+        sep5 = new ToolStripSeparator();
+        btnFront = new ToolStripButton();
+        btnBack = new ToolStripButton();
+        btnMoveUp = new ToolStripButton();
+        btnMoveDown = new ToolStripButton();
+        imageList1 = new ImageList(components);
+        mainMenu1 = new MenuStrip();
+        mnuFile = new ToolStripMenuItem();
+        mnuOpen = new ToolStripMenuItem();
+        mnuSave = new ToolStripMenuItem();
+        menuSaveas = new ToolStripMenuItem();
+        menuItem26 = new ToolStripMenuItem();
+        mnuExit = new ToolStripMenuItem();
+        mnuEdit = new ToolStripMenuItem();
+        mnuUndo = new ToolStripMenuItem();
+        mnuRedo = new ToolStripMenuItem();
+        menuItem3 = new ToolStripMenuItem();
+        mnuCut = new ToolStripMenuItem();
+        mnuCopy = new ToolStripMenuItem();
+        mnuPaste = new ToolStripMenuItem();
+        mnuDelete = new ToolStripMenuItem();
+        menuItem11 = new ToolStripMenuItem();
+        mnuSize = new ToolStripMenuItem();
+        mnuAdd = new ToolStripMenuItem();
+        mnuRectangle = new ToolStripMenuItem();
+        mnuEllipse = new ToolStripMenuItem();
+        mnuRectangleNode = new ToolStripMenuItem();
+        mnuEllipseNode = new ToolStripMenuItem();
+        mnuConnect = new ToolStripMenuItem();
+        menuItem20 = new ToolStripMenuItem();
+        mnuOrder = new ToolStripMenuItem();
+        mnuBringToFront = new ToolStripMenuItem();
+        mnuSendToBack = new ToolStripMenuItem();
+        mnuMoveUp = new ToolStripMenuItem();
+        mnuMoveDown = new ToolStripMenuItem();
+        mnuHelp = new ToolStripMenuItem();
+        mnuShowDebugLog = new ToolStripMenuItem();
+        menuItem1 = new ToolStripMenuItem();
+        mnuAbout = new ToolStripMenuItem();
+        panel1 = new Panel();
+        designer1 = new DiagramNet.Designer(this.components);
+        splitter2 = new Splitter();
+        txtLog = new TextBox();
+        splitter1 = new Splitter();
+        propertyGrid1 = new PropertyGrid();
+        openFileDialog1 = new OpenFileDialog();
+        saveFileDialog1 = new SaveFileDialog();
+        toolBar1.SuspendLayout();
+        contextMenu1.SuspendLayout();
+        contextMenu2.SuspendLayout();
+        contextMenu_Zoom.SuspendLayout();
+        mainMenu1.SuspendLayout();
+        panel1.SuspendLayout();
+        SuspendLayout();
+        // 
+        // toolBar1
+        // 
+        toolBar1.AllowDrop = true;
+        toolBar1.ImageList = imageList1;
+        toolBar1.ImageScalingSize = new Size(32, 32);
+        toolBar1.Items.AddRange(new ToolStripItem[] { btnOpen, btnSave, sep1, btnCut, btnCopy, btnPaste, btnDelete, sep4, btnSize, btnAdd, btnConnect, sep2, btnUndo, btnRedo, sep3, btnZoom, sep5, btnFront, btnBack, btnMoveUp, btnMoveDown });
+        toolBar1.Location = new Point(0, 39);
+        toolBar1.Name = "toolBar1";
+        toolBar1.Size = new Size(1180, 42);
+        toolBar1.TabIndex = 1;
+        toolBar1.ItemClicked += toolBar1_ButtonClick;
+        // 
+        // btnOpen
+        // 
+        btnOpen.ImageIndex = 6;
+        btnOpen.Name = "btnOpen";
+        btnOpen.Size = new Size(46, 36);
+        btnOpen.Tag = "Open";
+        btnOpen.ToolTipText = "Open";
+        // 
+        // btnSave
+        // 
+        btnSave.ImageIndex = 5;
+        btnSave.Name = "btnSave";
+        btnSave.Size = new Size(46, 36);
+        btnSave.Tag = "Save";
+        btnSave.ToolTipText = "Save";
+        // 
+        // sep1
+        // 
+        sep1.Name = "sep1";
+        sep1.Size = new Size(6, 42);
+        // 
+        // btnCut
+        // 
+        btnCut.ImageIndex = 13;
+        btnCut.Name = "btnCut";
+        btnCut.Size = new Size(46, 36);
+        btnCut.Tag = "Cut";
+        btnCut.ToolTipText = "Cut";
+        // 
+        // btnCopy
+        // 
+        btnCopy.ImageIndex = 14;
+        btnCopy.Name = "btnCopy";
+        btnCopy.Size = new Size(46, 36);
+        btnCopy.Tag = "Copy";
+        btnCopy.ToolTipText = "Copy";
+        // 
+        // btnPaste
+        // 
+        btnPaste.ImageIndex = 15;
+        btnPaste.Name = "btnPaste";
+        btnPaste.Size = new Size(46, 36);
+        btnPaste.Tag = "Paste";
+        btnPaste.ToolTipText = "Paste";
+        // 
+        // btnDelete
+        // 
+        btnDelete.ImageIndex = 2;
+        btnDelete.Name = "btnDelete";
+        btnDelete.Size = new Size(46, 36);
+        btnDelete.Tag = "Delete";
+        btnDelete.ToolTipText = "Delete";
+        // 
+        // sep4
+        // 
+        sep4.Name = "sep4";
+        sep4.Size = new Size(6, 42);
+        // 
+        // btnSize
+        // 
+        btnSize.ImageIndex = 0;
+        btnSize.Name = "btnSize";
+        btnSize.Size = new Size(46, 36);
+        btnSize.Tag = "Size";
+        btnSize.ToolTipText = "Size";
+        // 
+        // btnAdd
+        // 
+        btnAdd.DropDown = contextMenu1;
+        btnAdd.ImageIndex = 1;
+        btnAdd.Name = "btnAdd";
+        btnAdd.Size = new Size(54, 36);
+        btnAdd.Tag = "Add";
+        btnAdd.ToolTipText = "Add";
+        // 
+        // contextMenu1
+        // 
+        contextMenu1.ImageScalingSize = new Size(32, 32);
+        contextMenu1.Items.AddRange(new ToolStripItem[] { mnuTbRectangle, mnuTbEllipse, mnuTbRectangleNode, mnuTbEllipseNode, TbCommentBox, TbCommentBoxNode, TbDiagramBlockNode });
+        contextMenu1.Name = "contextMenu1";
+        contextMenu1.OwnerItem = btnAdd;
+        contextMenu1.Size = new Size(324, 270);
+        // 
+        // mnuTbRectangle
+        // 
+        mnuTbRectangle.Name = "mnuTbRectangle";
+        mnuTbRectangle.Size = new Size(323, 38);
+        mnuTbRectangle.Text = "&Rectangle";
+        mnuTbRectangle.Click += mnuTbRectangle_Click;
+        // 
+        // mnuTbEllipse
+        // 
+        mnuTbEllipse.Name = "mnuTbEllipse";
+        mnuTbEllipse.Size = new Size(323, 38);
+        mnuTbEllipse.Text = "&Ellipse";
+        mnuTbEllipse.Click += mnuTbEllipse_Click;
+        // 
+        // mnuTbRectangleNode
+        // 
+        mnuTbRectangleNode.Name = "mnuTbRectangleNode";
+        mnuTbRectangleNode.Size = new Size(323, 38);
+        mnuTbRectangleNode.Text = "&Node Rectangle";
+        mnuTbRectangleNode.Click += mnuTbRectangleNode_Click;
+        // 
+        // mnuTbEllipseNode
+        // 
+        mnuTbEllipseNode.Name = "mnuTbEllipseNode";
+        mnuTbEllipseNode.Size = new Size(323, 38);
+        mnuTbEllipseNode.Text = "N&ode Ellipse";
+        mnuTbEllipseNode.Click += mnuTbEllipseNode_Click;
+        // 
+        // TbCommentBox
+        // 
+        TbCommentBox.Name = "TbCommentBox";
+        TbCommentBox.Size = new Size(323, 38);
+        TbCommentBox.Text = "Comment Box";
+        TbCommentBox.Click += TbCommentBox_Click;
+        // 
+        // TbCommentBoxNode
+        // 
+        TbCommentBoxNode.Name = "TbCommentBoxNode";
+        TbCommentBoxNode.Size = new Size(323, 38);
+        TbCommentBoxNode.Text = "Comment Box Node";
+        TbCommentBoxNode.Click += TbCommentBoxNode_Click;
+        // 
+        // TbDiagramBlockNode
+        // 
+        TbDiagramBlockNode.Name = "TbDiagramBlockNode";
+        TbDiagramBlockNode.Size = new Size(323, 38);
+        TbDiagramBlockNode.Text = "Diagram Block Node";
+        TbDiagramBlockNode.Click += TbDiagramBlockNode_Click;
+        // 
+        // btnConnect
+        // 
+        btnConnect.DropDown = contextMenu2;
+        btnConnect.ImageIndex = 3;
+        btnConnect.Name = "btnConnect";
+        btnConnect.Size = new Size(54, 36);
+        btnConnect.Tag = "Connect";
+        btnConnect.ToolTipText = "Connect";
+        // 
+        // contextMenu2
+        // 
+        contextMenu2.ImageScalingSize = new Size(32, 32);
+        contextMenu2.Items.AddRange(new ToolStripItem[] { mnuTbStraightLink, mnuTbRightAngleLink });
+        contextMenu2.Name = "contextMenu2";
+        contextMenu2.OwnerItem = btnConnect;
+        contextMenu2.Size = new Size(277, 80);
+        // 
+        // mnuTbStraightLink
+        // 
+        mnuTbStraightLink.Name = "mnuTbStraightLink";
+        mnuTbStraightLink.Size = new Size(276, 38);
+        mnuTbStraightLink.Text = "Straight Link";
+        mnuTbStraightLink.Click += mnuTbStraightLink_Click;
+        // 
+        // mnuTbRightAngleLink
+        // 
+        mnuTbRightAngleLink.Name = "mnuTbRightAngleLink";
+        mnuTbRightAngleLink.Size = new Size(276, 38);
+        mnuTbRightAngleLink.Text = "Right Angle Link";
+        mnuTbRightAngleLink.Click += mnuTbRightAngleLink_Click;
+        // 
+        // sep2
+        // 
+        sep2.Name = "sep2";
+        sep2.Size = new Size(6, 42);
+        // 
+        // btnUndo
+        // 
+        btnUndo.ImageIndex = 7;
+        btnUndo.Name = "btnUndo";
+        btnUndo.Size = new Size(46, 36);
+        btnUndo.Tag = "Undo";
+        btnUndo.ToolTipText = "Undo";
+        // 
+        // btnRedo
+        // 
+        btnRedo.ImageIndex = 8;
+        btnRedo.Name = "btnRedo";
+        btnRedo.Size = new Size(46, 36);
+        btnRedo.Tag = "Redo";
+        btnRedo.ToolTipText = "Redo";
+        // 
+        // sep3
+        // 
+        sep3.Name = "sep3";
+        sep3.Size = new Size(6, 42);
+        // 
+        // btnZoom
+        // 
+        btnZoom.DropDown = contextMenu_Zoom;
+        btnZoom.ImageIndex = 16;
+        btnZoom.Name = "btnZoom";
+        btnZoom.Size = new Size(54, 36);
+        btnZoom.Tag = "Zoom";
+        // 
+        // contextMenu_Zoom
+        // 
+        contextMenu_Zoom.ImageScalingSize = new Size(32, 32);
+        contextMenu_Zoom.Items.AddRange(new ToolStripItem[] { mnuZoom_10, mnuZoom_25, mnuZoom_50, mnuZoom_75, mnuZoom_100, mnuZoom_150, mnuZoom_200 });
+        contextMenu_Zoom.Name = "contextMenu_Zoom";
+        contextMenu_Zoom.OwnerItem = btnZoom;
+        contextMenu_Zoom.Size = new Size(152, 270);
+        // 
+        // mnuZoom_10
+        // 
+        mnuZoom_10.Name = "mnuZoom_10";
+        mnuZoom_10.Size = new Size(151, 38);
+        mnuZoom_10.Text = "10%";
+        mnuZoom_10.Click += mnuZoom_10_Click;
+        // 
+        // mnuZoom_25
+        // 
+        mnuZoom_25.Name = "mnuZoom_25";
+        mnuZoom_25.Size = new Size(151, 38);
+        mnuZoom_25.Text = "25%";
+        mnuZoom_25.Click += mnuZoom_25_Click;
+        // 
+        // mnuZoom_50
+        // 
+        mnuZoom_50.Name = "mnuZoom_50";
+        mnuZoom_50.Size = new Size(151, 38);
+        mnuZoom_50.Text = "50%";
+        mnuZoom_50.Click += mnuZoom_50_Click;
+        // 
+        // mnuZoom_75
+        // 
+        mnuZoom_75.Name = "mnuZoom_75";
+        mnuZoom_75.Size = new Size(151, 38);
+        mnuZoom_75.Text = "75%";
+        mnuZoom_75.Click += mnuZoom_75_Click;
+        // 
+        // mnuZoom_100
+        // 
+        mnuZoom_100.Name = "mnuZoom_100";
+        mnuZoom_100.Size = new Size(151, 38);
+        mnuZoom_100.Text = "100%";
+        mnuZoom_100.Click += mnuZoom_100_Click;
+        // 
+        // mnuZoom_150
+        // 
+        mnuZoom_150.Name = "mnuZoom_150";
+        mnuZoom_150.Size = new Size(151, 38);
+        mnuZoom_150.Text = "150%";
+        mnuZoom_150.Click += mnuZoom_150_Click;
+        // 
+        // mnuZoom_200
+        // 
+        mnuZoom_200.Name = "mnuZoom_200";
+        mnuZoom_200.Size = new Size(151, 38);
+        mnuZoom_200.Text = "200%";
+        mnuZoom_200.Click += mnuZoom_200_Click;
+        // 
+        // sep5
+        // 
+        sep5.Name = "sep5";
+        sep5.Size = new Size(6, 42);
+        // 
+        // btnFront
+        // 
+        btnFront.ImageIndex = 9;
+        btnFront.Name = "btnFront";
+        btnFront.Size = new Size(46, 36);
+        btnFront.Tag = "Front";
+        btnFront.ToolTipText = "Bring to Front";
+        // 
+        // btnBack
+        // 
+        btnBack.ImageIndex = 10;
+        btnBack.Name = "btnBack";
+        btnBack.Size = new Size(46, 36);
+        btnBack.Tag = "Back";
+        btnBack.ToolTipText = "Send to Back";
+        // 
+        // btnMoveUp
+        // 
+        btnMoveUp.ImageIndex = 11;
+        btnMoveUp.Name = "btnMoveUp";
+        btnMoveUp.Size = new Size(46, 36);
+        btnMoveUp.Tag = "MoveUp";
+        btnMoveUp.ToolTipText = "Move Up";
+        // 
+        // btnMoveDown
+        // 
+        btnMoveDown.ImageIndex = 12;
+        btnMoveDown.Name = "btnMoveDown";
+        btnMoveDown.Size = new Size(46, 36);
+        btnMoveDown.Tag = "MoveDown";
+        btnMoveDown.ToolTipText = "Move Down";
+        // 
+        // imageList1
+        // 
+        imageList1.ColorDepth = ColorDepth.Depth8Bit;
+        imageList1.ImageStream = (ImageListStreamer)resources.GetObject("imageList1.ImageStream");
+        imageList1.TransparentColor = Color.Silver;
+        imageList1.Images.SetKeyName(0, "");
+        imageList1.Images.SetKeyName(1, "");
+        imageList1.Images.SetKeyName(2, "");
+        imageList1.Images.SetKeyName(3, "");
+        imageList1.Images.SetKeyName(4, "");
+        imageList1.Images.SetKeyName(5, "");
+        imageList1.Images.SetKeyName(6, "");
+        imageList1.Images.SetKeyName(7, "");
+        imageList1.Images.SetKeyName(8, "");
+        imageList1.Images.SetKeyName(9, "");
+        imageList1.Images.SetKeyName(10, "");
+        imageList1.Images.SetKeyName(11, "");
+        imageList1.Images.SetKeyName(12, "");
+        imageList1.Images.SetKeyName(13, "");
+        imageList1.Images.SetKeyName(14, "");
+        imageList1.Images.SetKeyName(15, "");
+        imageList1.Images.SetKeyName(16, "");
+        // 
+        // mainMenu1
+        // 
+        mainMenu1.ImageScalingSize = new Size(32, 32);
+        mainMenu1.Items.AddRange(new ToolStripItem[] { mnuFile, mnuEdit, mnuHelp });
+        mainMenu1.Location = new Point(0, 0);
+        mainMenu1.Name = "mainMenu1";
+        mainMenu1.Size = new Size(1180, 39);
+        mainMenu1.TabIndex = 3;
+        // 
+        // mnuFile
+        // 
+        mnuFile.DropDownItems.AddRange(new ToolStripItem[] { mnuOpen, mnuSave, menuSaveas, menuItem26, mnuExit });
+        mnuFile.Name = "mnuFile";
+        mnuFile.Size = new Size(73, 35);
+        mnuFile.Text = "&File";
+        // 
+        // mnuOpen
+        // 
+        mnuOpen.Name = "mnuOpen";
+        mnuOpen.Size = new Size(239, 44);
+        mnuOpen.Text = "&Open";
+        mnuOpen.Click += mnuOpen_Click;
+        // 
+        // mnuSave
+        // 
+        mnuSave.Name = "mnuSave";
+        mnuSave.Size = new Size(239, 44);
+        mnuSave.Text = "&Save";
+        mnuSave.Click += mnuSave_Click;
+        // 
+        // menuSaveas
+        // 
+        menuSaveas.Name = "menuSaveas";
+        menuSaveas.Size = new Size(239, 44);
+        menuSaveas.Text = "Save &as ";
+        menuSaveas.Click += menuSaveas_Click;
+        // 
+        // menuItem26
+        // 
+        menuItem26.Name = "menuItem26";
+        menuItem26.Size = new Size(239, 44);
+        menuItem26.Text = "-";
+        // 
+        // mnuExit
+        // 
+        mnuExit.Name = "mnuExit";
+        mnuExit.Size = new Size(239, 44);
+        mnuExit.Text = "&Exit";
+        mnuExit.Click += mnuExit_Click;
+        // 
+        // mnuEdit
+        // 
+        mnuEdit.DropDownItems.AddRange(new ToolStripItem[] { mnuUndo, mnuRedo, menuItem3, mnuCut, mnuCopy, mnuPaste, mnuDelete, menuItem11, mnuSize, mnuAdd, mnuConnect, menuItem20, mnuOrder });
+        mnuEdit.Name = "mnuEdit";
+        mnuEdit.Size = new Size(77, 35);
+        mnuEdit.Text = "&Edit";
+        // 
+        // mnuUndo
+        // 
+        mnuUndo.Name = "mnuUndo";
+        mnuUndo.Size = new Size(243, 44);
+        mnuUndo.Text = "&Undo";
+        mnuUndo.Click += mnuUndo_Click;
+        // 
+        // mnuRedo
+        // 
+        mnuRedo.Name = "mnuRedo";
+        mnuRedo.Size = new Size(243, 44);
+        mnuRedo.Text = "&Redo";
+        mnuRedo.Click += mnuRedo_Click;
+        // 
+        // menuItem3
+        // 
+        menuItem3.Name = "menuItem3";
+        menuItem3.Size = new Size(243, 44);
+        menuItem3.Text = "-";
+        // 
+        // mnuCut
+        // 
+        mnuCut.Name = "mnuCut";
+        mnuCut.Size = new Size(243, 44);
+        mnuCut.Text = "Cu&t";
+        mnuCut.Click += mnuCut_Click;
+        // 
+        // mnuCopy
+        // 
+        mnuCopy.Name = "mnuCopy";
+        mnuCopy.Size = new Size(243, 44);
+        mnuCopy.Text = "Cop&y";
+        mnuCopy.Click += mnuCopy_Click;
+        // 
+        // mnuPaste
+        // 
+        mnuPaste.Name = "mnuPaste";
+        mnuPaste.Size = new Size(243, 44);
+        mnuPaste.Text = "Paste";
+        mnuPaste.Click += mnuPaste_Click;
+        // 
+        // mnuDelete
+        // 
+        mnuDelete.Name = "mnuDelete";
+        mnuDelete.Size = new Size(243, 44);
+        mnuDelete.Text = "&Delete";
+        mnuDelete.Click += mnuDelete_Click;
+        // 
+        // menuItem11
+        // 
+        menuItem11.Name = "menuItem11";
+        menuItem11.Size = new Size(243, 44);
+        menuItem11.Text = "-";
+        // 
+        // mnuSize
+        // 
+        mnuSize.Name = "mnuSize";
+        mnuSize.Size = new Size(243, 44);
+        mnuSize.Text = "&Size";
+        mnuSize.Click += mnuSize_Click;
+        // 
+        // mnuAdd
+        // 
+        mnuAdd.DropDownItems.AddRange(new ToolStripItem[] { mnuRectangle, mnuEllipse, mnuRectangleNode, mnuEllipseNode });
+        mnuAdd.Name = "mnuAdd";
+        mnuAdd.Size = new Size(243, 44);
+        mnuAdd.Text = "&Add";
+        // 
+        // mnuRectangle
+        // 
+        mnuRectangle.Name = "mnuRectangle";
+        mnuRectangle.Size = new Size(332, 44);
+        mnuRectangle.Text = "&Rectangle";
+        mnuRectangle.Click += mnuRectangle_Click;
+        // 
+        // mnuEllipse
+        // 
+        mnuEllipse.Name = "mnuEllipse";
+        mnuEllipse.Size = new Size(332, 44);
+        mnuEllipse.Text = "&Ellipse";
+        mnuEllipse.Click += mnuEllipse_Click;
+        // 
+        // mnuRectangleNode
+        // 
+        mnuRectangleNode.Name = "mnuRectangleNode";
+        mnuRectangleNode.Size = new Size(332, 44);
+        mnuRectangleNode.Text = "&Node Rectangle";
+        mnuRectangleNode.Click += mnuRectangleNode_Click;
+        // 
+        // mnuEllipseNode
+        // 
+        mnuEllipseNode.Name = "mnuEllipseNode";
+        mnuEllipseNode.Size = new Size(332, 44);
+        mnuEllipseNode.Text = "N&ode Ellipse";
+        mnuEllipseNode.Click += mnuEllipseNode_Click;
+        // 
+        // mnuConnect
+        // 
+        mnuConnect.Name = "mnuConnect";
+        mnuConnect.Size = new Size(243, 44);
+        mnuConnect.Text = "&Connect";
+        mnuConnect.Click += mnuConnect_Click;
+        // 
+        // menuItem20
+        // 
+        menuItem20.Name = "menuItem20";
+        menuItem20.Size = new Size(243, 44);
+        menuItem20.Text = "-";
+        // 
+        // mnuOrder
+        // 
+        mnuOrder.DropDownItems.AddRange(new ToolStripItem[] { mnuBringToFront, mnuSendToBack, mnuMoveUp, mnuMoveDown });
+        mnuOrder.Name = "mnuOrder";
+        mnuOrder.Size = new Size(243, 44);
+        mnuOrder.Text = "&Order";
+        // 
+        // mnuBringToFront
+        // 
+        mnuBringToFront.Name = "mnuBringToFront";
+        mnuBringToFront.Size = new Size(306, 44);
+        mnuBringToFront.Text = "&Bring to Front";
+        mnuBringToFront.Click += mnuBringToFront_Click;
+        // 
+        // mnuSendToBack
+        // 
+        mnuSendToBack.Name = "mnuSendToBack";
+        mnuSendToBack.Size = new Size(306, 44);
+        mnuSendToBack.Text = "Send to &Back";
+        mnuSendToBack.Click += mnuSendToBack_Click;
+        // 
+        // mnuMoveUp
+        // 
+        mnuMoveUp.Name = "mnuMoveUp";
+        mnuMoveUp.Size = new Size(306, 44);
+        mnuMoveUp.Text = "Move &Up";
+        mnuMoveUp.Click += mnuMoveUp_Click;
+        // 
+        // mnuMoveDown
+        // 
+        mnuMoveDown.Name = "mnuMoveDown";
+        mnuMoveDown.Size = new Size(306, 44);
+        mnuMoveDown.Text = "Move &Down";
+        mnuMoveDown.Click += mnuMoveDown_Click;
+        // 
+        // mnuHelp
+        // 
+        mnuHelp.DropDownItems.AddRange(new ToolStripItem[] { mnuShowDebugLog, menuItem1, mnuAbout });
+        mnuHelp.Name = "mnuHelp";
+        mnuHelp.Size = new Size(88, 35);
+        mnuHelp.Text = "&Help";
+        // 
+        // mnuShowDebugLog
+        // 
+        mnuShowDebugLog.Name = "mnuShowDebugLog";
+        mnuShowDebugLog.Size = new Size(361, 44);
+        mnuShowDebugLog.Text = "&Show Debug Log...";
+        mnuShowDebugLog.Click += mnuShowDebugLog_Click;
+        // 
+        // menuItem1
+        // 
+        menuItem1.Name = "menuItem1";
+        menuItem1.Size = new Size(361, 44);
+        menuItem1.Text = "-";
+        // 
+        // mnuAbout
+        // 
+        mnuAbout.Name = "mnuAbout";
+        mnuAbout.Size = new Size(361, 44);
+        mnuAbout.Text = "&About...";
+        mnuAbout.Click += mnuAbout_Click;
+        // 
+        // panel1
+        // 
+        panel1.Controls.Add(this.designer1);
+        panel1.Controls.Add(splitter2);
+        panel1.Controls.Add(txtLog);
+        panel1.Controls.Add(splitter1);
+        panel1.Controls.Add(propertyGrid1);
+        panel1.Dock = DockStyle.Fill;
+        panel1.Location = new Point(0, 81);
+        panel1.Name = "panel1";
+        panel1.Size = new Size(1180, 748);
+        panel1.TabIndex = 2;
+        // 
+	    // designer1
+	    // 
+	    this.designer1.AutoScroll = true;
+	    this.designer1.AutoScrollMinSize = new System.Drawing.Size(100, 100);
+	    this.designer1.BackColor = System.Drawing.SystemColors.Window;
+	    this.designer1.Dock = System.Windows.Forms.DockStyle.Fill;
+	    this.designer1.Location = new System.Drawing.Point(0, 0);
+	    this.designer1.Name = "designer1";
+	    this.designer1.Size = new System.Drawing.Size(423, 243);
+	    this.designer1.TabIndex = 6;
+	    this.designer1.ElementClick += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementClick);
+	    this.designer1.ElementMouseDown += new DiagramNet.Designer.ElementMouseEventHandler(this.designer1_ElementMouseDown);
+	    this.designer1.ElementMouseUp += new DiagramNet.Designer.ElementMouseEventHandler(this.designer1_ElementMouseUp);
+	    this.designer1.ElementMoving += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementMoving);
+	    this.designer1.ElementMoved += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementMoved);
+	    this.designer1.ElementResizing += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementResizing);
+	    this.designer1.ElementResized += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementResized);
+	    this.designer1.ElementConnecting += new DiagramNet.Designer.ElementConnectEventHandler(this.designer1_ElementConnecting);
+	    this.designer1.ElementConnected += new DiagramNet.Designer.ElementConnectEventHandler(this.designer1_ElementConnected);
+	    this.designer1.ElementSelection += new DiagramNet.Designer.ElementSelectionEventHandler(this.designer1_ElementSelection);
+	    this.designer1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.designer1_MouseUp);
+        //
+        // splitter2
+        // 
+        splitter2.Dock = DockStyle.Bottom;
+        splitter2.Location = new Point(0, 491);
+        splitter2.Name = "splitter2";
+        splitter2.Size = new Size(589, 9);
+        splitter2.TabIndex = 5;
+        splitter2.TabStop = false;
+        // 
+        // txtLog
+        // 
+        txtLog.BorderStyle = BorderStyle.None;
+        txtLog.Dock = DockStyle.Bottom;
+        txtLog.Location = new Point(0, 500);
+        txtLog.Multiline = true;
+        txtLog.Name = "txtLog";
+        txtLog.ReadOnly = true;
+        txtLog.ScrollBars = ScrollBars.Both;
+        txtLog.Size = new Size(589, 248);
+        txtLog.TabIndex = 4;
+        txtLog.Text = "Log:";
+        txtLog.Visible = false;
+        // 
+        // splitter1
+        // 
+        splitter1.Dock = DockStyle.Right;
+        splitter1.Location = new Point(589, 0);
+        splitter1.Name = "splitter1";
+        splitter1.Size = new Size(8, 748);
+        splitter1.TabIndex = 1;
+        splitter1.TabStop = false;
+        // 
+        // propertyGrid1
+        // 
+        propertyGrid1.Dock = DockStyle.Right;
+        propertyGrid1.LineColor = SystemColors.ScrollBar;
+        propertyGrid1.Location = new Point(597, 0);
+        propertyGrid1.Name = "propertyGrid1";
+        propertyGrid1.Size = new Size(583, 748);
+        propertyGrid1.TabIndex = 0;
+        // 
+        // openFileDialog1
+        // 
+        openFileDialog1.DefaultExt = "*.dgn";
+        openFileDialog1.RestoreDirectory = true;
+        // 
+        // Form1
+        // 
+        AutoScaleBaseSize = new Size(13, 31);
+        ClientSize = new Size(1180, 829);
+        Controls.Add(panel1);
+        Controls.Add(toolBar1);
+        Controls.Add(mainMenu1);
+        MainMenuStrip = mainMenu1;
+        Name = "Form1";
+        Text = "Diagram.NET Test Form";
+        WindowState = FormWindowState.Maximized;
+        Load += Form1_Load;
+        toolBar1.ResumeLayout(false);
+        toolBar1.PerformLayout();
+        contextMenu1.ResumeLayout(false);
+        contextMenu2.ResumeLayout(false);
+        contextMenu_Zoom.ResumeLayout(false);
+        mainMenu1.ResumeLayout(false);
+        mainMenu1.PerformLayout();
+        panel1.ResumeLayout(false);
+        panel1.PerformLayout();
+        ResumeLayout(false);
+        PerformLayout();
+    }
+    #endregion
 
-  /// <summary>
-  /// The main entry point for the application.
-  /// </summary>
-  [STAThread]
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+    [STAThread]
   static void Main()
   {
     Application.EnableVisualStyles();
