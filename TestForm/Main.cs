@@ -32,7 +32,9 @@ public class Form1 : System.Windows.Forms.Form
   private System.Windows.Forms.ToolStripMenuItem menuItem11;
   private System.Windows.Forms.ToolStripMenuItem menuItem20;
   private System.Windows.Forms.ToolStripMenuItem menuItem26;
+  private System.Windows.Forms.Panel panel1;
   private System.Windows.Forms.PropertyGrid propertyGrid1;
+  private System.Windows.Forms.Splitter splitter1;
   private System.Windows.Forms.ToolStripMenuItem mnuFile;
   private System.Windows.Forms.ToolStripMenuItem mnuOpen;
   private System.Windows.Forms.ToolStripMenuItem mnuSave;
@@ -82,6 +84,8 @@ public class Form1 : System.Windows.Forms.Form
   private System.Windows.Forms.ToolStripMenuItem mnuZoom_100;
   private System.Windows.Forms.ToolStripMenuItem mnuZoom_150;
   private System.Windows.Forms.ToolStripMenuItem mnuZoom_200;
+  private System.Windows.Forms.Splitter splitter2;
+  private System.Windows.Forms.TextBox txtLog;
   private System.Windows.Forms.ToolStripMenuItem mnuShowDebugLog;
   private System.Windows.Forms.ToolStripMenuItem menuItem1;
   private DiagramNet.Designer designer1;
@@ -89,11 +93,7 @@ public class Form1 : System.Windows.Forms.Form
   private ToolStripMenuItem menuSaveas;
   private ToolStripMenuItem TbCommentBoxNode;
   private ToolStripMenuItem TbDiagramBlockNode;
-    private SplitContainer splitContainerMain;
-    private SplitContainer splitContainerRight;
-    private SplitContainer splitContainerMiddle;
-    private TextBox txtLog;
-    private System.ComponentModel.IContainer components;
+  private System.ComponentModel.IContainer components;
 
   public Form1()
   {
@@ -133,7 +133,6 @@ public class Form1 : System.Windows.Forms.Form
         components = new System.ComponentModel.Container();
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
         toolBar1 = new ToolStrip();
-        imageList1 = new ImageList(components);
         btnOpen = new ToolStripButton();
         btnSave = new ToolStripButton();
         sep1 = new ToolStripSeparator();
@@ -174,6 +173,7 @@ public class Form1 : System.Windows.Forms.Form
         btnBack = new ToolStripButton();
         btnMoveUp = new ToolStripButton();
         btnMoveDown = new ToolStripButton();
+        imageList1 = new ImageList(components);
         mainMenu1 = new MenuStrip();
         mnuFile = new ToolStripMenuItem();
         mnuOpen = new ToolStripMenuItem();
@@ -207,30 +207,20 @@ public class Form1 : System.Windows.Forms.Form
         mnuShowDebugLog = new ToolStripMenuItem();
         menuItem1 = new ToolStripMenuItem();
         mnuAbout = new ToolStripMenuItem();
-        designer1 = new Designer(components);
+        panel1 = new Panel();
+        designer1 = new DiagramNet.Designer(this.components);
+        splitter2 = new Splitter();
+        txtLog = new TextBox();
+        splitter1 = new Splitter();
         propertyGrid1 = new PropertyGrid();
         openFileDialog1 = new OpenFileDialog();
         saveFileDialog1 = new SaveFileDialog();
-        splitContainerMain = new SplitContainer();
-        splitContainerRight = new SplitContainer();
-        splitContainerMiddle = new SplitContainer();
-        txtLog = new TextBox();
         toolBar1.SuspendLayout();
         contextMenu1.SuspendLayout();
         contextMenu2.SuspendLayout();
         contextMenu_Zoom.SuspendLayout();
         mainMenu1.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
-        splitContainerMain.Panel2.SuspendLayout();
-        splitContainerMain.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)splitContainerRight).BeginInit();
-        splitContainerRight.Panel1.SuspendLayout();
-        splitContainerRight.Panel2.SuspendLayout();
-        splitContainerRight.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)splitContainerMiddle).BeginInit();
-        splitContainerMiddle.Panel1.SuspendLayout();
-        splitContainerMiddle.Panel2.SuspendLayout();
-        splitContainerMiddle.SuspendLayout();
+        panel1.SuspendLayout();
         SuspendLayout();
         // 
         // toolBar1
@@ -244,29 +234,6 @@ public class Form1 : System.Windows.Forms.Form
         toolBar1.Size = new Size(1180, 42);
         toolBar1.TabIndex = 1;
         toolBar1.ItemClicked += toolBar1_ButtonClick;
-        // 
-        // imageList1
-        // 
-        imageList1.ColorDepth = ColorDepth.Depth8Bit;
-        imageList1.ImageStream = (ImageListStreamer)resources.GetObject("imageList1.ImageStream");
-        imageList1.TransparentColor = Color.Silver;
-        imageList1.Images.SetKeyName(0, "");
-        imageList1.Images.SetKeyName(1, "");
-        imageList1.Images.SetKeyName(2, "");
-        imageList1.Images.SetKeyName(3, "");
-        imageList1.Images.SetKeyName(4, "");
-        imageList1.Images.SetKeyName(5, "");
-        imageList1.Images.SetKeyName(6, "");
-        imageList1.Images.SetKeyName(7, "");
-        imageList1.Images.SetKeyName(8, "");
-        imageList1.Images.SetKeyName(9, "");
-        imageList1.Images.SetKeyName(10, "");
-        imageList1.Images.SetKeyName(11, "");
-        imageList1.Images.SetKeyName(12, "");
-        imageList1.Images.SetKeyName(13, "");
-        imageList1.Images.SetKeyName(14, "");
-        imageList1.Images.SetKeyName(15, "");
-        imageList1.Images.SetKeyName(16, "");
         // 
         // btnOpen
         // 
@@ -559,6 +526,29 @@ public class Form1 : System.Windows.Forms.Form
         btnMoveDown.Tag = "MoveDown";
         btnMoveDown.ToolTipText = "Move Down";
         // 
+        // imageList1
+        // 
+        imageList1.ColorDepth = ColorDepth.Depth8Bit;
+        imageList1.ImageStream = (ImageListStreamer)resources.GetObject("imageList1.ImageStream");
+        imageList1.TransparentColor = Color.Silver;
+        imageList1.Images.SetKeyName(0, "");
+        imageList1.Images.SetKeyName(1, "");
+        imageList1.Images.SetKeyName(2, "");
+        imageList1.Images.SetKeyName(3, "");
+        imageList1.Images.SetKeyName(4, "");
+        imageList1.Images.SetKeyName(5, "");
+        imageList1.Images.SetKeyName(6, "");
+        imageList1.Images.SetKeyName(7, "");
+        imageList1.Images.SetKeyName(8, "");
+        imageList1.Images.SetKeyName(9, "");
+        imageList1.Images.SetKeyName(10, "");
+        imageList1.Images.SetKeyName(11, "");
+        imageList1.Images.SetKeyName(12, "");
+        imageList1.Images.SetKeyName(13, "");
+        imageList1.Images.SetKeyName(14, "");
+        imageList1.Images.SetKeyName(15, "");
+        imageList1.Images.SetKeyName(16, "");
+        // 
         // mainMenu1
         // 
         mainMenu1.ImageScalingSize = new Size(32, 32);
@@ -787,36 +777,80 @@ public class Form1 : System.Windows.Forms.Form
         mnuAbout.Text = "&About...";
         mnuAbout.Click += mnuAbout_Click;
         // 
-        // designer1
+        // panel1
         // 
-        designer1.AutoScroll = true;
-        designer1.AutoScrollMinSize = new Size(100, 100);
-        designer1.BackColor = SystemColors.Window;
-        designer1.Changed = false;
-        designer1.Dock = DockStyle.Fill;
-        designer1.Location = new Point(0, 0);
-        designer1.Name = "designer1";
-        designer1.Size = new Size(755, 626);
-        designer1.TabIndex = 6;
-        designer1.ElementClick += designer1_ElementClick;
-        designer1.ElementMouseDown += designer1_ElementMouseDown;
-        designer1.ElementMouseUp += designer1_ElementMouseUp;
-        designer1.ElementMoving += designer1_ElementMoving;
-        designer1.ElementMoved += designer1_ElementMoved;
-        designer1.ElementResizing += designer1_ElementResizing;
-        designer1.ElementResized += designer1_ElementResized;
-        designer1.ElementConnecting += designer1_ElementConnecting;
-        designer1.ElementConnected += designer1_ElementConnected;
-        designer1.ElementSelection += designer1_ElementSelection;
-        designer1.MouseUp += designer1_MouseUp;
+        panel1.Controls.Add(this.designer1);
+        panel1.Controls.Add(splitter2);
+        panel1.Controls.Add(txtLog);
+        panel1.Controls.Add(splitter1);
+        panel1.Controls.Add(propertyGrid1);
+        panel1.Dock = DockStyle.Fill;
+        panel1.Location = new Point(0, 81);
+        panel1.Name = "panel1";
+        panel1.Size = new Size(1180, 748);
+        panel1.TabIndex = 2;
+        // 
+	    // designer1
+	    // 
+	    this.designer1.AutoScroll = true;
+	    this.designer1.AutoScrollMinSize = new System.Drawing.Size(100, 100);
+	    this.designer1.BackColor = System.Drawing.SystemColors.Window;
+	    this.designer1.Dock = System.Windows.Forms.DockStyle.Fill;
+	    this.designer1.Location = new System.Drawing.Point(0, 0);
+	    this.designer1.Name = "designer1";
+	    this.designer1.Size = new System.Drawing.Size(423, 243);
+	    this.designer1.TabIndex = 6;
+	    this.designer1.ElementClick += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementClick);
+	    this.designer1.ElementMouseDown += new DiagramNet.Designer.ElementMouseEventHandler(this.designer1_ElementMouseDown);
+	    this.designer1.ElementMouseUp += new DiagramNet.Designer.ElementMouseEventHandler(this.designer1_ElementMouseUp);
+	    this.designer1.ElementMoving += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementMoving);
+	    this.designer1.ElementMoved += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementMoved);
+	    this.designer1.ElementResizing += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementResizing);
+	    this.designer1.ElementResized += new DiagramNet.Designer.ElementEventHandler(this.designer1_ElementResized);
+	    this.designer1.ElementConnecting += new DiagramNet.Designer.ElementConnectEventHandler(this.designer1_ElementConnecting);
+	    this.designer1.ElementConnected += new DiagramNet.Designer.ElementConnectEventHandler(this.designer1_ElementConnected);
+	    this.designer1.ElementSelection += new DiagramNet.Designer.ElementSelectionEventHandler(this.designer1_ElementSelection);
+	    this.designer1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.designer1_MouseUp);
+        //
+        // splitter2
+        // 
+        splitter2.Dock = DockStyle.Bottom;
+        splitter2.Location = new Point(0, 491);
+        splitter2.Name = "splitter2";
+        splitter2.Size = new Size(589, 9);
+        splitter2.TabIndex = 5;
+        splitter2.TabStop = false;
+        // 
+        // txtLog
+        // 
+        txtLog.BorderStyle = BorderStyle.None;
+        txtLog.Dock = DockStyle.Bottom;
+        txtLog.Location = new Point(0, 500);
+        txtLog.Multiline = true;
+        txtLog.Name = "txtLog";
+        txtLog.ReadOnly = true;
+        txtLog.ScrollBars = ScrollBars.Both;
+        txtLog.Size = new Size(589, 248);
+        txtLog.TabIndex = 4;
+        txtLog.Text = "Log:";
+        txtLog.Visible = false;
+        // 
+        // splitter1
+        // 
+        splitter1.Dock = DockStyle.Right;
+        splitter1.Location = new Point(589, 0);
+        splitter1.Name = "splitter1";
+        splitter1.Size = new Size(8, 748);
+        splitter1.TabIndex = 1;
+        splitter1.TabStop = false;
         // 
         // propertyGrid1
         // 
-        propertyGrid1.Dock = DockStyle.Fill;
+        propertyGrid1.Dock = DockStyle.Right;
         propertyGrid1.LineColor = SystemColors.ScrollBar;
-        propertyGrid1.Location = new Point(0, 0);
+        propertyGrid1.Location = new Point(597, 0);
         propertyGrid1.Name = "propertyGrid1";
-        propertyGrid1.Size = new Size(244, 748);
+        propertyGrid1.Size = new Size(583, 748);
         propertyGrid1.TabIndex = 0;
         // 
         // openFileDialog1
@@ -824,73 +858,11 @@ public class Form1 : System.Windows.Forms.Form
         openFileDialog1.DefaultExt = "*.dgn";
         openFileDialog1.RestoreDirectory = true;
         // 
-        // splitContainerMain
-        // 
-        splitContainerMain.Dock = DockStyle.Fill;
-        splitContainerMain.Location = new Point(0, 81);
-        splitContainerMain.Name = "splitContainerMain";
-        // 
-        // splitContainerMain.Panel2
-        // 
-        splitContainerMain.Panel2.Controls.Add(splitContainerRight);
-        splitContainerMain.Size = new Size(1180, 748);
-        splitContainerMain.SplitterDistance = 173;
-        splitContainerMain.TabIndex = 7;
-        // 
-        // splitContainerRight
-        // 
-        splitContainerRight.Dock = DockStyle.Fill;
-        splitContainerRight.Location = new Point(0, 0);
-        splitContainerRight.Name = "splitContainerRight";
-        // 
-        // splitContainerRight.Panel1
-        // 
-        splitContainerRight.Panel1.Controls.Add(splitContainerMiddle);
-        // 
-        // splitContainerRight.Panel2
-        // 
-        splitContainerRight.Panel2.Controls.Add(propertyGrid1);
-        splitContainerRight.Size = new Size(1003, 748);
-        splitContainerRight.SplitterDistance = 755;
-        splitContainerRight.TabIndex = 0;
-        // 
-        // splitContainerMiddle
-        // 
-        splitContainerMiddle.Dock = DockStyle.Fill;
-        splitContainerMiddle.Location = new Point(0, 0);
-        splitContainerMiddle.Name = "splitContainerMiddle";
-        splitContainerMiddle.Orientation = System.Windows.Forms.Orientation.Horizontal;
-        // 
-        // splitContainerMiddle.Panel1
-        // 
-        splitContainerMiddle.Panel1.Controls.Add(designer1);
-        // 
-        // splitContainerMiddle.Panel2
-        // 
-        splitContainerMiddle.Panel2.Controls.Add(txtLog);
-        splitContainerMiddle.Size = new Size(755, 748);
-        splitContainerMiddle.SplitterDistance = 626;
-        splitContainerMiddle.TabIndex = 0;
-        // 
-        // txtLog
-        // 
-        txtLog.BorderStyle = BorderStyle.None;
-        txtLog.Dock = DockStyle.Fill;
-        txtLog.Location = new Point(0, 0);
-        txtLog.Multiline = true;
-        txtLog.Name = "txtLog";
-        txtLog.ReadOnly = true;
-        txtLog.ScrollBars = ScrollBars.Both;
-        txtLog.Size = new Size(755, 118);
-        txtLog.TabIndex = 4;
-        txtLog.Text = "Log:";
-        txtLog.Visible = false;
-        // 
         // Form1
         // 
         AutoScaleBaseSize = new Size(13, 31);
         ClientSize = new Size(1180, 829);
-        Controls.Add(splitContainerMain);
+        Controls.Add(panel1);
         Controls.Add(toolBar1);
         Controls.Add(mainMenu1);
         MainMenuStrip = mainMenu1;
@@ -905,18 +877,8 @@ public class Form1 : System.Windows.Forms.Form
         contextMenu_Zoom.ResumeLayout(false);
         mainMenu1.ResumeLayout(false);
         mainMenu1.PerformLayout();
-        splitContainerMain.Panel2.ResumeLayout(false);
-        ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
-        splitContainerMain.ResumeLayout(false);
-        splitContainerRight.Panel1.ResumeLayout(false);
-        splitContainerRight.Panel2.ResumeLayout(false);
-        ((System.ComponentModel.ISupportInitialize)splitContainerRight).EndInit();
-        splitContainerRight.ResumeLayout(false);
-        splitContainerMiddle.Panel1.ResumeLayout(false);
-        splitContainerMiddle.Panel2.ResumeLayout(false);
-        splitContainerMiddle.Panel2.PerformLayout();
-        ((System.ComponentModel.ISupportInitialize)splitContainerMiddle).EndInit();
-        splitContainerMiddle.ResumeLayout(false);
+        panel1.ResumeLayout(false);
+        panel1.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
